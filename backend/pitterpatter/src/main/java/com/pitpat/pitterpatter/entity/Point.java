@@ -24,6 +24,7 @@ public class Point {
 
     private String source;
 
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "child_id")
     private Child child;
 
