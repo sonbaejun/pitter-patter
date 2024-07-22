@@ -27,6 +27,8 @@ public class Point {
     @JoinColumn(name = "child_id")
     private Child child;
 
+    
+
     @CreatedDate
     private LocalDateTime created_at;
 

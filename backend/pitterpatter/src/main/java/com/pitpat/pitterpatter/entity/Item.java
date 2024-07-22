@@ -35,7 +35,6 @@ public class Item {
     @CreatedDate
     private LocalDateTime created_at;
 
-
     public Item(int price, ItemType itemType, String category, List<ChildItem> childItems) {
         this.price = price;
         this.itemType = itemType;
