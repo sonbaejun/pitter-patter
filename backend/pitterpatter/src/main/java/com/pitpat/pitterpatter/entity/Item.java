@@ -1,5 +1,6 @@
 package com.pitpat.pitterpatter.entity;
 
+import com.pitpat.pitterpatter.entity.ItemType;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
