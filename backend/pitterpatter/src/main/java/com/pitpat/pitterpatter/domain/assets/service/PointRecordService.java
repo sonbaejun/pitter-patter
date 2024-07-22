@@ -10,6 +10,4 @@ public class PointRecordService {
 
     private final PointRecordRepository pointRecordRepository;
 
-
-
 }
