@@ -78,6 +78,8 @@ public class GameScene : MonoBehaviour
         // 생명이 0이 되면 UDP 연결을 닫고 점수 화면으로 이동
         if (playTime >= 300)
         {
+            gm.playTime = playTime;
+            gm.playTimeTxt = playTimeTxt.text;
             udpr.UDPClose();
             gm.ToScore();
         }

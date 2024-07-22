@@ -24280,7 +24280,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6ac40a61b56d1d45a61e958b0d25f75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  correctScoreTxt: {fileID: 0}
+  playTime: 0
+  playTimeTxt: {fileID: 0}
+  correctScoreTxt: {fileID: 853885447}
 --- !u!114 &1742544389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24295,6 +24297,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   finalScore: 0
   playTime: 0
+  playTimeTxt: 
 --- !u!4 &1742544390
 Transform:
   m_ObjectHideFlags: 0
