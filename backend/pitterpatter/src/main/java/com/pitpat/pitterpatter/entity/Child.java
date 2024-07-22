@@ -7,6 +7,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Builder
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
@@ -38,4 +40,10 @@ public class Child {
     private int personal_record;
 
     private int point;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<ChildItem> childItem = new ArrayList<>();
+
+    @OneToMany(mappedBy = "child", fetch = FetchType.LAZY)
+    private List<Point> points = new ArrayList<>();
 }
