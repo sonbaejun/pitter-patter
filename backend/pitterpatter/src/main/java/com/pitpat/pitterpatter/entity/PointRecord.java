@@ -13,11 +13,11 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-public class Point {
+public class PointRecord {
 
     @Id
     @GeneratedValue
-    @Column(name = "point_id")
+    @Column(name = "point_record_id")
     private Long id;
 
     private Long amount;
@@ -28,12 +28,10 @@ public class Point {
     @JoinColumn(name = "child_id")
     private Child child;
 
-    
-
     @CreatedDate
     private LocalDateTime created_at;
 
-    public Point(Long amount, String source, Child child) {
+    public PointRecord(Long amount, String source, Child child) {
         this.amount = amount;
         this.source = source;
         this.child = child;

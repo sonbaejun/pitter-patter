@@ -45,5 +45,5 @@ public class Child {
     private List<ChildItem> childItem = new ArrayList<>();
 
     @OneToMany(mappedBy = "child", fetch = FetchType.LAZY)
-    private List<Point> points = new ArrayList<>();
+    private List<PointRecord> pointRecords = new ArrayList<>();
 }
