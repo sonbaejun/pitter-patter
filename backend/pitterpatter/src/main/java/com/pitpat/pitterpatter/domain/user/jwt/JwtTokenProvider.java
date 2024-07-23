@@ -29,8 +29,10 @@ public class JwtTokenProvider {
 
     // application.yml에서 secret 값 가져와서 key에 저장
     public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
-        // secret key를 base 64로 인코딩
+        System.out.println("Key:" + secretKey);
+        // secretkey를 base64로 디코딩
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+        // hmac에서 사용할 수 있는 Key 객체로 변환(hmac 위변조 방지 인증코드)
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
@@ -74,7 +76,7 @@ public class JwtTokenProvider {
                 .subject(subject)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + expirationTime))
-                .signWith(key, SignatureAlgorithm.HS256)
+                .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
     }
 
@@ -97,6 +99,7 @@ public class JwtTokenProvider {
         UserDetails principal = new User(claims.getSubject(), "", authorities);
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
+
 
     // 토큰 정보를 검증하는 메서드
     public boolean validateToken(String token) {

@@ -59,6 +59,7 @@ dependencies {
 	// swagger
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 
+
 	// Jasypt : .yml 파일의 특정값을 암호화
 	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
 }

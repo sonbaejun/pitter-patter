@@ -21,7 +21,7 @@ spring:
 
 jasypt:
     encryptor:
-        bean: jasyptStringEncryptor
+        bean: stringEncryptor
 
 logging:
     level:
@@ -29,6 +29,9 @@ logging:
 
 jwt:
     header: Authorization
-    # jwt secret key를 jasypt secret key로 암호화함.
-    secret: ENC(WOYtLPTiMRjjiLX6WN3SREANUKLm2o1d2R/WPzTYEiJ0sEA6XFK8evCage9kSKUHuPHafl2LuENJXFVqn2hjcypolp8hE/FVaSza4iLTXFMTnvc4hDhpgQ==)
+    # 1. jwt secret key를 base64로 인코딩
+    # 2. 1번을 jasypt secret key로 암호화
+    # HS512 암호화 알고리즘을 사용할 것이므로 키 값은 최소 64 bytes이며, 128 bytes가 권장
+    secret: ENC(tczXeMu5KriFyTL5fcvIMH/DcjKadE9YENqm40lXahPXhcm+zrhE1kjq1cNMtZpNboqUOfcHphbrQLkIQq0JJcLnKOh7Ufu5Ogph9OtQ90jomHimQ2mLnEP9/V+blRKPTUZhWi88t9u7tuwQ1DFMFxR1ARFY6eBE)
+#    secret: and0LXRlc3QtdHV0b3JpYWwta2V5LXNlY3JldC1qd3QtdGVzdC10dXRvcmlhbC1rZXktand0LXRlc3QtdHV0b3JpYWwta2V5LWp3dC10ZXN0LXR1dG9yaWFsLWtleQ==
     token-validity-in-seconds: 86400
