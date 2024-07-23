@@ -28,6 +28,9 @@ public class Child {
     private Long id;
 
     // TODO: user_id FK 필요.
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 
     private String profile_image;
 
