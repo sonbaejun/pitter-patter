@@ -22,7 +22,7 @@ import java.util.List;
 public class Child {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "child_id")
     @NotNull
     private Long id;
@@ -60,7 +60,7 @@ public class Child {
     @Builder.Default
     private int point = 0;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "child", fetch = FetchType.LAZY)
     @NotNull
     @Builder.Default
     private List<ChildItem> childItems = new ArrayList<>();
@@ -70,12 +70,12 @@ public class Child {
     @Builder.Default
     private List<PointRecord> points = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "child", fetch = FetchType.LAZY)
     @NotNull
     @Builder.Default
     private List<PhysicalRecord> physicalRecords = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "child", fetch = FetchType.LAZY)
     @NotNull
     @Builder.Default
     private List<PlayRecord> playRecords = new ArrayList<>();
