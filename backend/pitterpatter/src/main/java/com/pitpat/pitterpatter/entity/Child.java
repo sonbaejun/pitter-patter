@@ -1,6 +1,6 @@
 package com.pitpat.pitterpatter.entity;
 
-import com.pitpat.pitterpatter.entity.ENUM.Gender;
+import com.pitpat.pitterpatter.entity.enums.Gender;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -61,5 +61,5 @@ public class Child {
 
     @OneToMany(mappedBy = "child", fetch = FetchType.LAZY)
     @NotNull
-    private List<Point> points = new ArrayList<>();
+    private List<PointRecord> points = new ArrayList<>();
 }
