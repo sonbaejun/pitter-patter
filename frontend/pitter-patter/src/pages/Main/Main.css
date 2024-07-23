@@ -1,0 +1,8 @@
+@import '../../style/main.css';
+
+.nav-bar {
+    background-color: red;
+    width: 100vw;
+    height: 10vh;
+}
+
