@@ -28,6 +28,9 @@ public class Child {
     private Long id;
 
     // TODO: user_id FK 필요.
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 
     private String profile_image;
 
@@ -57,9 +60,11 @@ public class Child {
 
     @OneToMany(fetch = FetchType.LAZY)
     @NotNull
+    @Builder.Default
     private List<ChildItem> childItem = new ArrayList<>();
 
     @OneToMany(mappedBy = "child", fetch = FetchType.LAZY)
     @NotNull
+    @Builder.Default
     private List<PointRecord> points = new ArrayList<>();
 }

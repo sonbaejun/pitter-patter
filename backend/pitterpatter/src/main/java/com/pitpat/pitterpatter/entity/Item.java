@@ -2,7 +2,6 @@ package com.pitpat.pitterpatter.entity;
 
 import com.pitpat.pitterpatter.entity.enums.ItemType;
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
