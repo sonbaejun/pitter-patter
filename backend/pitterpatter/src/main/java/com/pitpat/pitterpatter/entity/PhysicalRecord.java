@@ -2,15 +2,11 @@ package com.pitpat.pitterpatter.entity;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -32,10 +28,10 @@ public class PhysicalRecord {
   private Long id;
 
   @NotNull
-  private int height;
+  private float height;
 
   @NotNull
-  private int weight;
+  private float weight;
 
   @NotNull
   @CreatedDate
@@ -48,4 +44,7 @@ public class PhysicalRecord {
   @NotNull
   private float bmi;
 
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "child_id")
+  private Child child;
 }

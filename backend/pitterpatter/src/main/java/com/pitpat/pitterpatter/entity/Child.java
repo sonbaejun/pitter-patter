@@ -53,18 +53,25 @@ public class Child {
     private LocalDate birth;
 
     @NotNull
-    private int personal_record;
+    @Builder.Default
+    private int personal_record = 0;
 
     @NotNull
-    private int point;
+    @Builder.Default
+    private int point = 0;
 
     @OneToMany(fetch = FetchType.LAZY)
     @NotNull
     @Builder.Default
-    private List<ChildItem> childItem = new ArrayList<>();
+    private List<ChildItem> childItems = new ArrayList<>();
 
     @OneToMany(mappedBy = "child", fetch = FetchType.LAZY)
     @NotNull
     @Builder.Default
     private List<PointRecord> points = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @NotNull
+    @Builder.Default
+    private List<PhysicalRecord> physicalRecords = new ArrayList<>();
 }
