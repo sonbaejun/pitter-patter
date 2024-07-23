@@ -1,6 +1,6 @@
 package com.pitpat.pitterpatter.entity;
 
-import com.pitpat.pitterpatter.entity.Child;
+import com.pitpat.pitterpatter.entity.enums.SocialType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -52,12 +52,6 @@ public class UserEntity {
     // user 테이블:child 테이블 = 1:多 관계
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Child> children;
-
-    // SocialType을 위한 enum
-    public enum SocialType {
-        카카오,
-        네이버
-    }
 
     // 엔티티가 생성될 때 createdAt과 updatedAt을 자동으로 갱신
     @PrePersist
