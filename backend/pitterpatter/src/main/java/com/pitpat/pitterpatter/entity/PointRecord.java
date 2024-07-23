@@ -20,7 +20,7 @@ public class PointRecord {
     @Column(name = "point_record_id")
     private Long id;
 
-    private Long amount;
+    private int amount;
 
     private String source;
 
@@ -31,7 +31,7 @@ public class PointRecord {
     @CreatedDate
     private LocalDateTime created_at;
 
-    public PointRecord(Long amount, String source, Child child) {
+    public PointRecord(int amount, String source, Child child) {
         this.amount = amount;
         this.source = source;
         this.child = child;
