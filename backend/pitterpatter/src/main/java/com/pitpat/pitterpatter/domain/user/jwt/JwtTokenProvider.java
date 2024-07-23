@@ -29,7 +29,6 @@ public class JwtTokenProvider {
 
     // application.yml에서 secret 값 가져와서 key에 저장
     public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
-        System.out.println("Key:" + secretKey);
         // secretkey를 base64로 디코딩
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         // hmac에서 사용할 수 있는 Key 객체로 변환(hmac 위변조 방지 인증코드)
