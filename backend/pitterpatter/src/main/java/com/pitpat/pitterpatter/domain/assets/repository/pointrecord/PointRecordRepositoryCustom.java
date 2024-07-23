@@ -1,15 +1,13 @@
 package com.pitpat.pitterpatter.domain.assets.repository.pointrecord;
 
+import com.pitpat.pitterpatter.domain.assets.model.dto.pointrecord.PointRecordSearchCondition;
 import com.pitpat.pitterpatter.entity.PointRecord;
 
 import java.util.List;
 
 public interface PointRecordRepositoryCustom {
 
-    List<PointRecord> useOrEarnPoint(int amount, Long childId);
-    int findPointByChild(Long childId);
-    List<PointRecord> findRecordsByChild(Long childId);
+    Integer findPointByChild(Long childId);
 
-
-
+    List<PointRecord> findPointRecordByConditions(PointRecordSearchCondition condition, Long childId);
 }
