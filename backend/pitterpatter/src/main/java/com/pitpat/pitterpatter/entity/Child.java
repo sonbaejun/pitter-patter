@@ -60,9 +60,11 @@ public class Child {
 
     @OneToMany(fetch = FetchType.LAZY)
     @NotNull
+    @Builder.Default
     private List<ChildItem> childItem = new ArrayList<>();
 
     @OneToMany(mappedBy = "child", fetch = FetchType.LAZY)
     @NotNull
+    @Builder.Default
     private List<PointRecord> points = new ArrayList<>();
 }
