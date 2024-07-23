@@ -1,4 +1,4 @@
-package com.pitpat.pitterpatter.domain.assets.repository;
+package com.pitpat.pitterpatter.domain.assets.repository.pointrecord;
 
 import com.pitpat.pitterpatter.entity.PointRecord;
 

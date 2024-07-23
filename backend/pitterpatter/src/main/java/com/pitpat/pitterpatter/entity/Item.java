@@ -22,7 +22,11 @@ public class Item {
     @Column(name = "item_id")
     private Long id;
 
+    private String itemName;
+
     private int price;
+
+    private String photo;
 
     @Enumerated(EnumType.STRING)
     private ItemType itemType;
@@ -35,10 +39,9 @@ public class Item {
     @CreatedDate
     private LocalDateTime created_at;
 
-    public Item(int price, ItemType itemType, String category, List<ChildItem> childItems) {
+    public Item(int price, ItemType itemType, String category) {
         this.price = price;
         this.itemType = itemType;
         this.category = category;
-        this.childItems = childItems;
     }
 }

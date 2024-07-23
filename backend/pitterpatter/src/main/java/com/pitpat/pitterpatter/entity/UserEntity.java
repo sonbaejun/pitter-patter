@@ -2,9 +2,13 @@ package com.pitpat.pitterpatter.entity;
 
 import com.pitpat.pitterpatter.entity.enums.SocialType;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -24,11 +28,11 @@ public class UserEntity {
 
     @Column(name = "created_at", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDate updatedAt;
+    private LocalDateTime updatedAt;
 
     @Column(name = "team_name", nullable = false, length = 64)
     private String teamName;
@@ -51,18 +55,18 @@ public class UserEntity {
 
     // user 테이블:child 테이블 = 1:多 관계
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Child> children;
+    private List<Child> children = new ArrayList<>();
 
     // 엔티티가 생성될 때 createdAt과 updatedAt을 자동으로 갱신
     @PrePersist
     protected void onCreate() {
-        createdAt = LocalDate.now();
-        updatedAt = LocalDate.now();
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
 
     // 엔티티가 수정될 때 updatedAt 자동으로 갱신
     @PreUpdate
     protected void onUpdate() {
-        updatedAt = LocalDate.now();
+        updatedAt = LocalDateTime.now();
     }
 }

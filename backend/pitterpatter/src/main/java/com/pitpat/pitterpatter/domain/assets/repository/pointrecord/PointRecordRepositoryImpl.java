@@ -1,23 +1,21 @@
-package com.pitpat.pitterpatter.domain.assets.repository;
+package com.pitpat.pitterpatter.domain.assets.repository.pointrecord;
 
-import com.pitpat.pitterpatter.entity.Child;
 import com.pitpat.pitterpatter.entity.PointRecord;
-import com.pitpat.pitterpatter.entity.QChild;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
-import lombok.RequiredArgsConstructor;
+import jakarta.persistence.PersistenceContext;
 
 import java.util.List;
 
-import static com.pitpat.pitterpatter.entity.QChild.child;
-
-@RequiredArgsConstructor
 public class PointRecordRepositoryImpl implements PointRecordRepositoryCustom{
 
-    private final EntityManager em;
-    private final JPAQueryFactory queryFactory;
+    @PersistenceContext
+    private EntityManager em;
+    private JPAQueryFactory queryFactory;
 
-
+    public PointRecordRepositoryImpl() {
+        this.queryFactory = new JPAQueryFactory(this.em);
+    }
 
     @Override
     public List<PointRecord> useOrEarnPoint(int amount, Long childId) {
