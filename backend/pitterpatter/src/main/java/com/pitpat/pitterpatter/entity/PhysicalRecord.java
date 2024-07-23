@@ -14,8 +14,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Builder
-@AllArgsConstructor(access = AccessLevel.PACKAGE)
 @EntityListeners(AuditingEntityListener.class)
 @Entity
 @Getter
@@ -28,24 +26,27 @@ public class PhysicalRecord {
   @Column(name = "physical_record_id")
   private Long id;
 
-  @NotNull
   private float height;
 
-  @NotNull
   private float weight;
 
-  @NotNull
   @CreatedDate
   private LocalDate created_at;
 
-  @NotNull
   @LastModifiedDate
   private LocalDate updated_at;
 
-  @NotNull
   private float bmi;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "child_id")
   private Child child;
+
+  @Builder
+  public PhysicalRecord(float height, float weight, float bmi, Child child) {
+    this.height = height;
+    this.weight = weight;
+    this.bmi = bmi;
+    this.child = child;
+  }
 }

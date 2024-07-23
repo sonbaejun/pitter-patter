@@ -10,8 +10,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
-@Builder
-@AllArgsConstructor(access = AccessLevel.PACKAGE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Getter
@@ -23,20 +21,24 @@ public class PlayRecord {
     @Column(name = "play_record_id")
     private Long id;
 
-    @NotNull
     private int score;
 
-    @NotNull
     @CreatedDate
     private LocalDateTime created_at;
 
-    @NotNull
     private int playtime;
 
-    @NotNull
     private int burnedCalorie;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "child_id")
     private Child child;
+
+    @Builder
+    public PlayRecord(int score, int playtime, int burnedCalorie, Child child) {
+        this.score = score;
+        this.playtime = playtime;
+        this.burnedCalorie = burnedCalorie;
+        this.child = child;
+    }
 }

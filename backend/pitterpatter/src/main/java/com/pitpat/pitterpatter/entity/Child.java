@@ -12,8 +12,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Builder
-@AllArgsConstructor(access = AccessLevel.PACKAGE)
 @EntityListeners(AuditingEntityListener.class)
 @Entity
 @Getter
@@ -24,60 +22,54 @@ public class Child {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "child_id")
-    @NotNull
     private Long id;
 
-    // TODO: user_id FK 필요.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
     private String profile_image;
 
-    @NotNull
     private String nickname;
 
     @Enumerated(EnumType.STRING)
-    @NotNull
     private Gender gender;
 
     @CreatedDate
-    @NotNull
     private LocalDate created_at;
 
     @LastModifiedDate
-    @NotNull
     private LocalDate updated_at;
 
-    @NotNull
     private LocalDate birth;
 
-    @NotNull
-    @Builder.Default
     private int personal_record = 0;
 
-    @NotNull
-    @Builder.Default
     private int point = 0;
 
     @OneToMany(mappedBy = "child", fetch = FetchType.LAZY)
-    @NotNull
-    @Builder.Default
     private List<ChildItem> childItems = new ArrayList<>();
 
     @OneToMany(mappedBy = "child", fetch = FetchType.LAZY)
-    @NotNull
-    @Builder.Default
     private List<PointRecord> points = new ArrayList<>();
 
     @OneToMany(mappedBy = "child", fetch = FetchType.LAZY)
-    @NotNull
-    @Builder.Default
     private List<PhysicalRecord> physicalRecords = new ArrayList<>();
 
     @OneToMany(mappedBy = "child", fetch = FetchType.LAZY)
-    @NotNull
-    @Builder.Default
     private List<PlayRecord> playRecords = new ArrayList<>();
 
+    @Builder
+    public Child(String profile_image, String nickname, Gender gender, LocalDate birth, int personal_record, int point, List<ChildItem> childItems, List<PointRecord> points, List<PhysicalRecord> physicalRecords, List<PlayRecord> playRecords) {
+        this.profile_image = profile_image;
+        this.nickname = nickname;
+        this.gender = gender;
+        this.birth = birth;
+        this.personal_record = personal_record;
+        this.point = point;
+        this.childItems = childItems;
+        this.points = points;
+        this.physicalRecords = physicalRecords;
+        this.playRecords = playRecords;
+    }
 }
