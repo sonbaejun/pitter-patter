@@ -33,12 +33,3 @@ jwt:
     # jwt secret key를 jasypt secret key로 암호화함.
     secret: ENC(WOYtLPTiMRjjiLX6WN3SREANUKLm2o1d2R/WPzTYEiJ0sEA6XFK8evCage9kSKUHuPHafl2LuENJXFVqn2hjcypolp8hE/FVaSza4iLTXFMTnvc4hDhpgQ==)
     token-validity-in-seconds: 86400
-=======
-logging:
-    level:
-        com.pitpat: DEBUG
-jwt:
-    header: Authorization
-    secret: 65faa01b917c2cdc6008e92625d65b1c2789b129ba5aae8183b8480600b279413dc0499eb37905e9cad146fa0f9274ecdff470e3b4c63d5bd081431bdf4b4f60
-    token-validity-in-seconds: 86400
->>>>>>> a5202dd1b56471c76a86dfa27162f8188868ca5c
