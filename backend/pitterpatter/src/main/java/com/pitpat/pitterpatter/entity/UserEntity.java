@@ -4,17 +4,17 @@ import com.pitpat.pitterpatter.entity.enums.SocialType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "\"user\"")
 @Getter
 @NoArgsConstructor
+@Setter
 public class UserEntity {
 
     @Id
@@ -23,8 +23,11 @@ public class UserEntity {
     @Column(name = "user_id", nullable = false)
     private Integer userId;
 
-    @Column(name = "2fa", nullable = false)
-    private Integer twoFa;
+    @Column(name = "2fa", nullable = false, length = 64)
+    private String twoFa;
+
+    @Column(name = "is_social", nullable = false)
+    private Boolean isSocial;
 
     @Column(name = "created_at", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
