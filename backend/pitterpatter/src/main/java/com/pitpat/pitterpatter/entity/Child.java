@@ -1,5 +1,6 @@
 package com.pitpat.pitterpatter.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.pitpat.pitterpatter.entity.enums.Gender;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -29,7 +30,8 @@ public class Child {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    private String profile_image;
+    @Column(name = "profile_image")
+    private String profileImage;
 
     private String nickname;
 
@@ -37,14 +39,17 @@ public class Child {
     private Gender gender;
 
     @CreatedDate
-    private LocalDateTime created_at;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
     @LastModifiedDate
-    private LocalDateTime updated_at;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     private LocalDate birth;
 
-    private int personal_record = 0;
+    @Column(name = "personal_record")
+    private int personalRecord = 0;
 
     private int point = 0;
 
@@ -61,12 +66,13 @@ public class Child {
     private List<PlayRecord> playRecords = new ArrayList<>();
 
     @Builder
-    public Child(String profile_image, String nickname, Gender gender, LocalDate birth, int personal_record, int point, List<ChildItem> childItems, List<PointRecord> points, List<PhysicalRecord> physicalRecords, List<PlayRecord> playRecords) {
-        this.profile_image = profile_image;
+    public Child(String profileImage, UserEntity user, String nickname, Gender gender, LocalDate birth, int personalRecord, int point, List<ChildItem> childItems, List<PointRecord> points, List<PhysicalRecord> physicalRecords, List<PlayRecord> playRecords) {
+        this.profileImage = profileImage;
+        this.user = user;
         this.nickname = nickname;
         this.gender = gender;
         this.birth = birth;
-        this.personal_record = personal_record;
+        this.personalRecord = personalRecord;
         this.point = point;
         this.childItems = childItems;
         this.points = points;
