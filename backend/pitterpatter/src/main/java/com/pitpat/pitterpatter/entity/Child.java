@@ -74,4 +74,10 @@ public class Child {
     @NotNull
     @Builder.Default
     private List<PhysicalRecord> physicalRecords = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @NotNull
+    @Builder.Default
+    private List<PlayRecord> playRecords = new ArrayList<>();
+
 }
