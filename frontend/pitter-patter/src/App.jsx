@@ -1,12 +1,15 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 import LandingPage from "./pages/LandingPage/LandingPage"
 
 function App() {
-  
-  // return 에 router 들어갈 거임
   return (
-    <div className='App'>
-      <LandingPage />
-    </div>
+    <BrowserRouter>
+      <div>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   )
 }
 

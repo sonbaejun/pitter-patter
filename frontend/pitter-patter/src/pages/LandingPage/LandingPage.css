@@ -1,8 +1,31 @@
 @import '../../style/main.css';
 
-.nav-bar {
-    background-color: red;
+.header-body {
     width: 100vw;
     height: 10vh;
+    /* background-color: rebeccapurple; */
 }
 
+.layout-header {
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo-img {
+    height: 80%;
+} 
+
+.layout-header-button {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.header-button {
+    width: 50%;
+    height: 50%;
+    margin: 0 20%;
+}
