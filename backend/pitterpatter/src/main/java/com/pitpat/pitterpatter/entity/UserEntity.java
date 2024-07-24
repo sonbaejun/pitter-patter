@@ -2,19 +2,25 @@ package com.pitpat.pitterpatter.entity;
 
 import com.pitpat.pitterpatter.entity.enums.SocialType;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "\"user\"")
 @Getter
 @NoArgsConstructor
 @Setter
+@Builder
+@AllArgsConstructor
 public class UserEntity {
 
     @Id
@@ -57,8 +63,9 @@ public class UserEntity {
     private SocialType type;
 
     // user 테이블:child 테이블 = 1:多 관계
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Child> children = new ArrayList<>();
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private final List<Child> children = new ArrayList<>();
 
     // 엔티티가 생성될 때 createdAt과 updatedAt을 자동으로 갱신
     @PrePersist
@@ -72,4 +79,5 @@ public class UserEntity {
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
+
 }
