@@ -8,11 +8,11 @@ import java.time.LocalDateTime;
 public class FindPointRecordDto {
     private int amount;
     private String source;
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
-    public FindPointRecordDto(int amount, String source, LocalDateTime created_at) {
+    public FindPointRecordDto(int amount, String source, LocalDateTime createdAt) {
         this.amount = amount;
         this.source = source;
-        this.created_at = created_at;
+        this.createdAt = createdAt;
     }
 }

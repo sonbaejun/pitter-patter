@@ -1,14 +1,10 @@
 package com.pitpat.pitterpatter.domain.assets.service.pointrecord;
 
-import com.pitpat.pitterpatter.domain.assets.model.dto.item.FindItemDto;
-import com.pitpat.pitterpatter.domain.assets.model.dto.item.ItemSearchCondition;
 import com.pitpat.pitterpatter.domain.assets.model.dto.pointrecord.CreatePointRecordDto;
 import com.pitpat.pitterpatter.domain.assets.model.dto.pointrecord.FindPointRecordDto;
 import com.pitpat.pitterpatter.domain.assets.model.dto.pointrecord.PointRecordSearchCondition;
 import com.pitpat.pitterpatter.domain.assets.repository.pointrecord.PointRecordRepository;
 import com.pitpat.pitterpatter.entity.PointRecord;
-import com.pitpat.pitterpatter.entity.QPointRecord;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,11 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.pitpat.pitterpatter.entity.QPointRecord.pointRecord;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 public class PointRecordService {
 
     private final PointRecordRepository pointRecordRepository;
@@ -29,6 +24,7 @@ public class PointRecordService {
 
     // TODO : CHILD 포인트 변경 추가해줘야됌
     // 포인트 레코드 생성
+    @Transactional
     public PointRecord createPointRecord(CreatePointRecordDto createPointRecordDto) {
         PointRecord pointRecord = new PointRecord(createPointRecordDto.getAmount(),
                 createPointRecordDto.getSource(),
@@ -50,7 +46,7 @@ public class PointRecordService {
                         new FindPointRecordDto(
                                 pr.getAmount(),
                                 pr.getSource(),
-                                pr.getCreated_at()))
+                                pr.getCreatedAt()))
                 .collect(Collectors.toList());
     }
 
@@ -63,7 +59,7 @@ public class PointRecordService {
                         new FindPointRecordDto(
                                 pr.getAmount(),
                                 pr.getSource(),
-                                pr.getCreated_at()))
+                                pr.getCreatedAt()))
                 .collect(Collectors.toList());
     }
 

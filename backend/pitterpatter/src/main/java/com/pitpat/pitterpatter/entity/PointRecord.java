@@ -29,7 +29,7 @@ public class PointRecord {
     private Child child;
 
     @CreatedDate
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     public PointRecord(int amount, String source, Child child) {
         this.amount = amount;

@@ -5,7 +5,6 @@ import com.pitpat.pitterpatter.entity.PointRecord;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

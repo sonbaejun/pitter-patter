@@ -9,6 +9,8 @@ import lombok.Data;
 @Data
 public class CreateItemDto {
     @NotNull
+    private String itemName;
+    @NotNull
     private int price;
 
     @NotNull
@@ -21,7 +23,8 @@ public class CreateItemDto {
     @NotNull
     private String category;
 
-    public CreateItemDto(int price, String photo, ItemType itemType, String category) {
+    public CreateItemDto(String itemName, int price, String photo, ItemType itemType, String category) {
+        this.itemName = itemName;
         this.price = price;
         this.photo = photo;
         this.itemType = itemType;

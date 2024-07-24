@@ -37,10 +37,12 @@ public class Item {
     private List<ChildItem> childItems = new ArrayList<>();
 
     @CreatedDate
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
-    public Item(int price, ItemType itemType, String category) {
+    public Item(String itemName, int price, String photo, ItemType itemType, String category) {
+        this.itemName = itemName;
         this.price = price;
+        this.photo = photo;
         this.itemType = itemType;
         this.category = category;
     }
