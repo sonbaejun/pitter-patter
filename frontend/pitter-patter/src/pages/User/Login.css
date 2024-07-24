@@ -18,15 +18,6 @@
   box-shadow: 0px 11px 39.6px 0px rgba(0, 0, 0, 0.25);
 }
 
-.icon-x {
-  width: 2.5vw;
-  height: 2.5vw;
-  top: 1.5vw;
-  left: 1.5vw;
-  position: relative;
-  padding: 0;
-}
-
 .main-text {
   font-size: 2vw;
   font-weight: bold;
@@ -35,7 +26,7 @@
 }
 
 button#button-login {
-  width: 14vw;
+  width: 15vw;
   height: 2.5vw;
   margin-top: 2vw;
   border-radius: 6px;
@@ -43,21 +34,6 @@ button#button-login {
   background-color: #5a5a5a;
   color: var(--background);
   font-size: 1vw;
-}
-
-input[type="text"],
-input[type="password"] {
-  width: 13vw;
-  height: 2.5vw;
-  margin-top: 1vw;
-  border-radius: 6px;
-  border: 1px solid #d9d9d9;
-  padding-left: 0.8vw;
-  font-size: 1vw;
-}
-
-input::placeholder {
-  color: #b3b3b3;
 }
 
 .forgot-password {
@@ -76,17 +52,4 @@ input::placeholder {
 
 a.sign-up {
   font-weight: 700;
-}
-
-span.or {
-  font-size: 1vw;
-  font-weight: 700;
-  margin-top: 1.5vw;
-  margin-bottom: 1.5vw;
-}
-
-img.icon-social {
-  width: 2.5vw;
-  height: 2.5vw;
-  border-radius: 5px;
 }

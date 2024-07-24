@@ -42,7 +42,6 @@ function Login() {
               </a>
             </span>
           </div>
-
           <div className="layout-row center">
             <span className="or">
               또는
