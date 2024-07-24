@@ -1,6 +1,7 @@
 package com.pitpat.pitterpatter.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pitpat.pitterpatter.entity.enums.Gender;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -78,5 +79,16 @@ public class Child {
         this.points = points;
         this.physicalRecords = physicalRecords;
         this.playRecords = playRecords;
+    }
+
+    @PrePersist
+    @PreUpdate
+    private void trimNanoSeconds() {
+        if (createdAt != null) {
+            createdAt = createdAt.withNano(0);
+        }
+        if (updatedAt != null) {
+            updatedAt = updatedAt.withNano(0);
+        }
     }
 }
