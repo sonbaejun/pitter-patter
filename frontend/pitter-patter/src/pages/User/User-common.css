@@ -1,0 +1,61 @@
+@import "../../style/main.css";
+
+.layout-row {
+  flex-direction: row;
+  width: 100%;
+}
+
+.layout-column {
+  flex-direction: column;
+  height: 100%;
+}
+
+.icon-x {
+  width: 2.5vw;
+  height: 2.5vw;
+  top: 1.5vw;
+  left: 1.5vw;
+  position: relative;
+  padding: 0;
+}
+
+.center {
+  justify-content: center;
+  align-items: center;
+}
+
+.end {
+  justify-content: flex-end;
+}
+
+.evenly {
+  justify-content: space-evenly;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 14vw;
+  height: 2.5vw;
+  margin-top: 0.7vw;
+  border-radius: 6px;
+  border: 1px solid #d9d9d9;
+  padding-left: 0.8vw;
+  font-size: 1vw;
+}
+
+input::placeholder {
+  color: #b3b3b3;
+}
+
+span.or {
+  font-size: 1vw;
+  font-weight: 700;
+  margin-top: 1.5vw;
+  margin-bottom: 1.5vw;
+}
+
+img.icon-social {
+  width: 2.5vw;
+  height: 2.5vw;
+  border-radius: 5px;
+}
