@@ -24,15 +24,21 @@ public class ChildController {
 
     @GetMapping
     public ResponseEntity<List<ChildResponseDTO>> getChildrenList() {
-        Integer userId = 1; // Test용 데이터
+        // Test용 데이터
+        Integer userId = 1;
         List<ChildResponseDTO> childrenByUserId = childService.getChildrenByUserId(userId);
         return new ResponseEntity<>(childrenByUserId, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<Void> addChild(@RequestBody ChildRequestDTO childRequestDTO) {
-        System.out.println("childRequestDTO = " + childRequestDTO);
         childService.addChild(childRequestDTO);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/{childId}")
+    public ResponseEntity<ChildResponseDTO> getChildById(@PathVariable Long childId) {
+        ChildResponseDTO childResponseDTO = childService.getChildById(childId);
+        return new ResponseEntity<>(childResponseDTO, HttpStatus.OK);
     }
 }

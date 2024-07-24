@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -44,6 +45,22 @@ public class ChildServiceImpl implements ChildService {
         childRepository.save(child);
     }
 
+    @Override
+    public ChildResponseDTO getChildById(Long childId) {
+        return childRepository.findById(childId)
+                .map(child -> new ChildResponseDTO(
+                        child.getId(),
+                        child.getProfileImage(),
+                        child.getNickname(),
+                        child.getGender(),
+                        child.getBirth(),
+                        child.getPersonalRecord(),
+                        child.getPoint(),
+                        child.getCreatedAt(),
+                        child.getUpdatedAt()))
+                .orElseThrow(() -> new DataNotFoundException("Child not found with ID: " + childId));
+    }
+
     /**
      *
      * Exception 검증 메소드
@@ -64,4 +81,5 @@ public class ChildServiceImpl implements ChildService {
     public void userExceptionHandling(UserEntity user) {
 
     }
+
 }

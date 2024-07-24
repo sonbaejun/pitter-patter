@@ -9,7 +9,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
-@Builder
 public class ChildResponseDTO {
     @NotNull
     private Long id;
@@ -26,6 +25,19 @@ public class ChildResponseDTO {
     private LocalDateTime createdAt;
     @NotNull
     private LocalDateTime updatedAt;
+
+    @Builder
+    public ChildResponseDTO(Long id, String profileImage, String nickname, Gender gender, LocalDate birth, int personalRecord, int point, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.profileImage = profileImage;
+        this.nickname = nickname;
+        this.gender = gender;
+        this.birth = birth;
+        this.personalRecord = personalRecord;
+        this.point = point;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }
 
 
