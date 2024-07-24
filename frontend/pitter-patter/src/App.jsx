@@ -1,12 +1,11 @@
-import LandingPage from "./pages/Main/LandingPage"
-import NavBar from "./pages/Main/Header"
+import LandingPage from "./pages/LandingPage/LandingPage"
 
 function App() {
   
   // return 에 router 들어갈 거임
   return (
     <div className='App'>
-      <NavBar />
+      <LandingPage />
     </div>
   )
 }
