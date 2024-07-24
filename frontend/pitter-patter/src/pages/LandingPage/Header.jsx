@@ -1,6 +1,6 @@
-import "./Main.css"
 
-function NavBar() {
+
+function Header() {
     return (
         <div className="nav-bar">
             <div className="flex-"></div>

@@ -1,7 +1,5 @@
 import React from "react";
-import styled from "styled-components";
-import "./Main.css"
-import NavBar from "./Header";
+import 'LandingPage.css';
 
 function LandingPage() {
     return (

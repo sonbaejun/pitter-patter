@@ -1,5 +1,3 @@
-import "./Main.css"
-
 function NavBar() {
     return (
         <div></div>
