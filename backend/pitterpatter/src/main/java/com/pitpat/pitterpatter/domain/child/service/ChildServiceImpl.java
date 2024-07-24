@@ -58,7 +58,28 @@ public class ChildServiceImpl implements ChildService {
                         child.getPoint(),
                         child.getCreatedAt(),
                         child.getUpdatedAt()))
-                .orElseThrow(() -> new DataNotFoundException("Child not found with ID: " + childId));
+                .orElseThrow(() -> new DataNotFoundException("해당 데이터가 존재하지 않습니다."));
+    }
+
+    @Override
+    public void updateChild(Long childId, ChildRequestDTO childRequestDTO) {
+        // 예외 : child가 없는 경우
+        Child child = childRepository.findById(childId)
+                .orElseThrow(() -> new DataNotFoundException("해당 데이터가 존재하지 않습니다."));
+
+        // TODO : user가 없는 경우에 대한 예외처리 : user도메인 개발 완료 시 추가.(ForeignKeyConstraintException)
+        userExceptionHandling(child.getUser());
+
+        Child updatedChild = Child.builder()
+                .id(childId)
+                .profileImage(Optional.ofNullable(childRequestDTO.getProfileImage()).orElse(child.getProfileImage()))
+                .nickname(Optional.ofNullable(childRequestDTO.getNickname()).orElse(child.getNickname()))
+                .gender(Optional.ofNullable(childRequestDTO.getGender()).orElse(child.getGender()))
+                .birth(Optional.ofNullable(childRequestDTO.getBirth()).orElse(child.getBirth()))
+                .createdAt(child.getCreatedAt())
+                .build();
+
+        childRepository.save(updatedChild);
     }
 
     /**
@@ -66,12 +87,6 @@ public class ChildServiceImpl implements ChildService {
      * Exception 검증 메소드
      */
     public void childExceptionHandling(List<ChildResponseDTO> children) {
-        // TODO: 유저 토큰 기능 개발 완료 시 해당 예외처리 체크 필요.
-        // 토큰/세션 만료 등의 검사가 필요할 경우
-        // if (토큰 만료 조건) {
-        //     throw new TokenExpiredException("로그인 토큰/세션이 만료되었습니다.");
-        // }
-
         if (children.isEmpty()) {
             throw new DataNotFoundException("해당 데이터가 존재하지 않습니다.");
         }

@@ -19,4 +19,7 @@ public interface ChildService {
     void userExceptionHandling(UserEntity user);
 
     ChildResponseDTO getChildById(Long childId);
+
+    void updateChild(Long childId, ChildRequestDTO childRequestDTO);
+
 }

@@ -67,11 +67,13 @@ public class Child {
     private List<PlayRecord> playRecords = new ArrayList<>();
 
     @Builder
-    public Child(String profileImage, UserEntity user, String nickname, Gender gender, LocalDate birth, int personalRecord, int point, List<ChildItem> childItems, List<PointRecord> points, List<PhysicalRecord> physicalRecords, List<PlayRecord> playRecords) {
+    public Child(Long id, String profileImage, UserEntity user, String nickname, Gender gender, LocalDateTime createdAt, LocalDate birth, int personalRecord, int point, List<ChildItem> childItems, List<PointRecord> points, List<PhysicalRecord> physicalRecords, List<PlayRecord> playRecords) {
+        this.id = id;
         this.profileImage = profileImage;
         this.user = user;
         this.nickname = nickname;
         this.gender = gender;
+        this.createdAt = createdAt;
         this.birth = birth;
         this.personalRecord = personalRecord;
         this.point = point;

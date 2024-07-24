@@ -41,4 +41,10 @@ public class ChildController {
         ChildResponseDTO childResponseDTO = childService.getChildById(childId);
         return new ResponseEntity<>(childResponseDTO, HttpStatus.OK);
     }
+
+    @PatchMapping("/{childId}")
+    public ResponseEntity<Void> updateChild(@PathVariable Long childId, @RequestBody ChildRequestDTO childRequestDTO) {
+        childService.updateChild(childId, childRequestDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
