@@ -1,0 +1,8 @@
+* {
+    margin: 0;
+}
+
+[class*="layout-"] {
+    display: flex;
+}
+
