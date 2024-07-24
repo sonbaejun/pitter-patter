@@ -2,20 +2,25 @@ package com.pitpat.pitterpatter.entity;
 
 import com.pitpat.pitterpatter.entity.enums.SocialType;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "\"user\"")
 @Getter
 @NoArgsConstructor
 @Setter
-public class UserEntity {
+@Builder
+@AllArgsConstructor
+public class UserEntity implements UserDetails {
 
     @Id
     // MySQL의 Auto Increament와 같은 역할.
@@ -71,5 +76,21 @@ public class UserEntity {
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
+    }
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Builder.Default
+    private List<String> roles = new ArrayList<>();
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.roles.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public String getUsername() {
+        return "";
     }
 }
