@@ -1,9 +1,12 @@
 package com.pitpat.pitterpatter.domain.user.jwt;
 
 import com.pitpat.pitterpatter.domain.user.model.dto.JwtTokenDto;
+import com.pitpat.pitterpatter.domain.user.service.CustomUserDetails;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.io.DeserializationException;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,13 +40,8 @@ public class JwtTokenProvider {
 
     // User 정보를 가지고 AccessToken, RefreshToken을 생성하는 메서드
     public JwtTokenDto generateToken(Authentication authentication) {
-        // 권한 가져오기
-        String authorities = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(","));
-
         // Access Token 생성
-        String accessToken = generateAccessToken(authorities, authentication.getName());
+        String accessToken = generateAccessToken(authentication.getName());
 
         // Refresh Token 생성
         String refreshToken = generateRefreshToken(authentication.getName());
@@ -56,9 +54,8 @@ public class JwtTokenProvider {
     }
 
     // Access Token 생성
-    public String generateAccessToken(String authorities, String username) {
+    public String generateAccessToken(String username) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("auth", authorities);
         return createToken(claims, username, ACCESS_TOKEN_EXPIRATION_TIME);
     }
 
@@ -84,14 +81,8 @@ public class JwtTokenProvider {
         // Jwt 토큰 복호화
         Claims claims = parseClaims(accessToken);
 
-        if (claims.get("auth") == null) {
-            throw new RuntimeException("권한 정보가 없는 토큰입니다.");
-        }
-
-        // claim에서 권한 정보 가져오기
-        Collection<? extends GrantedAuthority> authorities = Arrays.stream(claims.get("auth").toString().split(","))
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+        // 빈 권한 리스트
+        Collection<? extends GrantedAuthority> authorities = Collections.emptyList();
 
         // UserDetails 객체를 만들어서 Authentication return
         // UserDetails: interface, User: UserDetails를 구현한 class
@@ -116,6 +107,8 @@ public class JwtTokenProvider {
             log.info("Unsupported JWT Token", e);
         } catch (IllegalArgumentException e) {
             log.info("JWT claims string is empty.", e);
+        } catch (Exception e) {
+            log.info("Internal server error.", e);
         }
         return false;
     }

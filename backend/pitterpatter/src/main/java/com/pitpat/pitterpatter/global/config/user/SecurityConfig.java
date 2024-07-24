@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         // GET 메서드에 대해서만 허용(일반유저 회원가입)
-                        .requestMatchers("/api/user/email", "/").permitAll()
+                        .requestMatchers("/api/user/email", "/api/user/test").permitAll()
                         // 이 밖에 모든 요청에 대해서 인증을 필요로 한다는 설정
                         .anyRequest().authenticated()
                 )

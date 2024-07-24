@@ -1,19 +1,13 @@
 package com.pitpat.pitterpatter.domain.user.service;
 
 import com.pitpat.pitterpatter.entity.UserEntity;
-import io.jsonwebtoken.security.Password;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collection;
 import java.util.Collections;
 
-@Builder
 public class CustomUserDetails implements UserDetails {
 
     private final UserEntity user;

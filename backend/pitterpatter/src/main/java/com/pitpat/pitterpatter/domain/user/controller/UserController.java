@@ -5,10 +5,10 @@ import com.pitpat.pitterpatter.domain.user.model.dto.LoginDto;
 import com.pitpat.pitterpatter.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.apache.catalina.security.SecurityUtil;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -30,8 +30,10 @@ public class UserController {
         return jwtToken;
     }
 
-    @PostMapping("/test")
+    // TODO: 테스트 완료되면 추후 지울 것
+    @GetMapping("/test")
     public String test() {
         return "success";
     }
 }
+
