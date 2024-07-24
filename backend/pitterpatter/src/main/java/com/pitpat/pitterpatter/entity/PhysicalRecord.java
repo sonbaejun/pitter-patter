@@ -1,6 +1,7 @@
 package com.pitpat.pitterpatter.entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -31,10 +32,10 @@ public class PhysicalRecord {
   private float weight;
 
   @CreatedDate
-  private LocalDate created_at;
+  private LocalDateTime created_at;
 
   @LastModifiedDate
-  private LocalDate updated_at;
+  private LocalDateTime updated_at;
 
   private float bmi;
 

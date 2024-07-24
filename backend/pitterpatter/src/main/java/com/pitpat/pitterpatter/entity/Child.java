@@ -1,5 +1,7 @@
 package com.pitpat.pitterpatter.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pitpat.pitterpatter.entity.enums.Gender;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -9,6 +11,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +31,8 @@ public class Child {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    private String profile_image;
+    @Column(name = "profile_image")
+    private String profileImage;
 
     private String nickname;
 
@@ -36,14 +40,17 @@ public class Child {
     private Gender gender;
 
     @CreatedDate
-    private LocalDate created_at;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
     @LastModifiedDate
-    private LocalDate updated_at;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     private LocalDate birth;
 
-    private int personal_record = 0;
+    @Column(name = "personal_record")
+    private int personalRecord = 0;
 
     private int point = 0;
 
@@ -60,16 +67,30 @@ public class Child {
     private List<PlayRecord> playRecords = new ArrayList<>();
 
     @Builder
-    public Child(String profile_image, String nickname, Gender gender, LocalDate birth, int personal_record, int point, List<ChildItem> childItems, List<PointRecord> points, List<PhysicalRecord> physicalRecords, List<PlayRecord> playRecords) {
-        this.profile_image = profile_image;
+    public Child(Long id, String profileImage, UserEntity user, String nickname, Gender gender, LocalDateTime createdAt, LocalDate birth, int personalRecord, int point, List<ChildItem> childItems, List<PointRecord> points, List<PhysicalRecord> physicalRecords, List<PlayRecord> playRecords) {
+        this.id = id;
+        this.profileImage = profileImage;
+        this.user = user;
         this.nickname = nickname;
         this.gender = gender;
+        this.createdAt = createdAt;
         this.birth = birth;
-        this.personal_record = personal_record;
+        this.personalRecord = personalRecord;
         this.point = point;
         this.childItems = childItems;
         this.points = points;
         this.physicalRecords = physicalRecords;
         this.playRecords = playRecords;
+    }
+
+    @PrePersist
+    @PreUpdate
+    private void trimNanoSeconds() {
+        if (createdAt != null) {
+            createdAt = createdAt.withNano(0);
+        }
+        if (updatedAt != null) {
+            updatedAt = updatedAt.withNano(0);
+        }
     }
 }
