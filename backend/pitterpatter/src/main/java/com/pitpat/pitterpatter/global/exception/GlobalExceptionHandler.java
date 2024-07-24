@@ -17,21 +17,21 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(DataNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleDataNotFoundException(DataNotFoundException ex) {
         Map<String, String> response = new HashMap<>();
-        response.put("msg", "해당 데이터가 존재하지 않습니다.");
+        response.put("msg", ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(TokenExpiredException.class)
     public ResponseEntity<Map<String, String>> handleTokenExpiredException(TokenExpiredException ex) {
         Map<String, String> response = new HashMap<>();
-        response.put("msg", "로그인 토큰/세션이 만료되었습니다.");
+        response.put("msg", ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(UserProblemException.class)
     public ResponseEntity<Map<String, String>> handleUserProblemException(UserProblemException ex) {
         Map<String, String> response = new HashMap<>();
-        response.put("msg", "잘못된 요청입니다.");
+        response.put("msg", ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
