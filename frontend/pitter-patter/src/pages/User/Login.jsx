@@ -1,5 +1,5 @@
 import "./Login.css";
-// get src/assets/img
+
 import X from "../../assets/img/logo/X.png";
 import kakao from "../../assets/img/logo/kakao.png";
 import naver from "../../assets/img/logo/naver.png"; 

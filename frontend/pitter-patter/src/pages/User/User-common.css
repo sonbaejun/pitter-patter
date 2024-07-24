@@ -1,0 +1,24 @@
+@import "../../style/main.css";
+
+.layout-row {
+  flex-direction: row;
+  width: 100%;
+}
+
+.layout-column {
+  flex-direction: column;
+  height: 100%;
+}
+
+.center {
+  justify-content: center;
+  align-items: center;
+}
+
+.end {
+  justify-content: flex-end;
+}
+
+.evenly {
+  justify-content: space-evenly;
+}
