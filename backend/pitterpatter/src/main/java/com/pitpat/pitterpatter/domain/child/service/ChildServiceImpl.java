@@ -82,6 +82,14 @@ public class ChildServiceImpl implements ChildService {
         childRepository.save(updatedChild);
     }
 
+    @Override
+    public void deleteChild(Long childId) {
+        Child child = childRepository.findById(childId)
+                .orElseThrow(() -> new DataNotFoundException("해당 데이터가 존재하지 않습니다."));
+
+        childRepository.delete(child);
+    }
+
     /**
      *
      * Exception 검증 메소드

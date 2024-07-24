@@ -47,4 +47,10 @@ public class ChildController {
         childService.updateChild(childId, childRequestDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @DeleteMapping("/{childId}")
+    public ResponseEntity<Void> deleteChild(@PathVariable Long childId) {
+        childService.deleteChild(childId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

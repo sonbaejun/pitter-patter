@@ -22,4 +22,5 @@ public interface ChildService {
 
     void updateChild(Long childId, ChildRequestDTO childRequestDTO);
 
+    void deleteChild(Long childId);
 }
