@@ -27,9 +27,9 @@ public class PhysicalRecord {
     @Column(name = "physical_record_id")
     private Long id;
 
-    private float height;
+    private Float height;
 
-    private float weight;
+    private Float weight;
 
     @CreatedDate
     private LocalDateTime createdAt;
@@ -37,14 +37,14 @@ public class PhysicalRecord {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    private float bmi;
+    private Float bmi;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "child_id")
     private Child child;
 
     @Builder
-    public PhysicalRecord(Long id, float height, float weight, LocalDateTime createdAt, float bmi, Child child) {
+    public PhysicalRecord(Long id, Float height, Float weight, LocalDateTime createdAt, Float bmi, Child child) {
       this.id = id;
       this.height = height;
       this.weight = weight;

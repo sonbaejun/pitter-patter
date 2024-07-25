@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
 @Builder
 public class ChildPhysicalRequestDTO {
 
-    private float height;
-    private float weight;
-    private float bmi;
+    private Float height;
+    private Float weight;
+    private Float bmi;
     @NotNull
     private LocalDateTime createdAt;
     @NotNull

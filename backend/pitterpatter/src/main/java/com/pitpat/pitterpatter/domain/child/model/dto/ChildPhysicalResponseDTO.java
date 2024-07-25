@@ -11,16 +11,16 @@ public class ChildPhysicalResponseDTO {
 
     @NotNull
     private Long id;
-    private float height;
-    private float weight;
-    private float bmi;
+    private Float height;
+    private Float weight;
+    private Float bmi;
     @NotNull
     private LocalDateTime createdAt;
     @NotNull
     private LocalDateTime updatedAt;
 
     @Builder
-    public ChildPhysicalResponseDTO(Long id, float height, float weight, float bmi, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public ChildPhysicalResponseDTO(Long id, Float height, Float weight, Float bmi, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.height = height;
         this.weight = weight;
