@@ -54,16 +54,16 @@ public class Child {
 
     private int point = 0;
 
-    @OneToMany(mappedBy = "child", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "child", fetch = FetchType.LAZY ,cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ChildItem> childItems = new ArrayList<>();
 
-    @OneToMany(mappedBy = "child", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "child", fetch = FetchType.LAZY ,cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PointRecord> points = new ArrayList<>();
 
-    @OneToMany(mappedBy = "child", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "child", fetch = FetchType.LAZY ,cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PhysicalRecord> physicalRecords = new ArrayList<>();
 
-    @OneToMany(mappedBy = "child", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "child", fetch = FetchType.LAZY ,cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PlayRecord> playRecords = new ArrayList<>();
 
     @Builder
