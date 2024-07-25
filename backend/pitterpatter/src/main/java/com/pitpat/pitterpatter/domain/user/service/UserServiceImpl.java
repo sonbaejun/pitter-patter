@@ -6,6 +6,7 @@ import com.pitpat.pitterpatter.domain.user.model.dto.SignUpDto;
 import com.pitpat.pitterpatter.domain.user.model.dto.UserDto;
 import com.pitpat.pitterpatter.domain.user.repository.UserRepository;
 import com.pitpat.pitterpatter.entity.UserEntity;
+import com.pitpat.pitterpatter.global.exception.DuplicateResourceException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -52,8 +53,11 @@ public class UserServiceImpl implements UserService{
     // email 유저 회원가입
     @Transactional
     @Override
-    public UserDto signUp(SignUpDto signUpDto) {
-        // 이미 이메일, 팀 이름 중복체크가 되었다고 가정
+    public UserDto emailSignUp(SignUpDto signUpDto) throws DuplicateResourceException{
+        // 백에서 다시 이메일, 팀 이름 중복체크
+        isEmailAlreadyInUse(signUpDto.getEmail());
+        isTeamNameAlreadyInUse(signUpDto.getTeamName());
+
         // Password 암호화
         String encodedPassword = passwordEncoder.encode(signUpDto.getPassword());
         String encoded2Fa = passwordEncoder.encode(signUpDto.getTwoFa());
@@ -64,7 +68,8 @@ public class UserServiceImpl implements UserService{
     @Override
     public boolean isEmailAlreadyInUse(String email) {
         if (userRepository.existsByEmail(email)) {
-            throw new IllegalArgumentException("이미 사용 중인 이메일 입니다.");
+            log.error("DuplicateResourceException: Duplicate email sign-up attempt with email: {}", email);
+            throw new DuplicateResourceException("This email address is already registered.");
         }
         return false;
     }
@@ -73,7 +78,8 @@ public class UserServiceImpl implements UserService{
     @Override
     public boolean isTeamNameAlreadyInUse(String teamName) {
         if (userRepository.existsByTeamName(teamName)) {
-            throw new IllegalArgumentException("이미 사용 중인 팀 이름 입니다.");
+            log.error("DuplicateResourceException: Duplicate team name sign-up attempt with team name: {}", teamName);
+            throw new DuplicateResourceException("This team name is already in use.");
         }
         return false;
     }

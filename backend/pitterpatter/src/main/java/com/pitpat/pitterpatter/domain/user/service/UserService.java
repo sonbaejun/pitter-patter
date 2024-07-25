@@ -15,7 +15,7 @@ public interface UserService {
 
     // ===================== 회원가입 관련 ========================
     // email 유저 회원가입
-    public UserDto signUp(SignUpDto signUpDto);
+    public UserDto emailSignUp(SignUpDto signUpDto);
     // email 유저 이메일 중복 체크
     public boolean isEmailAlreadyInUse(String email);
     // email, social 유저 팀 이름 중복 체크
