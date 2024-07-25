@@ -32,10 +32,10 @@ public class PhysicalRecord {
   private float weight;
 
   @CreatedDate
-  private LocalDateTime created_at;
+  private LocalDateTime createdAt;
 
   @LastModifiedDate
-  private LocalDateTime updated_at;
+  private LocalDateTime updatedAt;
 
   private float bmi;
 
@@ -44,9 +44,11 @@ public class PhysicalRecord {
   private Child child;
 
   @Builder
-  public PhysicalRecord(float height, float weight, float bmi, Child child) {
+  public PhysicalRecord(Long id, float height, float weight, LocalDateTime createdAt, float bmi, Child child) {
+    this.id = id;
     this.height = height;
     this.weight = weight;
+    this.createdAt = createdAt;
     this.bmi = bmi;
     this.child = child;
   }
