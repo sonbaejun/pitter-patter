@@ -1,11 +1,14 @@
 package com.pitpat.pitterpatter.domain.assets.repository.pointrecord;
 
+import com.pitpat.pitterpatter.domain.assets.model.dto.pointrecord.CreatePointRecordDto;
 import com.pitpat.pitterpatter.domain.assets.model.dto.pointrecord.PointRecordSearchCondition;
+import com.pitpat.pitterpatter.entity.Child;
 import com.pitpat.pitterpatter.entity.PointRecord;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,6 +16,7 @@ import static com.pitpat.pitterpatter.entity.QChild.child;
 import static com.pitpat.pitterpatter.entity.QPointRecord.pointRecord;
 
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class PointRecordRepositoryImpl implements PointRecordRepositoryCustom {
 
     private final EntityManager em;
@@ -37,6 +41,19 @@ public class PointRecordRepositoryImpl implements PointRecordRepositoryCustom {
                         minusAmount(condition.getAmount()),
                         sourceEq(condition.getSource()))
                 .fetch();
+    }
+
+    @Override
+    @Transactional
+    public PointRecord savePointRecord(CreatePointRecordDto createPointRecordDto) {
+        PointRecord pointRecord = new PointRecord(createPointRecordDto.getAmount(),
+                createPointRecordDto.getSource(),
+                createPointRecordDto.getChild());
+        em.persist(pointRecord);
+        Child child = em.find(Child.class, createPointRecordDto.getChild().getId());
+        child.addPoint(createPointRecordDto.getAmount());
+        child.getPoints().add(pointRecord);
+        return pointRecord;
     }
 
     private BooleanExpression plusAmount(Integer amount) {

@@ -58,6 +58,10 @@ public class Child {
     @NotNull
     private int point;
 
+    public void addPoint(int amount) {
+        this.point += amount;
+    }
+
     @OneToMany(fetch = FetchType.LAZY)
     @NotNull
     @Builder.Default

@@ -16,9 +16,8 @@ public class PointRecordController {
 
     private final PointRecordService pointRecordService;
 
-    // TODO : 포인트 변경 시 POINT RECORD와 CHILD POINT 동시 수정
     @PatchMapping("/point/{child_id}")
-    public PointRecord createPointRecord(@RequestBody CreatePointRecordDto createPointRecordDto) {
+    public FindPointRecordDto createPointRecord(@RequestBody CreatePointRecordDto createPointRecordDto) {
         return pointRecordService.createPointRecord(createPointRecordDto);
     }
 

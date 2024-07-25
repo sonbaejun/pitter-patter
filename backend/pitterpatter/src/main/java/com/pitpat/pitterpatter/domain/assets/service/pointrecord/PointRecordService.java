@@ -20,17 +20,16 @@ import java.util.stream.Collectors;
 public class PointRecordService {
 
     private final PointRecordRepository pointRecordRepository;
-    private final EntityManager em;
 
     // TODO : CHILD 포인트 변경 추가해줘야됌
     // 포인트 레코드 생성
     @Transactional
-    public PointRecord createPointRecord(CreatePointRecordDto createPointRecordDto) {
-        PointRecord pointRecord = new PointRecord(createPointRecordDto.getAmount(),
-                createPointRecordDto.getSource(),
-                createPointRecordDto.getChild());
-        // 포인트 +- 추가해야됨
-        return pointRecordRepository.save(pointRecord);
+    public FindPointRecordDto createPointRecord(CreatePointRecordDto createPointRecordDto) {
+        PointRecord pointRecord = pointRecordRepository.savePointRecord(createPointRecordDto);
+        return new FindPointRecordDto(
+                pointRecord.getAmount(),
+                pointRecord.getSource(),
+                pointRecord.getCreatedAt());
     }
 
     // 포인트 조회
