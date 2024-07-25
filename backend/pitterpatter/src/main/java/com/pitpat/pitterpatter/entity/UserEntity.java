@@ -52,12 +52,11 @@ public class UserEntity {
     @Column(name = "pw", length = 64)
     private String password;
 
-    @Column(name = "salt", length = 10)
-    private String salt;
-
+    // only social user
     @Column(name = "serial", length = 100)
     private String serial;
 
+    // only social user
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
     private SocialType type;
