@@ -19,6 +19,9 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom{
     public Map<Item, Child> findItemByItem(Long itemId, Long childId) {
         Item item = em.find(Item.class, itemId);
         Child child = em.find(Child.class, childId);
+        if (item == null || child == null) {
+            return null;
+        }
         Map<Item, Child> itemChildMap = new HashMap<>();
         itemChildMap.put(item, child);
         return itemChildMap;

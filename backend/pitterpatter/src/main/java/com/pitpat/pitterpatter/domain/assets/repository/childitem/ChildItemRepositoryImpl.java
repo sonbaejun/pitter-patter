@@ -18,13 +18,13 @@ public class ChildItemRepositoryImpl implements ChildItemRepositoryCustom {
 
     // 아이템 구매
     @Override
-    public boolean buyItem(Long childId, Long itemId) {
+    public Boolean buyItem(Long childId, Long itemId) {
         // Child와 Item 엔티티 조회
         Child child = em.find(Child.class, childId);
         Item item = em.find(Item.class, itemId);
 
         if (child == null || item == null) {
-            return false;
+            return null;
         }
 
         ChildItem childItem = new ChildItem(child, item);
@@ -82,13 +82,16 @@ public class ChildItemRepositoryImpl implements ChildItemRepositoryCustom {
 
     // 아이템 탈착
     @Override
-    public boolean toggleItem(Long childId, Long itemId) {
+    public Boolean toggleItem(Long childId, Long itemId) {
         ChildItem childItemToToggle = queryFactory
                 .selectFrom(childItem)
                 .where(childItem.child.id.eq(childId),
                         childItem.item.id.eq(itemId),
                         childItem.isOn.eq(true))
                 .fetchOne();
+        if (childItemToToggle == null) {
+            return null;
+        }
         childItemToToggle.toggle();
         return childItemToToggle.isOn();
     }

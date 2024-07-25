@@ -2,34 +2,44 @@ package com.pitpat.pitterpatter.domain.assets.controller.item;
 
 import com.pitpat.pitterpatter.domain.assets.model.dto.item.FindItemDto;
 import com.pitpat.pitterpatter.domain.assets.model.dto.item.FindItemListDto;
-import com.pitpat.pitterpatter.domain.assets.repository.item.ItemRepository;
 import com.pitpat.pitterpatter.domain.assets.service.item.ItemService;
-import com.pitpat.pitterpatter.entity.Item;
+import com.pitpat.pitterpatter.global.exception.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.processing.Find;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/assets")
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class ItemController {
 
     private final ItemService itemService;
 
     @GetMapping("/item")
-    public List<FindItemListDto> findAll() {
-        return itemService.findAll();
+    public ResponseEntity<?> findAll() {
+        try {
+            List<FindItemListDto> items = itemService.findAll();
+            return ResponseEntity.ok(items);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("아이템 리스트 조회 실패: " + e.getMessage());
+        }
     }
 
     @GetMapping("/item/{item_id}")
-    public FindItemDto findItemByItemId(
+    public ResponseEntity<?> findItemByItemId(
             @PathVariable("item_id") Long itemId,
             @RequestParam("child_id") Long childId) {
-        return itemService.findItemByItemId(itemId, childId);
+        try {
+            FindItemDto item = itemService.findItemByItemId(itemId, childId);
+            return ResponseEntity.ok(item);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("아이템 조회 실패: " + e.getMessage());
+        }
     }
 }

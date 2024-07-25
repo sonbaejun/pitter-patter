@@ -9,6 +9,7 @@ import com.pitpat.pitterpatter.entity.ChildItem;
 import com.pitpat.pitterpatter.entity.Item;
 import com.pitpat.pitterpatter.entity.QChildItem;
 import com.pitpat.pitterpatter.entity.enums.ItemType;
+import com.pitpat.pitterpatter.global.exception.EntityNotFoundException;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -52,6 +53,9 @@ public class ItemService {
             @PathVariable("item_id") Long itemId,
             @RequestParam("child_id") Long childId) {
         Map<Item, Child> itemByItem = itemRepository.findItemByItem(itemId, childId);
+        if (itemByItem.isEmpty()) {
+            throw new EntityNotFoundException("해당 자녀가 아이템을 보유하고 있지 않습니다.");
+        }
         Item item = itemByItem.keySet().iterator().next();
         Child child = itemByItem.get(item);
         ChildItem childItem1 = queryFactory

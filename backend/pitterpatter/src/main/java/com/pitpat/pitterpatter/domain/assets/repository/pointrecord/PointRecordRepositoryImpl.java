@@ -4,6 +4,7 @@ import com.pitpat.pitterpatter.domain.assets.model.dto.pointrecord.CreatePointRe
 import com.pitpat.pitterpatter.domain.assets.model.dto.pointrecord.PointRecordSearchCondition;
 import com.pitpat.pitterpatter.entity.Child;
 import com.pitpat.pitterpatter.entity.PointRecord;
+import com.pitpat.pitterpatter.global.exception.EntityNotFoundException;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
@@ -25,11 +26,15 @@ public class PointRecordRepositoryImpl implements PointRecordRepositoryCustom {
 
     @Override
     public Integer findPointByChild(Long childId) {
-        return queryFactory
+        Integer point = queryFactory
                 .select(child.point)
                 .from(child)
                 .where(child.id.eq(childId))
                 .fetchOne();
+        if (point == null) {
+            return null;
+        }
+        return point;
     }
 
     @Override
@@ -46,6 +51,9 @@ public class PointRecordRepositoryImpl implements PointRecordRepositoryCustom {
     @Override
     @Transactional
     public PointRecord savePointRecord(CreatePointRecordDto createPointRecordDto) {
+        if (createPointRecordDto.getChild() == null) {
+            return null;
+        }
         PointRecord pointRecord = new PointRecord(createPointRecordDto.getAmount(),
                 createPointRecordDto.getSource(),
                 createPointRecordDto.getChild());
