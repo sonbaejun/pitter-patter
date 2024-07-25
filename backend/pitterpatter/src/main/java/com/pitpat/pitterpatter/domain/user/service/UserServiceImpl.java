@@ -16,8 +16,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -53,14 +51,16 @@ public class UserServiceImpl implements UserService{
     // email 유저 회원가입
     @Transactional
     @Override
-    public UserDto emailSignUp(SignUpDto signUpDto) throws DuplicateResourceException{
-        // 백에서 다시 이메일, 팀 이름 중복체크
+    public UserDto emailSignUp(SignUpDto signUpDto) throws DuplicateResourceException {
+        // 백에서 이메일, 팀이름 중복체크를 한번 더 해준다
         isEmailAlreadyInUse(signUpDto.getEmail());
         isTeamNameAlreadyInUse(signUpDto.getTeamName());
 
         // Password 암호화
         String encodedPassword = passwordEncoder.encode(signUpDto.getPassword());
         String encoded2Fa = passwordEncoder.encode(signUpDto.getTwoFa());
+
+        // DB에 유저 정보를 저장하고 UserDto로 변환하여 return
         return UserDto.toDto(userRepository.save(signUpDto.toEntity(encodedPassword, encoded2Fa)));
     }
 
@@ -82,5 +82,13 @@ public class UserServiceImpl implements UserService{
             throw new DuplicateResourceException("This team name is already in use.");
         }
         return false;
+    }
+
+    // ====================== 조회, 변경, 탈퇴 ==========================
+    // 회원정보 조회
+    public UserDto getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .map(UserDto::toDto) // UserEntity를 UserDto로 변경
+                .orElseThrow(() -> new IllegalArgumentException("User not found with email: " + email));
     }
 }

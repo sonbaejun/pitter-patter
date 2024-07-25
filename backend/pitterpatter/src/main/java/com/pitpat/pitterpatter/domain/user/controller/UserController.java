@@ -4,13 +4,18 @@ import com.pitpat.pitterpatter.domain.user.model.dto.JwtTokenDto;
 import com.pitpat.pitterpatter.domain.user.model.dto.LoginDto;
 import com.pitpat.pitterpatter.domain.user.model.dto.SignUpDto;
 import com.pitpat.pitterpatter.domain.user.model.dto.UserDto;
+import com.pitpat.pitterpatter.domain.user.service.UserDetailsImpl;
 import com.pitpat.pitterpatter.domain.user.service.UserService;
 import com.pitpat.pitterpatter.global.exception.DuplicateResourceException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @Slf4j
 @RestController
@@ -70,5 +75,18 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
     }
+
+
+
+    // ====================== 조회, 변경, 탈퇴 ==========================
+    // 회원정보 조회
+    @GetMapping
+    public ResponseEntity<UserDto> getUserByEmail(@AuthenticationPrincipal UserDetails userDetails) {
+        // TODO: exception 처리
+        String email = userDetails.getUsername();
+        UserDto userDto = userService.getUserByEmail(email);
+        return ResponseEntity.ok(userDto);
+    }
+
 }
 

@@ -8,12 +8,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
-public class CustomUserDetails implements UserDetails {
-
+public class UserDetailsImpl implements UserDetails {
+    // TODO: UserEntity를 직접적으로 사용하는 것은 위험하므로, UserDto로 바꾸기
     private final UserEntity user;
 
     // 생성자
-    public CustomUserDetails(UserEntity user) {
+    public UserDetailsImpl(UserEntity user) {
         this.user = user;
     }
 

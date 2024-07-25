@@ -3,9 +3,6 @@ package com.pitpat.pitterpatter.domain.user.service;
 import com.pitpat.pitterpatter.domain.user.model.dto.JwtTokenDto;
 import com.pitpat.pitterpatter.domain.user.model.dto.SignUpDto;
 import com.pitpat.pitterpatter.domain.user.model.dto.UserDto;
-import com.pitpat.pitterpatter.entity.UserEntity;
-
-import java.util.Optional;
 
 public interface UserService {
 
@@ -20,4 +17,8 @@ public interface UserService {
     public boolean isEmailAlreadyInUse(String email);
     // email, social 유저 팀 이름 중복 체크
     public boolean isTeamNameAlreadyInUse(String teamName);
+
+    // ====================== 조회, 변경, 탈퇴 ==========================
+    // 회원정보 조회
+    public UserDto getUserByEmail(String email);
 }

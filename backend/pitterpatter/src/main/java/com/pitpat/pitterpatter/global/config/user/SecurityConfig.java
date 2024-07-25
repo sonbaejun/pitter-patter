@@ -36,12 +36,12 @@ public class SecurityConfig {
                         .requestMatchers("/api/user/email",
                                 "/api/user/test",
                                 "/api/user/login/email",
-                                "api/user/check/email",
-                                "api/user/check/teamname").permitAll()
+                                "/api/user/check/email",
+                                "/api/user/check/teamname").permitAll()
                         // 이 밖에 모든 요청에 대해서 인증을 필요로 한다는 설정
                         .anyRequest().authenticated()
                 )
-                // JWT 인증을 위하여 직접 구현한 필터를 UsernamePasswordAuthenticationFilter 전에 실행
+                // 필터 추가 및 순서 설정
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

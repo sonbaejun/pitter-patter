@@ -28,7 +28,8 @@ public class UserDto {
     private String serial;
     // only social user
     private SocialType type;
-    private List<Child> children;
+    // TODO: children을 넣을 필요가 있나?
+//    private List<Child> children;
 
     public static UserDto toDto(UserEntity user) {
         return UserDto.builder()
@@ -42,7 +43,7 @@ public class UserDto {
                 .password(user.getPassword())
                 .serial(user.getSerial())
                 .type(user.getType())
-                .children(user.getChildren())
+//                .children(user.getChildren())
                 .build();
     }
 
@@ -58,7 +59,7 @@ public class UserDto {
                 .password(password)
                 .serial(serial)
                 .type(type)
-                .children(children)
+//                .children(children)
                 .build();
     }
 }

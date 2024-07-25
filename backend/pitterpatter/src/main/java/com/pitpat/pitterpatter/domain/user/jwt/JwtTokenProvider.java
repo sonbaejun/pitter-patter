@@ -1,25 +1,20 @@
 package com.pitpat.pitterpatter.domain.user.jwt;
 
 import com.pitpat.pitterpatter.domain.user.model.dto.JwtTokenDto;
-import com.pitpat.pitterpatter.domain.user.service.CustomUserDetails;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.io.DeserializationException;
 import io.jsonwebtoken.security.Keys;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -34,7 +29,7 @@ public class JwtTokenProvider {
     public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
         // secretkey를 base64로 디코딩
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-        // hmac에서 사용할 수 있는 Key 객체로 변환(hmac 위변조 방지 인증코드)
+        // hmac에서 사용할 수 있는 Key 객체로 변환
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
@@ -54,25 +49,33 @@ public class JwtTokenProvider {
     }
 
     // Access Token 생성
-    public String generateAccessToken(String username) {
+    public String generateAccessToken(String email) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, username, ACCESS_TOKEN_EXPIRATION_TIME);
+        return createToken(claims, email, ACCESS_TOKEN_EXPIRATION_TIME);
     }
 
     // Refresh Token 생성
-    public String generateRefreshToken(String username) {
+    public String generateRefreshToken(String email) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, username, REFRESH_TOKEN_EXPIRATION_TIME);
+        return createToken(claims, email, REFRESH_TOKEN_EXPIRATION_TIME);
     }
 
-    // 파라미터로 부터 토큰을 생성
+    // 전달받은 파라미터로부터 토큰 생성
     private String createToken(Map<String, Object> claims, String subject, long expirationTime) {
+        String ISSUER = "com.pitpat.pitterpatter";
+        long nowMillis = System.currentTimeMillis();
+        Date now = new Date(nowMillis);
+        Date exp = new Date(nowMillis + expirationTime);
+
         return Jwts.builder()
-                .claims(claims)
-                .subject(subject)
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + expirationTime))
-                .signWith(key, SignatureAlgorithm.HS512)
+                .claims(claims) // 기타 정보
+                .subject(subject) // 사용자 식별자
+                .issuer(ISSUER) // 토큰 발행자
+                .notBefore(now) // 활성화 시간
+                .issuedAt(now) // 발행 시간
+                .expiration(exp) // 만료 시간
+                .setId(UUID.randomUUID().toString()) // 고유 식별자
+                .signWith(key, SignatureAlgorithm.HS512) // 서명 알고리즘 및 키
                 .compact();
     }
 

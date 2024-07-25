@@ -4,8 +4,9 @@ import com.pitpat.pitterpatter.entity.Child;
 import com.pitpat.pitterpatter.entity.UserEntity;
 import com.pitpat.pitterpatter.entity.enums.SocialType;
 import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
 
-import java.time.LocalDateTime;
+import java.time.temporal.TemporalAccessor;
 import java.util.List;
 
 @Builder
@@ -17,25 +18,26 @@ public class SignUpDto {
 
     private String twoFa;
     private Boolean isSocial;
-    private String teamName;
     private String email;
     private String password;
+    private String teamName;
     // only social user
     private String serial;
     // only social user
     private SocialType type;
-    private List<Child> children;
+    // TODO: children 정보를 가지고 있을 필요가 있나?
+//    private List<Child> children;
 
     public UserEntity toEntity(String encodedPassword, String encoded2Fa) {
         return UserEntity.builder()
                 .twoFa(encoded2Fa)
                 .isSocial(isSocial)
-                .teamName(teamName)
                 .email(email)
                 .password(encodedPassword)
+                .teamName(teamName)
                 .serial(serial)
                 .type(type)
-                .children(children)
+//                .children(children)
                 .build();
     }
 }
