@@ -1,10 +1,8 @@
 package com.pitpat.pitterpatter.domain.assets.controller.childitem;
 
-import com.pitpat.pitterpatter.domain.assets.model.dto.item.FindItemDto;
-import com.pitpat.pitterpatter.domain.assets.repository.childitem.ChildItemRepository;
+import com.pitpat.pitterpatter.domain.assets.model.dto.childitem.FindChildItemDto;
 import com.pitpat.pitterpatter.domain.assets.service.childitem.ChildItemService;
 import com.pitpat.pitterpatter.entity.ChildItem;
-import com.pitpat.pitterpatter.entity.Item;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -22,13 +20,13 @@ public class ChildItemController {
 
     // 소유 아이템 리스트 조회
     @GetMapping("/{child_id}")
-    public List<FindItemDto> haveItems(@PathVariable("child_id") Long childId) {
+    public List<FindChildItemDto> haveItems(@PathVariable("child_id") Long childId) {
         return childItemService.haveItems(childId);
     }
 
     // 착용 아이템 리스트 조회
     @GetMapping("/{child_id}/on")
-    public List<FindItemDto> isOnItems(@PathVariable("child_id") Long childId) {
+    public List<FindChildItemDto> isOnItems(@PathVariable("child_id") Long childId) {
         return childItemService.isOnItems(childId);
     }
 

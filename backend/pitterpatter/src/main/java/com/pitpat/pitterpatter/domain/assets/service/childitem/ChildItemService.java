@@ -1,5 +1,6 @@
 package com.pitpat.pitterpatter.domain.assets.service.childitem;
 
+import com.pitpat.pitterpatter.domain.assets.model.dto.childitem.FindChildItemDto;
 import com.pitpat.pitterpatter.domain.assets.model.dto.item.FindItemDto;
 import com.pitpat.pitterpatter.domain.assets.repository.childitem.ChildItemRepository;
 import com.pitpat.pitterpatter.entity.ChildItem;
@@ -19,10 +20,11 @@ public class ChildItemService {
     private final ChildItemRepository childItemRepository;
 
     // 소유 아이템 리스트 조회
-    public List<FindItemDto> haveItems(@PathVariable("child_id") Long childId) {
+    public List<FindChildItemDto> haveItems(@PathVariable("child_id") Long childId) {
         List<ChildItem> childItems = childItemRepository.haveItems(childId);
         return childItems.stream()
-                .map(childItem -> new FindItemDto(
+                .map(childItem -> new FindChildItemDto(
+                        childItem.getId(),
                         childItem.getItem().getItemName(),
                         childItem.getItem().getPhoto(),
                         childItem.getItem().getItemType(),
@@ -31,10 +33,11 @@ public class ChildItemService {
     }
 
     // 착용 아이템 리스트 조회
-    public List<FindItemDto> isOnItems(@PathVariable("child_id") Long childId) {
+    public List<FindChildItemDto> isOnItems(@PathVariable("child_id") Long childId) {
         List<ChildItem> childItems = childItemRepository.isOnItems(childId);
         return childItems.stream()
-                .map(childItem -> new FindItemDto(
+                .map(childItem -> new FindChildItemDto(
+                        childItem.getId(),
                         childItem.getItem().getItemName(),
                         childItem.getItem().getPhoto(),
                         childItem.getItem().getItemType(),
