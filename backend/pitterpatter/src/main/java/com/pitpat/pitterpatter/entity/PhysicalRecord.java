@@ -22,34 +22,45 @@ import lombok.NoArgsConstructor;
 @Table(name = "physical_record")
 public class PhysicalRecord {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "physical_record_id")
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "physical_record_id")
+    private Long id;
 
-  private float height;
+    private float height;
 
-  private float weight;
+    private float weight;
 
-  @CreatedDate
-  private LocalDateTime createdAt;
+    @CreatedDate
+    private LocalDateTime createdAt;
 
-  @LastModifiedDate
-  private LocalDateTime updatedAt;
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
 
-  private float bmi;
+    private float bmi;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "child_id")
-  private Child child;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "child_id")
+    private Child child;
 
-  @Builder
-  public PhysicalRecord(Long id, float height, float weight, LocalDateTime createdAt, float bmi, Child child) {
-    this.id = id;
-    this.height = height;
-    this.weight = weight;
-    this.createdAt = createdAt;
-    this.bmi = bmi;
-    this.child = child;
-  }
+    @Builder
+    public PhysicalRecord(Long id, float height, float weight, LocalDateTime createdAt, float bmi, Child child) {
+      this.id = id;
+      this.height = height;
+      this.weight = weight;
+      this.createdAt = createdAt;
+      this.bmi = bmi;
+      this.child = child;
+    }
+
+    @PrePersist
+    @PreUpdate
+    private void trimNanoSeconds() {
+      if (createdAt != null) {
+        createdAt = createdAt.withNano(0);
+      }
+      if (updatedAt != null) {
+        updatedAt = updatedAt.withNano(0);
+      }
+    }
 }
