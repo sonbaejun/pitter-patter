@@ -63,9 +63,8 @@ public class ChildServiceImpl implements ChildService {
 
     @Override
     public void updateChild(Long childId, ChildRequestDTO childRequestDTO) {
-        // 예외 : child가 없는 경우
-        Child child = childRepository.findById(childId)
-                .orElseThrow(() -> new DataNotFoundException("해당 데이터가 존재하지 않습니다."));
+        // 자녀 존재여부 검증 후 존재한다면 Child 할당
+        Child child = validateChildExists(childId);
 
         // TODO : user가 없는 경우에 대한 예외처리 : user도메인 개발 완료 시 추가.(ForeignKeyConstraintException)
         userExceptionHandling(child.getUser());
@@ -84,8 +83,8 @@ public class ChildServiceImpl implements ChildService {
 
     @Override
     public void deleteChild(Long childId) {
-        Child child = childRepository.findById(childId)
-                .orElseThrow(() -> new DataNotFoundException("해당 데이터가 존재하지 않습니다."));
+        // 자녀 존재여부 검증 후 존재한다면 Child 할당
+        Child child = validateChildExists(childId);
 
         childRepository.delete(child);
     }
@@ -105,4 +104,9 @@ public class ChildServiceImpl implements ChildService {
 
     }
 
+    // 해당 ID의 자녀가 존재하는지 검증
+    private Child validateChildExists(Long childId) {
+        return childRepository.findById(childId)
+                .orElseThrow(() -> new DataNotFoundException("해당 자녀가 존재하지 않습니다."));
+    }
 }
