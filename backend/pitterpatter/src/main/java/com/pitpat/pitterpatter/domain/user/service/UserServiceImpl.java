@@ -61,6 +61,7 @@ public class UserServiceImpl implements UserService{
     }
 
     // email 유저 이메일 중복 체크
+    @Override
     public boolean isEmailAlreadyInUse(String email) {
         if (userRepository.existsByEmail(email)) {
             throw new IllegalArgumentException("이미 사용 중인 이메일 입니다.");
@@ -69,6 +70,7 @@ public class UserServiceImpl implements UserService{
     }
 
     // email, social 유저 팀 이름 중복 체크
+    @Override
     public boolean isTeamNameAlreadyInUse(String teamName) {
         if (userRepository.existsByTeamName(teamName)) {
             throw new IllegalArgumentException("이미 사용 중인 팀 이름 입니다.");
