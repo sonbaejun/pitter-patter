@@ -43,7 +43,7 @@ public class ChildPhysicalServiceImpl implements ChildPhysicalService{
         Child child = validateChildExists(childId);
 
         // 키, 몸무게 기준으로 BMI 계산
-        float caculatedBMI = calculateBMI(childPhysicalRequestDTO.getHeight(), childPhysicalRequestDTO.getWeight());
+        Float caculatedBMI = calculateBMI(childPhysicalRequestDTO.getHeight(), childPhysicalRequestDTO.getWeight());
 
         PhysicalRecord physicalRecord = PhysicalRecord.builder()
                 .child(child)
@@ -55,12 +55,39 @@ public class ChildPhysicalServiceImpl implements ChildPhysicalService{
         childPhysicalRepository.save(physicalRecord);
     }
 
+    @Override
+    public void updateChild(Long childId, ChildPhysicalUpdateDTO childPhysicalUpdateDTO) {
+        // 자녀 존재여부 검증
+        validateChildExists(childId);
+
+        PhysicalRecord physicalRecord = childPhysicalRepository.findById(childPhysicalUpdateDTO.getId())
+                .orElseThrow(() -> new DataNotFoundException("신체정보 테이블이 존재하지 않습니다."));
+
+        // 키와 몸무게 업데이트(수정 사항이 아니라면, 기존 데이터 할당)
+        Float newHeight = Optional.ofNullable(childPhysicalUpdateDTO.getHeight()).orElse(physicalRecord.getHeight());
+        Float newWeight = Optional.ofNullable(childPhysicalUpdateDTO.getWeight()).orElse(physicalRecord.getWeight());
+
+        // BMI 계산
+        Float caculatedBMI = calculateBMI(newHeight, newWeight);
+
+        PhysicalRecord updatePhysicalRecord = PhysicalRecord.builder()
+                .id(childPhysicalUpdateDTO.getId())
+                .height(Optional.ofNullable(childPhysicalUpdateDTO.getHeight()).orElse(physicalRecord.getHeight()))
+                .weight(Optional.ofNullable(childPhysicalUpdateDTO.getWeight()).orElse(physicalRecord.getWeight()))
+                .bmi(caculatedBMI)
+                .createdAt(physicalRecord.getCreatedAt())
+                .child(physicalRecord.getChild())
+                .build();
+
+        childPhysicalRepository.save(updatePhysicalRecord);
+    }
+
     // BMI 계산
-    private float calculateBMI(float height, float weight) {
+    private Float calculateBMI(Float height, Float weight) {
         if (height <= 0 || weight <= 0) {
             throw new IllegalArgumentException("키 또는 몸무게가 음수입니다.");
         }
-        float caculatedBMI = weight / (height * height);
+        Float caculatedBMI = weight / (height * height);
         caculatedBMI *= 10000;
         caculatedBMI = Math.round(caculatedBMI * 100) / 100.0f;
         return caculatedBMI;

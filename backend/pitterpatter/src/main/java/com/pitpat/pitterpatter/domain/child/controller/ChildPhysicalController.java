@@ -27,4 +27,10 @@ public class ChildPhysicalController {
         childPhysicalService.addPhysicalRecord(childId, childPhysicalRequestDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PatchMapping("/{childId}/physical")
+    public ResponseEntity<Void> updatePhysicalRecord(@PathVariable Long childId, @RequestBody ChildPhysicalUpdateDTO childPhysicalUpdateDTO) {
+        childPhysicalService.updateChild(childId, childPhysicalUpdateDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
