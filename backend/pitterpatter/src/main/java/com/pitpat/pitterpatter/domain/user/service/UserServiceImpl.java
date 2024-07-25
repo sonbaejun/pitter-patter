@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService{
     @Transactional
     @Override
     public UserDto signUp(SignUpDto signUpDto) {
-        // 이미 이메일 중복체크가 되었다고 가정
+        // 이미 이메일, 팀 이름 중복체크가 되었다고 가정
         // Password 암호화
         String encodedPassword = passwordEncoder.encode(signUpDto.getPassword());
         String encoded2Fa = passwordEncoder.encode(signUpDto.getTwoFa());
@@ -64,6 +64,14 @@ public class UserServiceImpl implements UserService{
     public boolean isEmailAlreadyInUse(String email) {
         if (userRepository.existsByEmail(email)) {
             throw new IllegalArgumentException("이미 사용 중인 이메일 입니다.");
+        }
+        return false;
+    }
+
+    // email, social 유저 팀 이름 중복 체크
+    public boolean isTeamNameAlreadyInUse(String teamName) {
+        if (userRepository.existsByTeamName(teamName)) {
+            throw new IllegalArgumentException("이미 사용 중인 팀 이름 입니다.");
         }
         return false;
     }

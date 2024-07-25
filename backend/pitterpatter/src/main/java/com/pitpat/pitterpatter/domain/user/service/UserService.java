@@ -18,4 +18,6 @@ public interface UserService {
     public UserDto signUp(SignUpDto signUpDto);
     // email 유저 이메일 중복 체크
     public boolean isEmailAlreadyInUse(String email);
+    // email, social 유저 팀 이름 중복 체크
+    public boolean isTeamNameAlreadyInUse(String teamName);
 }
