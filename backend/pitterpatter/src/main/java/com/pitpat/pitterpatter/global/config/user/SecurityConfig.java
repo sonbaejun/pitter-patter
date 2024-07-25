@@ -35,7 +35,9 @@ public class SecurityConfig {
                         // GET 메서드에 대해서만 허용(일반유저 회원가입)
                         .requestMatchers("/api/user/email",
                                 "/api/user/test",
-                                "/api/user/login/email").permitAll()
+                                "/api/user/login/email",
+                                "api/user/check/email",
+                                "api/user/check/teamname").permitAll()
                         // 이 밖에 모든 요청에 대해서 인증을 필요로 한다는 설정
                         .anyRequest().authenticated()
                 )
