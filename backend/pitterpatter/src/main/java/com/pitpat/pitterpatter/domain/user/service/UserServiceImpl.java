@@ -2,14 +2,22 @@ package com.pitpat.pitterpatter.domain.user.service;
 
 import com.pitpat.pitterpatter.domain.user.jwt.JwtTokenProvider;
 import com.pitpat.pitterpatter.domain.user.model.dto.JwtTokenDto;
+import com.pitpat.pitterpatter.domain.user.model.dto.SignUpDto;
+import com.pitpat.pitterpatter.domain.user.model.dto.UserDto;
 import com.pitpat.pitterpatter.domain.user.repository.UserRepository;
+import com.pitpat.pitterpatter.entity.UserEntity;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +26,7 @@ public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
+    private final PasswordEncoder passwordEncoder;
 
     // ============================= 로그인 관련 ================================
     // email 유저 로그인
@@ -37,5 +46,25 @@ public class UserServiceImpl implements UserService{
         JwtTokenDto jwtToken = jwtTokenProvider.generateToken(authentication);
 
         return jwtToken;
+    }
+
+    // ============================= 회원가입 관련 ================================
+    // email 유저 회원가입
+    @Transactional
+    @Override
+    public UserDto signUp(SignUpDto signUpDto) {
+        // 이미 이메일 중복체크가 되었다고 가정
+        // Password 암호화
+        String encodedPassword = passwordEncoder.encode(signUpDto.getPassword());
+        String encoded2Fa = passwordEncoder.encode(signUpDto.getTwoFa());
+        return UserDto.toDto(userRepository.save(signUpDto.toEntity(encodedPassword, encoded2Fa)));
+    }
+
+    // email 유저 이메일 중복 체크
+    public boolean isEmailAlreadyInUse(String email) {
+        if (userRepository.existsByEmail(email)) {
+            throw new IllegalArgumentException("이미 사용 중인 이메일 입니다.");
+        }
+        return false;
     }
 }

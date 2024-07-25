@@ -30,7 +30,7 @@ public class UserDto {
     private SocialType type;
     private List<Child> children;
 
-    public UserDto toDto(UserEntity user) {
+    public static UserDto toDto(UserEntity user) {
         return UserDto.builder()
                 .userId(user.getUserId())
                 .twoFa(user.getTwoFa())
