@@ -18,10 +18,11 @@ import java.util.List;
 public class Item {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "item_id")
     private Long id;
 
+    @Column(name = "item_name")
     private String itemName;
 
     private int price;
@@ -29,6 +30,7 @@ public class Item {
     private String photo;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "item_type")
     private ItemType itemType;
 
     private String category;
@@ -37,6 +39,7 @@ public class Item {
     private List<ChildItem> childItems = new ArrayList<>();
 
     @CreatedDate
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     public Item(String itemName, int price, String photo, ItemType itemType, String category) {

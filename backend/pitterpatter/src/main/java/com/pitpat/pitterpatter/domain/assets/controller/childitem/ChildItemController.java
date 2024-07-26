@@ -4,9 +4,9 @@ import com.pitpat.pitterpatter.domain.assets.model.dto.childitem.FindChildItemDt
 import com.pitpat.pitterpatter.domain.assets.service.childitem.ChildItemService;
 import com.pitpat.pitterpatter.entity.ChildItem;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/assets/item-property")
 @RequiredArgsConstructor
+@Slf4j
 public class ChildItemController {
 
     public final ChildItemService childItemService;
@@ -44,7 +45,7 @@ public class ChildItemController {
     @DeleteMapping("/{child_id}/{item_id}")
     public ResponseEntity<?> throwOutItem(@PathVariable("child_id") Long childId, @PathVariable("item_id") Long itemId) {
         try {
-            ChildItem deletedItem = childItemService.throwOutItem(childId, itemId);
+            Boolean deletedItem = childItemService.throwOutItem(childId, itemId);
             if (deletedItem == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("아이템을 찾을 수 없거나 삭제할 수 없습니다");
             }

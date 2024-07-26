@@ -12,7 +12,7 @@ public interface ChildItemRepositoryCustom {
     // 착용 아이템 리스트 조회
     List<ChildItem> isOnItems(Long childId);
     // 아이템 버리기
-    ChildItem throwOutItem(Long childId, Long itemId);
+    Boolean throwOutItem(Long childId, Long itemId);
     // 아이템 탈착
     Boolean toggleItem(Long childId, Long itemId);
 }

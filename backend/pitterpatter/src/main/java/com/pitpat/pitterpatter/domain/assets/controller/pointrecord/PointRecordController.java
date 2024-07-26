@@ -5,6 +5,7 @@ import com.pitpat.pitterpatter.domain.assets.model.dto.pointrecord.FindPointReco
 import com.pitpat.pitterpatter.domain.assets.service.pointrecord.PointRecordService;
 import com.pitpat.pitterpatter.global.exception.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/assets")
 @RequiredArgsConstructor
+@Slf4j
 public class PointRecordController {
 
     private final PointRecordService pointRecordService;
@@ -21,6 +23,7 @@ public class PointRecordController {
     @PatchMapping("/point/{child_id}")
     public ResponseEntity<?> createPointRecord(@RequestBody CreatePointRecordDto createPointRecordDto) {
         try {
+            log.info("createDto = {}", createPointRecordDto);
             FindPointRecordDto createdRecord = pointRecordService.createPointRecord(createPointRecordDto);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdRecord);
         } catch (EntityNotFoundException e) {

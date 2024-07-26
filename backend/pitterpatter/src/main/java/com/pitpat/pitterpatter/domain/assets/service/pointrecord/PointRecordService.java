@@ -6,7 +6,6 @@ import com.pitpat.pitterpatter.domain.assets.model.dto.pointrecord.PointRecordSe
 import com.pitpat.pitterpatter.domain.assets.repository.pointrecord.PointRecordRepository;
 import com.pitpat.pitterpatter.entity.PointRecord;
 import com.pitpat.pitterpatter.global.exception.EntityNotFoundException;
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,7 +50,7 @@ public class PointRecordService {
             throw new EntityNotFoundException("요청한 데이터가 존재하지 않습니다.");
         }
         return pointRecords.stream()
-                .map((PointRecord pr) ->
+                .map(pr ->
                         new FindPointRecordDto(
                                 pr.getAmount(),
                                 pr.getSource(),
@@ -66,7 +65,7 @@ public class PointRecordService {
             throw new EntityNotFoundException("만족하는 검색 조건이 없습니다.");
         }
         return pointRecords.stream()
-                .map((PointRecord pr) ->
+                .map(pr ->
                         new FindPointRecordDto(
                                 pr.getAmount(),
                                 pr.getSource(),

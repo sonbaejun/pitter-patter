@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class PointRecord {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "point_record_id")
     private Long id;
 
@@ -29,6 +29,7 @@ public class PointRecord {
     private Child child;
 
     @CreatedDate
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     public PointRecord(int amount, String source, Child child) {

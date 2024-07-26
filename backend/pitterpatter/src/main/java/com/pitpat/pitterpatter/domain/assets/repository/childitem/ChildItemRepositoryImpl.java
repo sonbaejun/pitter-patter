@@ -1,5 +1,6 @@
 package com.pitpat.pitterpatter.domain.assets.repository.childitem;
 
+import com.pitpat.pitterpatter.domain.assets.model.dto.pointrecord.CreatePointRecordDto;
 import com.pitpat.pitterpatter.entity.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
@@ -27,8 +28,27 @@ public class ChildItemRepositoryImpl implements ChildItemRepositoryCustom {
             return null;
         }
 
-        ChildItem childItem = new ChildItem(child, item);
+        // 아이템이 이미 소유되었는지 확인
+        boolean alreadyOwned = child.getChildItem().stream()
+                .anyMatch(childItem -> childItem.getItem().getId().equals(itemId));
 
+        if (alreadyOwned) {
+            return false;
+        }
+
+        // 포인트 기록 생성
+        CreatePointRecordDto createPointRecordDto = new CreatePointRecordDto(-item.getPrice(), item.getItemName() + " 구매", childId);
+        PointRecord pointRecord = new PointRecord(createPointRecordDto.getAmount(),
+                createPointRecordDto.getSource(),
+                child);
+        em.persist(pointRecord);
+
+        // 아이템 구매 이력 추가 및 포인트 수정
+        child.addPoint(createPointRecordDto.getAmount());
+        child.getPoints().add(pointRecord);
+
+        // 소유 아이템 리스트 추가
+        ChildItem childItem = new ChildItem(child, item);
         child.getChildItem().add(childItem);
         item.getChildItems().add(childItem);
 
@@ -59,7 +79,7 @@ public class ChildItemRepositoryImpl implements ChildItemRepositoryCustom {
 
     // 아이템 버리기
     @Override
-    public ChildItem throwOutItem(Long childId, Long itemId) {
+    public Boolean throwOutItem(Long childId, Long itemId) {
         ChildItem childItemToDelete = queryFactory
                 .selectFrom(childItem)
                 .where(childItem.child.id.eq(childId)
@@ -77,7 +97,7 @@ public class ChildItemRepositoryImpl implements ChildItemRepositoryCustom {
 
         em.remove(childItemToDelete);
 
-        return childItemToDelete;
+        return true;
     }
 
     // 아이템 탈착
@@ -86,8 +106,7 @@ public class ChildItemRepositoryImpl implements ChildItemRepositoryCustom {
         ChildItem childItemToToggle = queryFactory
                 .selectFrom(childItem)
                 .where(childItem.child.id.eq(childId),
-                        childItem.item.id.eq(itemId),
-                        childItem.isOn.eq(true))
+                        childItem.item.id.eq(itemId))
                 .fetchOne();
         if (childItemToToggle == null) {
             return null;

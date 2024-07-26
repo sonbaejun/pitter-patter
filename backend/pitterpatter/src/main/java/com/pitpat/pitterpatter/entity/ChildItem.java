@@ -11,7 +11,7 @@ import lombok.Setter;
 public class ChildItem {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "child_item_id")
     private Long id;
 
@@ -23,7 +23,7 @@ public class ChildItem {
     @JoinColumn(name = "item_id")
     private Item item;
 
-
+    @Column(name = "is_on")
     private boolean isOn = false;
 
     public void toggle() {
