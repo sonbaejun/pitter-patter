@@ -5,7 +5,6 @@ import com.pitpat.pitterpatter.domain.user.model.dto.JwtTokenDto;
 import com.pitpat.pitterpatter.domain.user.model.dto.SignUpDto;
 import com.pitpat.pitterpatter.domain.user.model.dto.UserDto;
 import com.pitpat.pitterpatter.domain.user.repository.UserRepository;
-import com.pitpat.pitterpatter.entity.UserEntity;
 import com.pitpat.pitterpatter.global.exception.DuplicateResourceException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +14,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +25,8 @@ public class UserServiceImpl implements UserService{
     private final PasswordEncoder passwordEncoder;
 
     // ============================= 로그인 관련 ================================
+    // TODO: 로그인은 추후 Spring Security Filter로 구현하기
+    // (인증 로직을 보안 필터로 분리하여 책임을 명확히. 보안 필터를 통해 모든 요청을 통합적으로 처리할 수 있어, 보안 취약점을 최소화.)
     // email 유저 로그인
     @Transactional
     @Override
