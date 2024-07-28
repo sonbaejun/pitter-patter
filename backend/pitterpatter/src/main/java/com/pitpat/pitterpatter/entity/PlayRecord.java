@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "play_record")
 public class PlayRecord {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "play_record_id")
@@ -24,7 +25,7 @@ public class PlayRecord {
     private int score;
 
     @CreatedDate
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     private int playtime;
 
@@ -35,10 +36,20 @@ public class PlayRecord {
     private Child child;
 
     @Builder
-    public PlayRecord(int score, int playtime, int burnedCalorie, Child child) {
+    public PlayRecord(Long id, int score, LocalDateTime createdAt, int playtime, int burnedCalorie, Child child) {
+        this.id = id;
         this.score = score;
+        this.createdAt = createdAt;
         this.playtime = playtime;
         this.burnedCalorie = burnedCalorie;
         this.child = child;
+    }
+
+    @PrePersist
+    @PreUpdate
+    private void trimNanoSeconds() {
+        if (createdAt != null) {
+            createdAt = createdAt.withNano(0);
+        }
     }
 }
