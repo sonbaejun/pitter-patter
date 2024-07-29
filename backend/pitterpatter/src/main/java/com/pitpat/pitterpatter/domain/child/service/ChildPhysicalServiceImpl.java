@@ -45,13 +45,7 @@ public class ChildPhysicalServiceImpl implements ChildPhysicalService{
         // 키, 몸무게 기준으로 BMI 계산
         Float caculatedBMI = calculateBMI(childPhysicalRequestDTO.getHeight(), childPhysicalRequestDTO.getWeight());
 
-        PhysicalRecord physicalRecord = PhysicalRecord.builder()
-                .child(child)
-                .height(childPhysicalRequestDTO.getHeight())
-                .weight(childPhysicalRequestDTO.getWeight())
-                .bmi(caculatedBMI)
-                .build();
-
+        PhysicalRecord physicalRecord = childPhysicalRequestDTO.toAddEntity(child, childPhysicalRequestDTO, caculatedBMI);
         childPhysicalRepository.save(physicalRecord);
     }
 
@@ -70,15 +64,7 @@ public class ChildPhysicalServiceImpl implements ChildPhysicalService{
         // BMI 계산
         Float caculatedBMI = calculateBMI(newHeight, newWeight);
 
-        PhysicalRecord updatePhysicalRecord = PhysicalRecord.builder()
-                .id(childPhysicalUpdateDTO.getId())
-                .height(Optional.ofNullable(childPhysicalUpdateDTO.getHeight()).orElse(physicalRecord.getHeight()))
-                .weight(Optional.ofNullable(childPhysicalUpdateDTO.getWeight()).orElse(physicalRecord.getWeight()))
-                .bmi(caculatedBMI)
-                .createdAt(physicalRecord.getCreatedAt())
-                .child(physicalRecord.getChild())
-                .build();
-
+        PhysicalRecord updatePhysicalRecord = childPhysicalUpdateDTO.toUpdateEntity(childPhysicalUpdateDTO, physicalRecord, caculatedBMI);
         childPhysicalRepository.save(updatePhysicalRecord);
     }
 
