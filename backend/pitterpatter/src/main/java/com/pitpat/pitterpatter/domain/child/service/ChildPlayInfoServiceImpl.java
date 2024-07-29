@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,11 +33,16 @@ public class ChildPlayInfoServiceImpl implements ChildPlayInfoService {
     }
 
     private List<ChildPlayInfoResponseDTO> convertPlayRecordToChildPlayInfoResponseDTO(List<PlayRecord> playRecords) {
-        return playRecords.stream()
+        List<ChildPlayInfoResponseDTO> result = playRecords.stream()
                 .collect(Collectors.groupingBy(pr -> pr.getCreatedAt().toLocalDate(), Collectors.summingLong(PlayRecord::getPlaytime)))
                 .entrySet().stream()
                 .map(entry -> new ChildPlayInfoResponseDTO(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
+
+        // 레포지토리에서 역순으로 리턴해주기 때문에, List를 뒤집어서 반환(날짜순 정렬)
+        Collections.reverse(result);
+
+        return result;
     }
 
     private void validateNotEmptyList(List<PlayRecord> playRecordsByDateRange) {
