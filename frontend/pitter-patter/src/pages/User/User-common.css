@@ -32,6 +32,14 @@
   justify-content: space-evenly;
 }
 
+.around {
+  justify-content: space-around;
+}
+
+.between {
+  justify-content: space-between;
+}
+
 input[type="text"],
 input[type="password"] {
   width: 14vw;
