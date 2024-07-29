@@ -34,14 +34,7 @@ public class ChildServiceImpl implements ChildService {
         // TODO : user가 없는 경우에 대한 예외처리 : user도메인 개발 완료 시 추가.(ForeignKeyConstraintException)
         userExceptionHandling(user);
 
-        Child child = Child.builder()
-                .profileImage(childRequestDTO.getProfileImage())
-                .user(user)
-                .nickname(childRequestDTO.getNickname())
-                .gender(childRequestDTO.getGender())
-                .birth(childRequestDTO.getBirth())
-                .build();
-
+        Child child = childRequestDTO.toAddEntity(user, childRequestDTO);
         childRepository.save(child);
     }
 
@@ -69,14 +62,7 @@ public class ChildServiceImpl implements ChildService {
         // TODO : user가 없는 경우에 대한 예외처리 : user도메인 개발 완료 시 추가.(ForeignKeyConstraintException)
         userExceptionHandling(child.getUser());
 
-        Child updatedChild = Child.builder()
-                .id(childId)
-                .profileImage(Optional.ofNullable(childRequestDTO.getProfileImage()).orElse(child.getProfileImage()))
-                .nickname(Optional.ofNullable(childRequestDTO.getNickname()).orElse(child.getNickname()))
-                .gender(Optional.ofNullable(childRequestDTO.getGender()).orElse(child.getGender()))
-                .birth(Optional.ofNullable(childRequestDTO.getBirth()).orElse(child.getBirth()))
-                .createdAt(child.getCreatedAt())
-                .build();
+        Child updatedChild = childRequestDTO.toUpdateEntity(child, childRequestDTO);
 
         childRepository.save(updatedChild);
     }
