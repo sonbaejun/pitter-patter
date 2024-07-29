@@ -26,8 +26,12 @@ public class ChildPlayInfoServiceImpl implements ChildPlayInfoService {
         validateChildExists(childId);
         List<PlayRecord> playRecords = childPlayInfoRepository.findPlayRecordsByDateRangeWithFetchJoin(childId, startDate, endDate);
         validateNotEmptyList(playRecords);
+        List<ChildPlayInfoResponseDTO> childPlayInfoResponseDTOList = convertPlayRecordToChildPlayInfoResponseDTO(playRecords);
 
-        // Convert PlayRecord to ChildPlayInfoResponseDTO and sum playtime by date
+        return childPlayInfoResponseDTOList;
+    }
+
+    private List<ChildPlayInfoResponseDTO> convertPlayRecordToChildPlayInfoResponseDTO(List<PlayRecord> playRecords) {
         return playRecords.stream()
                 .collect(Collectors.groupingBy(pr -> pr.getCreatedAt().toLocalDate(), Collectors.summingLong(PlayRecord::getPlaytime)))
                 .entrySet().stream()
