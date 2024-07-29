@@ -1,5 +1,6 @@
 package com.pitpat.pitterpatter.domain.assets.repository.childitem;
 
+import com.pitpat.pitterpatter.domain.assets.model.dto.childitem.PurchaseResult;
 import com.pitpat.pitterpatter.domain.assets.model.dto.pointrecord.CreatePointRecordDto;
 import com.pitpat.pitterpatter.entity.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -19,13 +20,13 @@ public class ChildItemRepositoryImpl implements ChildItemRepositoryCustom {
 
     // 아이템 구매
     @Override
-    public Boolean buyItem(Long childId, Long itemId) {
+    public PurchaseResult buyItem(Long childId, Long itemId) {
         // Child와 Item 엔티티 조회
         Child child = em.find(Child.class, childId);
         Item item = em.find(Item.class, itemId);
 
         if (child == null || item == null) {
-            return null;
+            return PurchaseResult.ITEM_NOT_FOUND;
         }
 
         // 아이템이 이미 소유되었는지 확인
@@ -33,7 +34,12 @@ public class ChildItemRepositoryImpl implements ChildItemRepositoryCustom {
                 .anyMatch(childItem -> childItem.getItem().getId().equals(itemId));
 
         if (alreadyOwned) {
-            return false;
+            return PurchaseResult.ALREADY_OWNED;
+        }
+
+        // 자녀가 가지고 있는 포인트 확인
+        if (child.getPoint() < item.getPrice()) {
+            return PurchaseResult.INSUFFICIENT_POINTS;
         }
 
         // 포인트 기록 생성
@@ -54,7 +60,7 @@ public class ChildItemRepositoryImpl implements ChildItemRepositoryCustom {
 
         em.persist(childItem);
 
-        return true;
+        return PurchaseResult.SUCCESS;
     }
 
     // 소유 아이템 리스트 조회

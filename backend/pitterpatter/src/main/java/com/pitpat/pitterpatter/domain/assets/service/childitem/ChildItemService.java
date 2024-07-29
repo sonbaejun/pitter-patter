@@ -1,11 +1,13 @@
 package com.pitpat.pitterpatter.domain.assets.service.childitem;
 
 import com.pitpat.pitterpatter.domain.assets.model.dto.childitem.FindChildItemDto;
+import com.pitpat.pitterpatter.domain.assets.model.dto.childitem.PurchaseResult;
 import com.pitpat.pitterpatter.domain.assets.model.dto.item.FindItemDto;
 import com.pitpat.pitterpatter.domain.assets.repository.childitem.ChildItemRepository;
 import com.pitpat.pitterpatter.entity.ChildItem;
 import com.pitpat.pitterpatter.global.exception.AlreadyHaveItemException;
 import com.pitpat.pitterpatter.global.exception.EntityNotFoundException;
+import com.pitpat.pitterpatter.global.exception.InsufficientPointsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,14 +67,20 @@ public class ChildItemService {
 
     // 아이템 구매
     @Transactional
-    public Boolean buyItem(@PathVariable("child_id") Long childId, @PathVariable("item_id") Long itemId) {
-        Boolean buyItem = childItemRepository.buyItem(childId, itemId);
-        if (buyItem == null) {
-            throw new EntityNotFoundException("해당 자녀가 없거나 아이템이 없습니다.");
-        } else if (!buyItem) {
-            throw new AlreadyHaveItemException("해당 아이템은 구매한 아이템입니다.");
+    public PurchaseResult buyItem(@PathVariable("child_id") Long childId, @PathVariable("item_id") Long itemId) {
+        PurchaseResult result = childItemRepository.buyItem(childId, itemId);
+        switch (result) {
+            case ITEM_NOT_FOUND:
+                throw new EntityNotFoundException("해당 자녀가 없거나 아이템이 없습니다.");
+            case ALREADY_OWNED:
+                throw new AlreadyHaveItemException("해당 아이템은 구매한 아이템입니다.");
+            case INSUFFICIENT_POINTS:
+                throw new InsufficientPointsException("포인트가 부족합니다.");
+            case SUCCESS:
+                return result;
+            default:
+                throw new IllegalStateException("Unexpected value: " + result);
         }
-        return buyItem;
     }
 
     // 아이템 탈착

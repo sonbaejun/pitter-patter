@@ -1,5 +1,6 @@
 package com.pitpat.pitterpatter.domain.assets.model.dto.item;
 
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -12,5 +13,6 @@ public class FindItemDto {
     private String itemName;
     private int price;
     private String photo;
-    private boolean is_on;
+    @Column(name = "is_on")
+    private boolean isOn;
 }

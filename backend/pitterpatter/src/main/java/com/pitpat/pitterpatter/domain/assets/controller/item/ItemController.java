@@ -4,6 +4,7 @@ import com.pitpat.pitterpatter.domain.assets.model.dto.item.FindItemDto;
 import com.pitpat.pitterpatter.domain.assets.model.dto.item.FindItemListDto;
 import com.pitpat.pitterpatter.domain.assets.service.item.ItemService;
 import com.pitpat.pitterpatter.global.exception.EntityNotFoundException;
+import com.pitpat.pitterpatter.global.exception.ErrorResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,8 @@ public class ItemController {
             List<FindItemListDto> items = itemService.findAll();
             return ResponseEntity.ok(items);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("아이템 리스트 조회 실패: " + e.getMessage());
+            ErrorResponseDto errorResponse = new ErrorResponseDto("아이템 리스트 조회 실패: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
 
@@ -36,9 +38,11 @@ public class ItemController {
             FindItemDto item = itemService.findItemByItemId(itemId, childId);
             return ResponseEntity.ok(item);
         } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            ErrorResponseDto errorResponse = new ErrorResponseDto(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("아이템 조회 실패: " + e.getMessage());
+            ErrorResponseDto errorResponse = new ErrorResponseDto("아이템 조회 실패: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
 }
