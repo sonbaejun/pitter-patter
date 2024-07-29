@@ -9,7 +9,11 @@ import com.pitpat.pitterpatter.global.exception.exceptions.DataNotFoundException
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -68,6 +72,28 @@ public class ChildPhysicalServiceImpl implements ChildPhysicalService{
         childPhysicalRepository.save(updatePhysicalRecord);
     }
 
+    @Override
+    public List<BMIResponseDTO> getBMIHistory(Long childId, LocalDateTime start, LocalDateTime end) {
+
+        validateChildExists(childId);
+
+        List<PhysicalRecord> physicalRecords = childPhysicalRepository.findPhysicalRecordsByDateRangeWithFetchJoin(childId, start, end);
+        validateNotEmptyList(physicalRecords);
+        List<BMIResponseDTO> result = convertPhysicalRecordToBMIResponseDTO(physicalRecords);
+        return result;
+    }
+
+    private static List<BMIResponseDTO> convertPhysicalRecordToBMIResponseDTO(List<PhysicalRecord> physicalRecords) {
+        List<BMIResponseDTO> result = new ArrayList<>();
+        physicalRecords.forEach(pr -> {
+            result.add(BMIResponseDTO.builder()
+                    .bmi(pr.getBmi())
+                    .updatedAt(pr.getUpdatedAt())
+                    .build());
+        });
+        return result;
+    }
+
     // BMI 계산
     private Float calculateBMI(Float height, Float weight) {
         if (height <= 0 || weight <= 0) {
@@ -77,6 +103,12 @@ public class ChildPhysicalServiceImpl implements ChildPhysicalService{
         caculatedBMI *= 10000;
         caculatedBMI = Math.round(caculatedBMI * 100) / 100.0f;
         return caculatedBMI;
+    }
+
+    private <T> void validateNotEmptyList(List<T> list) {
+        if(list.isEmpty()) {
+            throw new DataNotFoundException("해당 데이터가 존재하지 않습니다.(리스트의 길이가 0)");
+        }
     }
 
     // 해당 ID의 자녀가 존재하는지 검증

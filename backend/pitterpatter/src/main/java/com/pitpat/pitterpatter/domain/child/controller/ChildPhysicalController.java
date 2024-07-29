@@ -9,6 +9,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/child")
 @RequiredArgsConstructor
@@ -32,5 +38,19 @@ public class ChildPhysicalController {
     public ResponseEntity<Void> updatePhysicalRecord(@PathVariable Long childId, @RequestBody ChildPhysicalUpdateDTO childPhysicalUpdateDTO) {
         childPhysicalService.updateChild(childId, childPhysicalUpdateDTO);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/{childId}/bmi/{startDate}/{endDate}")
+    public ResponseEntity<List<BMIResponseDTO>> getBMIHistory(@PathVariable Long childId,
+                                                        @PathVariable LocalDate startDate,
+                                                        @PathVariable LocalDate endDate) {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime start = LocalDateTime.parse(startDate + " 00:00:00", formatter);
+        LocalDateTime end = LocalDateTime.parse(endDate + " 23:59:59", formatter);
+
+        List<BMIResponseDTO> bmiHistory = childPhysicalService.getBMIHistory(childId, start, end);
+
+        return new ResponseEntity<>(bmiHistory, HttpStatus.OK);
     }
 }
