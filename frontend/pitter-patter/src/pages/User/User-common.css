@@ -3,11 +3,13 @@
 .layout-row {
   flex-direction: row;
   width: 100%;
+  height: fit-content;
 }
 
 .layout-column {
   flex-direction: column;
   height: 100%;
+  width: fit-content;
 }
 
 .icon-x {

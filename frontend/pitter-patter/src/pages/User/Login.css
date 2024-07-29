@@ -52,4 +52,5 @@ button#button-login {
 
 a.sign-up {
   font-weight: 700;
+  display: inline;
 }
