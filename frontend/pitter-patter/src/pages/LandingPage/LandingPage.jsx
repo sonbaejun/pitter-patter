@@ -7,9 +7,9 @@ import InputH from "../../components/modal/InputH.jsx";
 function LandingPage() {
     return (
         <div>
-            {/* <Header /> */}
+            <Header />
             {/* <NavBar /> */}
-            <InputH />
+            {/* <InputH /> */}
         </div>
     );
 }
