@@ -77,10 +77,10 @@ public class Child {
         this.birth = birth;
         this.personalRecord = personalRecord;
         this.point = point;
-        this.childItems = childItems;
-        this.points = points;
-        this.physicalRecords = physicalRecords;
-        this.playRecords = playRecords;
+        this.childItems = childItems != null ? childItems : new ArrayList<>();
+        this.points = points != null ? points : new ArrayList<>();
+        this.physicalRecords = physicalRecords != null ? physicalRecords : new ArrayList<>();
+        this.playRecords = playRecords != null ? playRecords : new ArrayList<>();
     }
 
     @PrePersist
