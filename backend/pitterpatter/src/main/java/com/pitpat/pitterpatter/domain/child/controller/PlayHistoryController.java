@@ -1,6 +1,8 @@
 package com.pitpat.pitterpatter.domain.child.controller;
 
+import com.pitpat.pitterpatter.domain.child.model.dto.ChildRankDTO;
 import com.pitpat.pitterpatter.domain.child.service.PlayHistoryService;
+import com.pitpat.pitterpatter.entity.PlayRecord;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,5 +25,11 @@ public class PlayHistoryController {
     public ResponseEntity<List<LocalDate>> getCurrentMonthPlayData(@PathVariable Long childId) {
         List<LocalDate> currentMonthPlayData = playHistoryService.getCurrentMonthPlayData(childId);
         return new ResponseEntity<>(currentMonthPlayData, HttpStatus.OK);
+    }
+
+    @GetMapping("/{childId}/play-record/ranking")
+    public ResponseEntity<List<ChildRankDTO>> getRanking(@PathVariable Long childId) {
+        List<ChildRankDTO> rankings = playHistoryService.getRanking(childId);
+        return new ResponseEntity<>(rankings, HttpStatus.OK);
     }
 }

@@ -1,6 +1,7 @@
 package com.pitpat.pitterpatter.entity;
 
 
+import com.pitpat.pitterpatter.domain.child.model.dto.ChildRankDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -15,6 +16,17 @@ import java.time.LocalDateTime;
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "play_record")
+@SqlResultSetMapping(
+        name = "ChildRankMapping",
+        classes = @ConstructorResult(
+                targetClass = ChildRankDTO.class,
+                columns = {
+                        @ColumnResult(name = "childId", type = Long.class),
+                        @ColumnResult(name = "maxScore", type = Integer.class),
+                        @ColumnResult(name = "ranking", type = Integer.class)
+                }
+        )
+)
 public class PlayRecord {
 
     @Id

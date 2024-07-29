@@ -1,8 +1,10 @@
 package com.pitpat.pitterpatter.domain.child.service;
 
+import com.pitpat.pitterpatter.domain.child.model.dto.ChildRankDTO;
 import com.pitpat.pitterpatter.domain.child.repository.ChildRepository;
 import com.pitpat.pitterpatter.domain.child.repository.PlayHistoryRepository;
 import com.pitpat.pitterpatter.entity.Child;
+import com.pitpat.pitterpatter.entity.PlayRecord;
 import com.pitpat.pitterpatter.global.exception.exceptions.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,14 @@ public class PlayHistoryServiceImpl implements PlayHistoryService {
                 .map(LocalDateTime::toLocalDate)
                 .distinct()
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ChildRankDTO> getRanking(Long childId) {
+        validateChildExists(childId);
+        List<ChildRankDTO> rankings = playHistoryRepository.findRankings(childId);
+        validateNotEmptyList(rankings);
+        return rankings;
     }
 
     private <T> void validateNotEmptyList(List<T> list) {
