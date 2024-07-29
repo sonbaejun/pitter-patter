@@ -18,6 +18,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,12 +45,10 @@ public class ChildPlayInfoServiceImpl implements ChildPlayInfoService {
         ChildMaxScoreDTO maxScore = getMaxScore(childId);
         List<DailyScoreSumDTO> dailyScoreSumDTOList = getDailyScoreSum(childId, start, end);
 
-        ChildScoreResponseDTO childScoreResponseDTO = ChildScoreResponseDTO.builder()
+        return ChildScoreResponseDTO.builder()
                 .maxScore(maxScore)
                 .dailyScoreSum(dailyScoreSumDTOList)
                 .build();
-
-        return childScoreResponseDTO;
     }
 
     @Override
@@ -89,7 +89,6 @@ public class ChildPlayInfoServiceImpl implements ChildPlayInfoService {
 
         // 레포지토리에서 역순으로 리턴해주기 때문에, List를 뒤집어서 반환(날짜순 정렬)
         Collections.reverse(result);
-
         return result;
     }
 
@@ -102,7 +101,6 @@ public class ChildPlayInfoServiceImpl implements ChildPlayInfoService {
 
         // 레포지토리에서 역순으로 리턴해주기 때문에, List를 뒤집어서 반환(날짜순 정렬)
         Collections.reverse(result);
-
         return result;
     }
 

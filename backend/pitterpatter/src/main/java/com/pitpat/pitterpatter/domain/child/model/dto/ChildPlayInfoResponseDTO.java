@@ -21,7 +21,8 @@ public class ChildPlayInfoResponseDTO {
     @NotNull
     private Long playtime;
 
-        public ChildPlayInfoResponseDTO(LocalDate createdAt, Long playtime) {
+    @Builder
+    public ChildPlayInfoResponseDTO(LocalDate createdAt, Long playtime) {
         this.createdAt = createdAt;
         this.playtime = playtime;
     }
