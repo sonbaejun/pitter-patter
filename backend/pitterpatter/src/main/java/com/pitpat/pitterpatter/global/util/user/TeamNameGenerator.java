@@ -1,6 +1,7 @@
 package com.pitpat.pitterpatter.global.util.user;
 
-import org.springframework.stereotype.Component;
+import com.pitpat.pitterpatter.domain.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
 import java.util.List;

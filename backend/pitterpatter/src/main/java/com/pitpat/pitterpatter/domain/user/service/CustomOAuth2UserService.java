@@ -44,45 +44,38 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         String serial = oAuth2Response.getProvider() + oAuth2Response.getProviderId();
         Optional<UserEntity> existingUser = userRepository.findBySerial(serial);
-        int userId = -1;
-        // DB에 유저가 존재하지 않는 경우 새로 entity를 만들어서 DB에 저장 후 userId 값을 꺼내옴
+        UserDto userDto = null;
+
+        // DB에 유저가 존재하지 않는 경우 새로 entity를 만들어서 DB에 저장
         if (!existingUser.isPresent()) {
-            userId = saveUserEntity(oAuth2Response, serial);
+            userDto = saveUserEntity(oAuth2Response, serial);
         }
-        // DB에 유저가 존재하는 경우 userId 값을 꺼내옴
+        // DB에 유저가 존재하는 경우
         else {
-            userId = existingUser.get().getUserId();
+            userDto = UserDto.toDto(existingUser.get());
         }
 
-        return makeCustomOAuth2UserDto(oAuth2Response, serial, userId);
+        return new CustomOAuth2UserDto(userDto);
     }
 
-    private int saveUserEntity(OAuth2Response oAuth2Response, String serial) {
+    private UserDto saveUserEntity(OAuth2Response oAuth2Response, String serial) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         UserEntity userEntity = new UserEntity();
 
         userEntity.setIsSocial(true);
         // 임시 2차 비밀번호 저장
         userEntity.setTwoFa(passwordEncoder.encode(random2Fa));
-        // 팀 이름 랜덤 생성기를 이용하여 팀 이름 생성
-        userEntity.setTeamName(generateTeamName());
+        // 임시 팀 이름 저장
+        userEntity.setTeamName(getUniqueTeamName());
         userEntity.setSerial(serial);
         userEntity.setType(SocialType.valueOf(oAuth2Response.getProvider().toString()));
 
-        return UserDto.toDto(userRepository.save(userEntity)).getUserId();
+        return UserDto.toDto(userRepository.save(userEntity));
     }
 
-    private CustomOAuth2UserDto makeCustomOAuth2UserDto(OAuth2Response oAuth2Response, String serial, int userId) {
-        SocialUserDto socialUserDto = new SocialUserDto();
-
-        socialUserDto.setType(SocialType.valueOf(oAuth2Response.getProvider().toString()));
-        socialUserDto.setSerial(serial);
-        socialUserDto.setUserId(userId);
-
-        return new CustomOAuth2UserDto(socialUserDto);
-    }
-
-    private String generateTeamName() {
+    // TODO: UserServiceImpl에도 getUniqueTeamName()이 있으므로 따로 빼서 사용하기
+    // 팀 이름 생성기를 이용하여 db에 없는 유니크한 팀 이름 반환
+    public String getUniqueTeamName() {
         String teamName = null;
         do {
             teamName = TeamNameGenerator.generateTeamName();

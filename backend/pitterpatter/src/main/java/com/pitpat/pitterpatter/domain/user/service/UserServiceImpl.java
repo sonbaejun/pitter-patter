@@ -2,15 +2,17 @@ package com.pitpat.pitterpatter.domain.user.service;
 
 import com.pitpat.pitterpatter.domain.user.jwt.JwtTokenProvider;
 import com.pitpat.pitterpatter.domain.user.model.dto.JwtTokenDto;
-import com.pitpat.pitterpatter.domain.user.model.dto.SignUpDto;
-import com.pitpat.pitterpatter.domain.user.model.dto.UpdateUserDto;
+import com.pitpat.pitterpatter.domain.user.model.dto.EmailUserSignUpDto;
+import com.pitpat.pitterpatter.domain.user.model.dto.AdditionalUserInfoDto;
 import com.pitpat.pitterpatter.domain.user.model.dto.UserDto;
 import com.pitpat.pitterpatter.domain.user.repository.UserRepository;
 import com.pitpat.pitterpatter.entity.UserEntity;
 import com.pitpat.pitterpatter.global.exception.user.DuplicateResourceException;
+import com.pitpat.pitterpatter.global.util.user.TeamNameGenerator;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -27,6 +29,9 @@ public class UserServiceImpl implements UserService{
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
+
+    @Value("${custom.random-2fa}")
+    private String random2Fa;
 
     // ============================= 로그인 관련 ================================
     // TODO: 로그인은 추후 Spring Security Filter로 구현하기
@@ -54,17 +59,23 @@ public class UserServiceImpl implements UserService{
     // email 유저 회원가입
     @Transactional
     @Override
-    public UserDto emailSignUp(SignUpDto signUpDto) throws DuplicateResourceException {
-        // 백에서 이메일, 팀이름 중복체크를 한번 더 해준다
-        isEmailAlreadyInUse(signUpDto.getEmail());
-        isTeamNameAlreadyInUse(signUpDto.getTeamName());
+    public UserDto emailSignUp(EmailUserSignUpDto emailUserSignUpDto) throws DuplicateResourceException {
+        // 1. 백에서 이메일 중복체크를 한번 더 해준다
+        isEmailAlreadyInUse(emailUserSignUpDto.getEmail());
 
-        // Password 암호화
-        String encodedPassword = passwordEncoder.encode(signUpDto.getPassword());
-        String encoded2Fa = passwordEncoder.encode(signUpDto.getTwoFa());
+        // 2. UserEntity 생성
+        UserEntity userEntity = null;
 
-        // DB에 유저 정보를 저장하고 UserDto로 변환하여 return
-        return UserDto.toDto(userRepository.save(signUpDto.toEntity(encodedPassword, encoded2Fa)));
+        // 3. Password 암호화
+        String encodedPassword = passwordEncoder.encode(emailUserSignUpDto.getPassword());
+
+        // 4. emailUserSignUpDto를 UserEntity로 변경하고 2차 비밀번호와 팀 이름을 임의로 넣는다.
+        userEntity = emailUserSignUpDto.toEntity(encodedPassword);
+        userEntity.setTeamName(getUniqueTeamName());
+        userEntity.setTwoFa(passwordEncoder.encode(random2Fa));
+
+        // 4. DB에 유저 정보를 저장하고 UserDto로 변환하여 return
+        return UserDto.toDto(userRepository.save(userEntity));
     }
 
     // email 유저 이메일 중복 체크
@@ -102,7 +113,7 @@ public class UserServiceImpl implements UserService{
     // jwt 토큰에서 userId 값을 꺼내와 회원정보 변경
     @Transactional
     @Override
-    public UserDto updateUserById(int userId, UpdateUserDto updatedUser) {
+    public UserDto updateUserById(int userId, AdditionalUserInfoDto updatedUser) {
         Optional<UserEntity> existingUserOptional = userRepository.findByUserId(userId);
         if (existingUserOptional.isPresent()) {
             UserEntity existingUser = existingUserOptional.get();
@@ -119,5 +130,17 @@ public class UserServiceImpl implements UserService{
         } else {
             throw new IllegalArgumentException("User not found with id: " + userId);
         }
+    }
+
+
+    // ====================== 기타 ============================
+    // TODO: CustomOAuth2UserService에도 getUniqueTeamName()이 있으므로 따로 빼서 사용하기
+    // 팀 이름 생성기를 이용하여 db에 없는 유니크한 팀 이름 반환
+    public String getUniqueTeamName() {
+        String teamName = null;
+        do {
+            teamName = TeamNameGenerator.generateTeamName();
+        } while(userRepository.existsByTeamName(teamName));
+        return teamName;
     }
 }

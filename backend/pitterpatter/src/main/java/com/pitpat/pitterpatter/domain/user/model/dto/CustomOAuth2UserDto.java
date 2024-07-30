@@ -11,7 +11,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CustomOAuth2UserDto implements OAuth2User {
 
-    private final SocialUserDto socialUserDto;
+    private final UserDto userDto;
 
     // kakao, naver 등 소셜 로그인 response 구조가 각각 다르므로 해당 메서드는 사용 x
     @Override
@@ -28,6 +28,6 @@ public class CustomOAuth2UserDto implements OAuth2User {
     @Override
     public String getName() {
         // name 대신 userId 반환
-        return String.valueOf(socialUserDto.getUserId());
+        return String.valueOf(userDto.getUserId());
     }
 }

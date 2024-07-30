@@ -38,11 +38,11 @@ public class UserController {
         return "home";
     }
 
-    // email 유저 회원가입(인증 정보 + 인적 정보)
+    // email 유저 회원가입
     @PostMapping("/email")
-    public ResponseEntity<?> emailSignUp(@RequestBody SignUpDto signUpDto) {
+    public ResponseEntity<?> emailSignUp(@RequestBody EmailUserSignUpDto emailUserSignUpDto) {
         try {
-            UserDto savedUserDto = userService.emailSignUp(signUpDto);
+            UserDto savedUserDto = userService.emailSignUp(emailUserSignUpDto);
             return ResponseEntity.status(HttpStatus.CREATED).body(savedUserDto);
         } catch (DuplicateResourceException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
@@ -53,7 +53,7 @@ public class UserController {
 
     // email 유저 이메일 중복 체크
     @GetMapping("/check/email")
-    public ResponseEntity<String> isEmailAlreadyInUse(@RequestParam String email) {
+    public ResponseEntity<String> isEmailAlreadyInUse(@RequestParam(name = "email") String email) {
         try {
             userService.isEmailAlreadyInUse(email);
             return ResponseEntity.status(HttpStatus.OK).body(email + " is available.");
@@ -96,7 +96,7 @@ public class UserController {
 
     // jwt 토큰에서 userId 값을 꺼내와 회원정보(2차 비밀번호, 팀 이름) 변경
     @PatchMapping
-    public ResponseEntity<?> updateUserById(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UpdateUserDto updatedUser) {
+    public ResponseEntity<?> updateUserById(@AuthenticationPrincipal UserDetails userDetails, @RequestBody AdditionalUserInfoDto updatedUser) {
         try {
             int userId = Integer.parseInt(userDetails.getUsername());
             UserDto userDto = userService.updateUserById(userId, updatedUser);
