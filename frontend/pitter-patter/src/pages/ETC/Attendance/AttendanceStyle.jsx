@@ -114,15 +114,30 @@ export const CalendarWrapper = styled.div`
     height: 9vh;
     display: flex;
     flex-direction: column;
-    justify-content: start;
-    align-items: start;
+    justify-content: center;
+    align-items: center;
     border-radius: 0;
 
     &.attendance-day {
       background-image: url(${StarIcon});
       background-repeat: no-repeat;
-      background-position: center;
+      background-position: center center;
       background-size: contain;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      pointer-events: none; /* 클릭 이벤트 방지 */
+    }
+
+    &.react-calendar__tile--active {
+        background: none;
+        color: inherit; /* 글자색 변경 방지 */
+        outline: none; /* 선택된 테두리 변경 방지 */
+      }
+
+      &.react-calendar__tile--now {
+      border: 4px dashed rgba(0,0,256, .1); /* 점선 테두리 추가 */
+      background-color: white;
     }
   }
 
@@ -131,11 +146,14 @@ export const CalendarWrapper = styled.div`
     background: none;
   }
 
-  .react-calendar__tile--now {
-    background: #ffff76;
-  }
+  .react-calendar__navigation {
+    height: 90px;
+    border-radius: 20px 20px 0 0;
 
-  .react-calendar__tile--active {
-    background: #76ff76;
+    span {
+      font-size: 24px;
+      font-weight: 600;
+      color: #629d1b;
+    }
   }
 `;

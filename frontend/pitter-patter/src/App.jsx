@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import LandingPage from "./pages/LandingPage/LandingPage"
 import ChildPage from "./pages/Child/ChildPage"
 import Login from "./pages/User/Login"
-import AttendancePage from "./pages/ETC/Attendance/AttendancePage"
+import Attendance from "./pages/ETC/Attendance/Attendance"
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
           <Route path="/child" element={<ChildPage />} />
 
           {/* ETC */}
-          <Route path="/attendance" element={<AttendancePage />} />
+          <Route path="/attendance" element={<Attendance />} />
 
         </Routes>
       </div>
