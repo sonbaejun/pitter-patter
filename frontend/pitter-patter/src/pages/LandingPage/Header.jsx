@@ -1,18 +1,29 @@
 import { Link } from 'react-router-dom';
-import './LandingPage.css'; 
+import {
+  HeaderBody,
+  LayoutHeader,
+  LogoImg,
+  LayoutHeaderButton,
+  HeaderButton
+} from './LandingPageStyle';
+import Logo from '../../assets/img/logo/logo.png';
+import UserIcon from '../../assets/icons/User.png';
+import MenuIcon from '../../assets/icons/Menu.png';
 
 function Header() {
-    return (
-        <div className='header-body'>
-            <div className='layout-header'>
-                <Link to='/'><img src="src/assets/img/logo/logo.png" alt="" className='logo-img'/></Link>
-                <div className='layout-header-button'>
-                    <img src="src/assets/icons/User.png" alt="" className='header-button'/>
-                    <img src="src/assets/icons/Menu.png" alt="" className='header-button'/>
-                </div>
-            </div>
-        </div>
-    );
+  return (
+    <HeaderBody>
+      <LayoutHeader>
+        <Link to='/'>
+          <LogoImg src={Logo} alt="Logo" />
+        </Link>
+        <LayoutHeaderButton>
+          <HeaderButton src={UserIcon} alt="User" />
+          <HeaderButton src={MenuIcon} alt="Menu" />
+        </LayoutHeaderButton>
+      </LayoutHeader>
+    </HeaderBody>
+  );
 }
 
 export default Header;
