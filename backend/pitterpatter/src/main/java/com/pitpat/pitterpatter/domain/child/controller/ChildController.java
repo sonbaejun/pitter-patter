@@ -35,13 +35,7 @@ public class ChildController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addChild(@Valid @RequestBody ChildRequestDTO childRequestDTO, BindingResult bindingResult) {
-
-        ResponseEntity<List<String>> validatedChildRequest = validateChildRequest(bindingResult);
-        if (validatedChildRequest != null) {
-            return validatedChildRequest;
-        }
-
+    public ResponseEntity<Void> addChild(@Valid @RequestBody ChildRequestDTO childRequestDTO) {
         childService.addChild(childRequestDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -63,15 +57,15 @@ public class ChildController {
         childService.deleteChild(childId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-    private static ResponseEntity<List<String>> validateChildRequest(BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            // 유효성 검증 실패 시, 에러 메시지를 담아서 반환
-            List<String> errors = bindingResult.getAllErrors().stream()
-                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                    .collect(Collectors.toList());
-            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-        }
-        return null;
-    }
+//
+//    private static ResponseEntity<List<String>> validateChildRequest(BindingResult bindingResult) {
+//        if (bindingResult.hasErrors()) {
+//            // 유효성 검증 실패 시, 에러 메시지를 담아서 반환
+//            List<String> errors = bindingResult.getAllErrors().stream()
+//                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+//                    .collect(Collectors.toList());
+//            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+//        }
+//        return null;
+//    }
 }
