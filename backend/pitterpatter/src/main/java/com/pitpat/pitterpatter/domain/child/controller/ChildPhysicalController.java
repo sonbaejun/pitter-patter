@@ -3,6 +3,7 @@ package com.pitpat.pitterpatter.domain.child.controller;
 import com.pitpat.pitterpatter.domain.child.model.dto.*;
 import com.pitpat.pitterpatter.domain.child.service.ChildPhysicalService;
 import com.pitpat.pitterpatter.domain.child.service.ChildService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,7 +30,7 @@ public class ChildPhysicalController {
     }
 
     @PostMapping("/{childId}/physical")
-    public ResponseEntity<Void> addPhysicalRecord(@PathVariable Long childId, @RequestBody ChildPhysicalRequestDTO childPhysicalRequestDTO) {
+    public ResponseEntity<Void> addPhysicalRecord(@PathVariable Long childId, @Valid @RequestBody ChildPhysicalRequestDTO childPhysicalRequestDTO) {
         childPhysicalService.addPhysicalRecord(childId, childPhysicalRequestDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
