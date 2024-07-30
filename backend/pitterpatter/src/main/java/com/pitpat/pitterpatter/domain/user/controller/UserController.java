@@ -1,11 +1,7 @@
 package com.pitpat.pitterpatter.domain.user.controller;
 
-import com.pitpat.pitterpatter.domain.user.model.dto.JwtTokenDto;
-import com.pitpat.pitterpatter.domain.user.model.dto.LoginDto;
-import com.pitpat.pitterpatter.domain.user.model.dto.SignUpDto;
-import com.pitpat.pitterpatter.domain.user.model.dto.UserDto;
+import com.pitpat.pitterpatter.domain.user.model.dto.*;
 import com.pitpat.pitterpatter.domain.user.service.UserService;
-import com.pitpat.pitterpatter.entity.UserEntity;
 import com.pitpat.pitterpatter.global.exception.user.DuplicateResourceException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +38,7 @@ public class UserController {
         return "home";
     }
 
-    // email 유저 회원가입
+    // email 유저 회원가입(인증 정보 + 인적 정보)
     @PostMapping("/email")
     public ResponseEntity<?> emailSignUp(@RequestBody SignUpDto signUpDto) {
         try {
@@ -98,12 +94,12 @@ public class UserController {
         }
     }
 
-    // jwt 토큰에서 userId 값을 꺼내와 회원정보 변경
+    // jwt 토큰에서 userId 값을 꺼내와 회원정보(2차 비밀번호, 팀 이름) 변경
     @PatchMapping
-    public ResponseEntity<?> modifyUserById(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UserDto updatedUser) {
+    public ResponseEntity<?> updateUserById(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UpdateUserDto updatedUser) {
         try {
             int userId = Integer.parseInt(userDetails.getUsername());
-            UserDto userDto = userService.modifyUserById(userId, updatedUser);
+            UserDto userDto = userService.updateUserById(userId, updatedUser);
             return ResponseEntity.ok(userDto);
         } catch (DuplicateResourceException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());

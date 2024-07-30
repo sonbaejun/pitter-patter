@@ -3,6 +3,7 @@ package com.pitpat.pitterpatter.domain.user.service;
 import com.pitpat.pitterpatter.domain.user.jwt.JwtTokenProvider;
 import com.pitpat.pitterpatter.domain.user.model.dto.JwtTokenDto;
 import com.pitpat.pitterpatter.domain.user.model.dto.SignUpDto;
+import com.pitpat.pitterpatter.domain.user.model.dto.UpdateUserDto;
 import com.pitpat.pitterpatter.domain.user.model.dto.UserDto;
 import com.pitpat.pitterpatter.domain.user.repository.UserRepository;
 import com.pitpat.pitterpatter.entity.UserEntity;
@@ -101,7 +102,7 @@ public class UserServiceImpl implements UserService{
     // jwt 토큰에서 userId 값을 꺼내와 회원정보 변경
     @Transactional
     @Override
-    public UserDto modifyUserById(int userId, UserDto updatedUser) {
+    public UserDto updateUserById(int userId, UpdateUserDto updatedUser) {
         Optional<UserEntity> existingUserOptional = userRepository.findByUserId(userId);
         if (existingUserOptional.isPresent()) {
             UserEntity existingUser = existingUserOptional.get();
