@@ -1,0 +1,146 @@
+@import '../../../style/main.css';
+
+.layout-row {
+    flex-direction: row;
+    width: 100%;
+}
+  
+.layout-column {
+    flex-direction: column;
+    height: 100%;
+}
+
+.back-arrow {
+    width: 0.5vw;
+    padding: 2vw 1vh;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.arrow-pic {
+    width: 20px;
+}
+
+.center {
+    justify-content: center;
+    align-items: center;
+}
+
+.end {
+    justify-content: flex-end;
+}
+
+.evenly {
+    justify-content: space-evenly;
+}
+
+.around {
+    justify-content: space-around;
+}
+
+.between {
+    justify-content: space-between;
+}
+
+.layout-base {
+    min-height: 100vh;
+    min-width: 100vw;
+    justify-content: center;
+    align-items: center;
+    background-image: url('src/assets/img/Attendance/attendance-background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+
+.layout-my-page {
+    background-color: var(--box-green-color);
+    height: 80vh;
+    width: 70vw;
+    border-radius: 40px;
+    box-shadow: 0px 11px 39.6px 0px rgba(0, 0, 0, 0.25);
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 1vw;
+}
+
+.menu-wrap {
+    width: 30%;
+}
+
+.menu-icon {
+    width: 3vw;
+    height: 3vw;
+    margin-top: 1vw;
+    margin-bottom: 2vw;
+}
+
+.menu-item-wrap {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2vw;
+}
+
+.menu-item {
+    font-size: 1.5vw;
+    margin-top: 1vw;
+    margin-bottom: 1vw;
+    font-weight: 700;
+    color: #616161;
+    box-shadow: none;
+}
+
+.menu-item-selected {
+    color: #629d1b;
+}
+
+.main-wrap {
+    background-color: white;
+    border-radius: 30px;
+    height: 100%;
+}
+
+.calendar {
+    width: 100%;
+    border: none;
+    border-radius: 20px;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.layout-column.main-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.calendar-arrow {
+    width: 20px;
+    height: 20px;
+}
+
+.react-calendar__month-view {
+    padding: 12px 32px;
+}
+
+.react-calendar__tile {
+    text-align: center;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    border-radius: 0;
+}
+
+/* 출석 날짜의 백그라운드 이미지 스타일 */
+.attendance-day {
+    background-image: url('src/assets/icons/star.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
