@@ -1,11 +1,11 @@
-import "./GamePage.css";
+import { MainWrap, Game } from "./GamePageStyle";
 
 function GamePage() {
   return (
-    <div className="main-wrap">
-      <div className="game"></div>
-    </div>
-  )
+    <MainWrap>
+      <Game />
+    </MainWrap>
+  );
 }
 
-export default GamePage
+export default GamePage;

@@ -1,4 +1,6 @@
-.center-row {
+import styled from "styled-components";
+
+export const CenterRow = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -7,10 +9,10 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-}
+`;
 
-.box-wrap {
-  background-color: #fff;
+export const BoxWrap = styled.div`
+  background-color: ${(props) => props.bgColor || "#fff"};
   border-radius: 40px;
   box-shadow: 0px 10px 40px 4px rgba(0, 0, 0, 0.25);
   display: flex;
@@ -19,9 +21,9 @@
   align-items: center;
   padding: 2vw;
   margin: 0 2vw;
-}
+`;
 
-.image-box {
+export const ImageBox = styled.div`
   width: 15vw;
   height: 12vw;
   display: flex;
@@ -29,19 +31,20 @@
   align-items: center;
   border-radius: 30px;
   padding: 2vw;
-}
+  box-shadow: ${(props) => props.shadow || "none"};
+`;
 
-.game-image {
+export const GameImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: contain;
   border-radius: 30px;
-}
+`;
 
-.item-name {
+export const ItemName = styled.div`
   margin-top: 6vh;
   margin-bottom: 3vh;
   font-size: 1vw;
   font-weight: 700;
-  color: #000;
-}
+  color: ${(props) => props.color || "#000"};
+`;

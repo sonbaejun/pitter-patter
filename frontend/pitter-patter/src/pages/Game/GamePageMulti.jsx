@@ -1,12 +1,12 @@
-import "./GamePageMulti.css";
+import { MainWrap, MyGame, OpponentGame } from "./GamePageMultiStyle";
 
 function GamePageMulti() {
   return (
-    <div className="main-wrap">
-      <div className="my-game"></div>
-      <div className="opponent-game"></div>
-    </div>
-  )
+    <MainWrap>
+      <MyGame />
+      <OpponentGame />
+    </MainWrap>
+  );
 }
 
-export default GamePageMulti
+export default GamePageMulti;

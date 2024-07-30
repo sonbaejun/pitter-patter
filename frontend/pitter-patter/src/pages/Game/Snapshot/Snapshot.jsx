@@ -1,10 +1,17 @@
-import "./Snapshot.css";
-
 import { useRef, useState, useEffect } from "react";
-
-import AddImageIcon from "../../../assets/icons/AddImage.png";
 import { useNavigate } from "react-router-dom";
-
+import {
+  MainWrap,
+  CenterColumn,
+  CenterRow,
+  Title,
+  Frame,
+  BlankRow,
+  Blank,
+  UserImg,
+  AddImg,
+} from "./SnapshotStyle";
+import AddImageIcon from "../../../assets/icons/AddImage.png";
 import EG1 from "../../../assets/img/Snapshot/eg1.png";
 import EG2 from "../../../assets/img/Snapshot/eg2.png";
 import EG3 from "../../../assets/img/Snapshot/eg3.png";
@@ -25,12 +32,11 @@ function Snapshot() {
         const reader = new FileReader();
         reader.onload = () => {
           const image = reader.result;
-          setImageList(imageList.map((img, i) => i === index ? image : img));
-        }
+          setImageList(imageList.map((img, i) => (i === index ? image : img)));
+        };
         reader.readAsDataURL(file);
-        
       }
-    }
+    };
     input.click();
   }
 
@@ -41,50 +47,58 @@ function Snapshot() {
   }, [imageList, navigate]);
 
   return (
-    <div className="main-wrap">
-      <div className="center-column">
-        <span className="title">피터와 패터를 따라 사진을 찍어보세요 !</span>
-        <div className="center-row">
-          <div className="frame">
-            <div className="blank-row">
-              <div className="blank">
-                <img src={EG1} alt="example" className="user-img" />
-              </div>
-              <div className="blank">
-                <img src={EG2} alt="example" className="user-img" />
-              </div>
-            </div>
-            <div className="blank-row">
-              <div className="blank">
-                <img src={EG3} alt="example" className="user-img" />
-              </div>
-              <div className="blank">
-                <img src={EG4} alt="example" className="user-img" />
-              </div>
-            </div>
-          </div>
-            <div className="frame" ref={frameRef}>
-              <div className="blank-row">
-                <div className="blank" onClick={() => getImage(0)}>
-                  {(imageList[0] && <img src={imageList[0]} alt="snapshot" className="user-img" />) || <img src={AddImageIcon} alt="add" className="add-img" />}
-                </div>
-              <div className="blank" onClick={() => getImage(1)}>
-                {(imageList[1] && <img src={imageList[1]} alt="snapshot" className="user-img" />) || <img src={AddImageIcon} alt="add" className="add-img" />}
-                </div>
-              </div>
-              <div className="blank-row">
-              <div className="blank" onClick={() => getImage(2)}>
-                {(imageList[2] && <img src={imageList[2]} alt="snapshot" className="user-img" />) || <img src={AddImageIcon} alt="add" className="add-img" />}
-                </div>
-              <div className="blank" onClick={() => getImage(3)}>
-                {(imageList[3] && <img src={imageList[3]} alt="snapshot" className="user-img" />) || <img src={AddImageIcon} alt="add" className="add-img" />}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
+    <MainWrap>
+      <CenterColumn>
+        <Title>피터와 패터를 따라 사진을 찍어보세요 !</Title>
+        <CenterRow>
+          <Frame>
+            <BlankRow>
+              <Blank>
+                <UserImg src={EG1} alt="example" />
+              </Blank>
+              <Blank>
+                <UserImg src={EG2} alt="example" />
+              </Blank>
+            </BlankRow>
+            <BlankRow>
+              <Blank>
+                <UserImg src={EG3} alt="example" />
+              </Blank>
+              <Blank>
+                <UserImg src={EG4} alt="example" />
+              </Blank>
+            </BlankRow>
+          </Frame>
+          <Frame ref={frameRef}>
+            <BlankRow>
+              <Blank onClick={() => getImage(0)}>
+                {(imageList[0] && <UserImg src={imageList[0]} alt="snapshot" />) || (
+                  <AddImg src={AddImageIcon} alt="add" />
+                )}
+              </Blank>
+              <Blank onClick={() => getImage(1)}>
+                {(imageList[1] && <UserImg src={imageList[1]} alt="snapshot" />) || (
+                  <AddImg src={AddImageIcon} alt="add" />
+                )}
+              </Blank>
+            </BlankRow>
+            <BlankRow>
+              <Blank onClick={() => getImage(2)}>
+                {(imageList[2] && <UserImg src={imageList[2]} alt="snapshot" />) || (
+                  <AddImg src={AddImageIcon} alt="add" />
+                )}
+              </Blank>
+              <Blank onClick={() => getImage(3)}>
+                {(imageList[3] && <UserImg src={imageList[3]} alt="snapshot" />) || (
+                  <AddImg src={AddImageIcon} alt="add" />
+                )}
+              </Blank>
+            </BlankRow>
+          </Frame>
+        </CenterRow>
+      </CenterColumn>
+    </MainWrap>
+  );
 }
 
-export default Snapshot
+export default Snapshot;
