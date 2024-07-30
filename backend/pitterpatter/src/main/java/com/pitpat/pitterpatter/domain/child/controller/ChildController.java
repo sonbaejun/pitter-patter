@@ -2,6 +2,7 @@ package com.pitpat.pitterpatter.domain.child.controller;
 
 import com.pitpat.pitterpatter.domain.child.model.dto.ChildRequestDTO;
 import com.pitpat.pitterpatter.domain.child.model.dto.ChildResponseDTO;
+import com.pitpat.pitterpatter.domain.child.model.dto.ChildUpdateDTO;
 import com.pitpat.pitterpatter.domain.child.repository.ChildRepository;
 import com.pitpat.pitterpatter.domain.child.service.ChildService;
 import com.pitpat.pitterpatter.entity.Child;
@@ -47,8 +48,8 @@ public class ChildController {
     }
 
     @PatchMapping("/{childId}")
-    public ResponseEntity<Void> updateChild(@PathVariable Long childId, @RequestBody ChildRequestDTO childRequestDTO) {
-        childService.updateChild(childId, childRequestDTO);
+    public ResponseEntity<Void> updateChild(@PathVariable Long childId, @Valid @RequestBody ChildUpdateDTO childUpdateDTO) {
+        childService.updateChild(childId, childUpdateDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

@@ -2,6 +2,7 @@ package com.pitpat.pitterpatter.domain.child.service;
 
 import com.pitpat.pitterpatter.domain.child.model.dto.ChildRequestDTO;
 import com.pitpat.pitterpatter.domain.child.model.dto.ChildResponseDTO;
+import com.pitpat.pitterpatter.domain.child.model.dto.ChildUpdateDTO;
 import com.pitpat.pitterpatter.domain.child.repository.ChildRepository;
 import com.pitpat.pitterpatter.entity.Child;
 import com.pitpat.pitterpatter.entity.UserEntity;
@@ -55,14 +56,14 @@ public class ChildServiceImpl implements ChildService {
     }
 
     @Override
-    public void updateChild(Long childId, ChildRequestDTO childRequestDTO) {
+    public void updateChild(Long childId, ChildUpdateDTO childUpdateDTO) {
         // 자녀 존재여부 검증 후 존재한다면 Child 할당
         Child child = validateChildExists(childId);
 
         // TODO : user가 없는 경우에 대한 예외처리 : user도메인 개발 완료 시 추가.(ForeignKeyConstraintException)
         userExceptionHandling(child.getUser());
 
-        Child updatedChild = childRequestDTO.toUpdateEntity(child, childRequestDTO);
+        Child updatedChild = childUpdateDTO.toUpdateEntity(child, childUpdateDTO);
 
         childRepository.save(updatedChild);
     }
