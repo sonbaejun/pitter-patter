@@ -4,9 +4,9 @@ import com.pitpat.pitterpatter.domain.user.model.dto.JwtTokenDto;
 import com.pitpat.pitterpatter.domain.user.model.dto.LoginDto;
 import com.pitpat.pitterpatter.domain.user.model.dto.SignUpDto;
 import com.pitpat.pitterpatter.domain.user.model.dto.UserDto;
-import com.pitpat.pitterpatter.domain.user.service.UserDetailsImpl;
 import com.pitpat.pitterpatter.domain.user.service.UserService;
-import com.pitpat.pitterpatter.global.exception.DuplicateResourceException;
+import com.pitpat.pitterpatter.entity.UserEntity;
+import com.pitpat.pitterpatter.global.exception.user.DuplicateResourceException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -14,8 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.Principal;
 
 @Slf4j
 @RestController
@@ -34,13 +32,14 @@ public class UserController {
         JwtTokenDto jwtToken = userService.emailLogin(email, password);
         log.info("request email = {}, password = {}", email, password);
         log.info("jwtToken accessToken = {}, refreshToken = {}", jwtToken.getAccessToken(), jwtToken.getRefreshToken());
+
         return ResponseEntity.status(HttpStatus.OK).body(jwtToken);
     }
 
     // TODO: 테스트 완료되면 추후 지울 것
-    @GetMapping("/test")
-    public String test() {
-        return "success";
+    @GetMapping("/home")
+    public String home() {
+        return "home";
     }
 
     // email 유저 회원가입
@@ -51,6 +50,8 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.CREATED).body(savedUserDto);
         } catch (DuplicateResourceException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -62,6 +63,8 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.OK).body(email + " is available.");
         } catch (DuplicateResourceException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -73,19 +76,42 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.OK).body(teamName + " is available.");
         } catch (DuplicateResourceException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
 
 
     // ====================== 조회, 변경, 탈퇴 ==========================
-    // 회원정보 조회
+    // jwt 토큰에서 userId 값을 꺼내와 회원정보 조회
     @GetMapping
-    public ResponseEntity<UserDto> getUserByEmail(@AuthenticationPrincipal UserDetails userDetails) {
-        // TODO: exception 처리
-        String email = userDetails.getUsername();
-        UserDto userDto = userService.getUserByEmail(email);
-        return ResponseEntity.ok(userDto);
+    public ResponseEntity<?> getUserById(@AuthenticationPrincipal UserDetails userDetails) {
+        try {
+            int userId = Integer.parseInt(userDetails.getUsername());
+            UserDto userDto = userService.getUserById(userId);
+            return ResponseEntity.ok(userDto);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    // jwt 토큰에서 userId 값을 꺼내와 회원정보 변경
+    @PatchMapping
+    public ResponseEntity<?> modifyUserById(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UserDto updatedUser) {
+        try {
+            int userId = Integer.parseInt(userDetails.getUsername());
+            UserDto userDto = userService.modifyUserById(userId, updatedUser);
+            return ResponseEntity.ok(userDto);
+        } catch (DuplicateResourceException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
 }

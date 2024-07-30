@@ -35,6 +35,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             Authentication authentication = jwtTokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
+        // 토큰 정보가 없거나 유효하지 않다면 다음 체인으로 이동
         chain.doFilter(request, response);
     }
 
@@ -46,4 +47,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         }
         return null;
     }
+
+
 }

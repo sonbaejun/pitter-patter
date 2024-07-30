@@ -1,13 +1,8 @@
 package com.pitpat.pitterpatter.domain.user.model.dto;
 
-import com.pitpat.pitterpatter.entity.Child;
 import com.pitpat.pitterpatter.entity.UserEntity;
 import com.pitpat.pitterpatter.entity.enums.SocialType;
 import lombok.*;
-import org.springframework.data.annotation.CreatedBy;
-
-import java.time.temporal.TemporalAccessor;
-import java.util.List;
 
 @Builder
 @NoArgsConstructor
@@ -25,8 +20,6 @@ public class SignUpDto {
     private String serial;
     // only social user
     private SocialType type;
-    // TODO: children 정보를 가지고 있을 필요가 있나?
-//    private List<Child> children;
 
     public UserEntity toEntity(String encodedPassword, String encoded2Fa) {
         return UserEntity.builder()
@@ -37,7 +30,6 @@ public class SignUpDto {
                 .teamName(teamName)
                 .serial(serial)
                 .type(type)
-//                .children(children)
                 .build();
     }
 }

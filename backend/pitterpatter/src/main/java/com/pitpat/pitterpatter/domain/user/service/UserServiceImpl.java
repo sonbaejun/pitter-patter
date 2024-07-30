@@ -5,7 +5,8 @@ import com.pitpat.pitterpatter.domain.user.model.dto.JwtTokenDto;
 import com.pitpat.pitterpatter.domain.user.model.dto.SignUpDto;
 import com.pitpat.pitterpatter.domain.user.model.dto.UserDto;
 import com.pitpat.pitterpatter.domain.user.repository.UserRepository;
-import com.pitpat.pitterpatter.global.exception.DuplicateResourceException;
+import com.pitpat.pitterpatter.entity.UserEntity;
+import com.pitpat.pitterpatter.global.exception.user.DuplicateResourceException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -64,6 +67,7 @@ public class UserServiceImpl implements UserService{
     }
 
     // email 유저 이메일 중복 체크
+    @Transactional
     @Override
     public boolean isEmailAlreadyInUse(String email) {
         if (userRepository.existsByEmail(email)) {
@@ -74,6 +78,7 @@ public class UserServiceImpl implements UserService{
     }
 
     // email, social 유저 팀 이름 중복 체크
+    @Transactional
     @Override
     public boolean isTeamNameAlreadyInUse(String teamName) {
         if (userRepository.existsByTeamName(teamName)) {
@@ -84,10 +89,34 @@ public class UserServiceImpl implements UserService{
     }
 
     // ====================== 조회, 변경, 탈퇴 ==========================
-    // 회원정보 조회
-    public UserDto getUserByEmail(String email) {
-        return userRepository.findByEmail(email)
+    // jwt 토큰에서 userId 값을 꺼내와 회원정보 조회
+    @Transactional
+    @Override
+    public UserDto getUserById(int userId) {
+        return userRepository.findByUserId(userId)
                 .map(UserDto::toDto) // UserEntity를 UserDto로 변경
-                .orElseThrow(() -> new IllegalArgumentException("User not found with email: " + email));
+                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+    }
+
+    // jwt 토큰에서 userId 값을 꺼내와 회원정보 변경
+    @Transactional
+    @Override
+    public UserDto modifyUserById(int userId, UserDto updatedUser) {
+        Optional<UserEntity> existingUserOptional = userRepository.findByUserId(userId);
+        if (existingUserOptional.isPresent()) {
+            UserEntity existingUser = existingUserOptional.get();
+
+            if (updatedUser.getTeamName() != null) {
+                // 백에서 한번 더 팀 이름 중복 체크
+                isTeamNameAlreadyInUse(updatedUser.getTeamName());
+                existingUser.setTeamName(updatedUser.getTeamName());
+            }
+            if (updatedUser.getTwoFa() != null) {
+                existingUser.setTwoFa(passwordEncoder.encode(updatedUser.getTwoFa()));
+            }
+            return UserDto.toDto(userRepository.save(existingUser));
+        } else {
+            throw new IllegalArgumentException("User not found with id: " + userId);
+        }
     }
 }

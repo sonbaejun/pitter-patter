@@ -35,6 +35,7 @@ public class JwtTokenProvider {
 
     // User 정보를 가지고 AccessToken, RefreshToken을 생성하는 메서드
     public JwtTokenDto generateToken(Authentication authentication) {
+
         // Access Token 생성
         String accessToken = generateAccessToken(authentication.getName());
 
@@ -49,15 +50,15 @@ public class JwtTokenProvider {
     }
 
     // Access Token 생성
-    public String generateAccessToken(String email) {
+    public String generateAccessToken(String userId) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, email, ACCESS_TOKEN_EXPIRATION_TIME);
+        return createToken(claims, userId, ACCESS_TOKEN_EXPIRATION_TIME);
     }
 
     // Refresh Token 생성
-    public String generateRefreshToken(String email) {
+    public String generateRefreshToken(String userId) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, email, REFRESH_TOKEN_EXPIRATION_TIME);
+        return createToken(claims, userId, REFRESH_TOKEN_EXPIRATION_TIME);
     }
 
     // 전달받은 파라미터로부터 토큰 생성
@@ -69,7 +70,7 @@ public class JwtTokenProvider {
 
         return Jwts.builder()
                 .claims(claims) // 기타 정보
-                .subject(subject) // 사용자 식별자
+                .subject(subject) // 사용자 식별자(user의 user_id 컬럼 값)
                 .issuer(ISSUER) // 토큰 발행자
                 .notBefore(now) // 활성화 시간
                 .issuedAt(now) // 발행 시간

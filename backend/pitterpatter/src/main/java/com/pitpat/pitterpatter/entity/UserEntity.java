@@ -43,7 +43,7 @@ public class UserEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime updatedAt;
 
-    @Column(name = "team_name", nullable = false, length = 64)
+    @Column(name = "team_name", unique = true, nullable = false, length = 15)
     private String teamName;
 
     @Column(name = "email", length = 320)
@@ -53,7 +53,7 @@ public class UserEntity {
     private String password;
 
     // only social user
-    @Column(name = "serial", length = 100)
+    @Column(name = "serial", unique = true, length = 20)
     private String serial;
 
     // only social user

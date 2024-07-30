@@ -19,6 +19,8 @@ public interface UserService {
     public boolean isTeamNameAlreadyInUse(String teamName);
 
     // ====================== 조회, 변경, 탈퇴 ==========================
-    // 회원정보 조회
-    public UserDto getUserByEmail(String email);
+    // jwt 토큰에서 userId 값을 꺼내와 회원정보 조회
+    public UserDto getUserById(int userId);
+    // jwt 토큰에서 userId 값을 꺼내와 회원정보 변경
+    public UserDto modifyUserById(int userId, UserDto updatedUser);
 }
