@@ -1,7 +1,14 @@
-import "./Rank.css";
-
-import NavBar from "../../components/NavBar";
-import Trophy from "../../assets/img/Rank/Trophy.png";
+import {
+  OuterBox,
+  InnerBox,
+  RankWrap,
+  RankOrder,
+  RankBarWrap,
+  RankBar,
+  RankName,
+  ProfileImg
+} from './RankStyle';
+import Trophy from '/src/assets/img/Rank/Trophy.png';
 
 function Rank() {
   const rankData = [
@@ -35,62 +42,56 @@ function Rank() {
       name: "Player 1236",
       score: 12323451451243
     }
-  ]
+  ];
 
   return (
     <div>
       {/* <NavBar /> */}
-      <div className="outer-box">
-        <div className="rank-bar-wrap" style={{ left: "41vw" }}>
-          <img src={Trophy} alt="Trophy" className="profile-img" />
-          <div className="rank-bar" style={{ height: "66vh" }}>
-            <div className="rank-name">{rankData[0].name}</div>
-          </div>
-        </div>
-        <div className="rank-bar-wrap" style={{ left: "11vw" }}>
-          <img src={Trophy} alt="Trophy" className="profile-img" />
-          <div className="rank-bar" style={{ height: "62vh" }}>
-            <div className="rank-name">{rankData[1].name}</div>
-          </div>
-        </div>
-        <div className="rank-bar-wrap" style={{ left: "71vw" }}>
-          <img src={Trophy} alt="Trophy" className="profile-img" />
-          <div className="rank-bar" style={{ height: "58vh" }}>
-            <div className="rank-name">{rankData[2].name}</div>
-          </div>
-        </div>
-        <div className="inner-box">
-          <div className="rank-wrap">
+      <OuterBox>
+        <RankBarWrap style={{ left: "41vw" }}>
+          <ProfileImg src={Trophy} alt="Trophy" />
+          <RankBar style={{ height: "66vh" }}>
+            <RankName>{rankData[0].name}</RankName>
+          </RankBar>
+        </RankBarWrap>
+        <RankBarWrap style={{ left: "11vw" }}>
+          <ProfileImg src={Trophy} alt="Trophy" />
+          <RankBar style={{ height: "62vh" }}>
+            <RankName>{rankData[1].name}</RankName>
+          </RankBar>
+        </RankBarWrap>
+        <RankBarWrap style={{ left: "71vw" }}>
+          <ProfileImg src={Trophy} alt="Trophy" />
+          <RankBar style={{ height: "58vh" }}>
+            <RankName>{rankData[2].name}</RankName>
+          </RankBar>
+        </RankBarWrap>
+        <InnerBox>
+          <RankWrap>
             <div>
-              <span className="rank">
-                # {rankData[3].rank}
-              </span>
+              <RankOrder># {rankData[3].rank}</RankOrder>
               <span>{rankData[3].name}</span>
             </div>
             <span>{rankData[3].score}</span>
-          </div>
-          <div className="rank-wrap">
+          </RankWrap>
+          <RankWrap>
             <div>
-              <span className="rank">
-                # {rankData[4].rank}
-              </span>
+              <RankOrder># {rankData[4].rank}</RankOrder>
               <span>{rankData[4].name}</span>
             </div>
             <span>{rankData[4].score}</span>
-          </div>
-          <div className="rank-wrap">
+          </RankWrap>
+          <RankWrap>
             <div>
-              <span className="rank">
-                # {rankData[5].rank}
-              </span>
+              <RankOrder># {rankData[5].rank}</RankOrder>
               <span>{rankData[5].name}</span>
             </div>
             <span>{rankData[5].score}</span>
-          </div>
-        </div>
-      </div>
+          </RankWrap>
+        </InnerBox>
+      </OuterBox>
     </div>
-  )
+  );
 }
 
 export default Rank;

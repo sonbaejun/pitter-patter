@@ -1,4 +1,6 @@
-.outer-box {
+import styled from 'styled-components';
+
+export const OuterBox = styled.div`
   z-index: -1;
   position: absolute;
   bottom: 0;
@@ -9,9 +11,9 @@
   border-top-left-radius: 60px;
   border-top-right-radius: 60px;
   box-shadow: 0px -3px 33.4px 0px rgba(0, 0, 0, 0.25);
-}
+`;
 
-.inner-box {
+export const InnerBox = styled.div`
   position: absolute;
   bottom: 0;
   left: 2vw;
@@ -24,9 +26,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
+`;
 
-.rank-wrap {
+export const RankWrap = styled.div`
   width: 70%;
   padding: 2.5vh 2vw;
   padding-right: 10vw;
@@ -36,38 +38,38 @@
   align-items: center;
   background-color: #d9d9d9;
   font-size: 1.5vw;
-}
+`;
 
-.rank {
+export const RankOrder = styled.span`
   font-weight: bold;
   margin-right: 5vw;
-}
+`;
 
-.rank-bar-wrap {
+export const RankBarWrap = styled.div`
   position: absolute;
   bottom: 0;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
   align-items: center;
-}
+`;
 
-.rank-bar {
+export const RankBar = styled.div`
   width: 18vw;
   background-color: var(--box-yellow-color);
   border-top-left-radius: 80px;
   border-top-right-radius: 80px;
   box-shadow: 0px -3px 33.4px 0px rgba(0, 0, 0, 0.25);
-}
+`;
 
-.rank-name {
+export const RankName = styled.div`
   position: relative;
   top: 2vh;
   text-align: center;
   font-size: 1.5vw;
-}
+`;
 
-.profile-img {
+export const ProfileImg = styled.img`
   width: 10vw;
   height: 10vw;
-}
+`;
