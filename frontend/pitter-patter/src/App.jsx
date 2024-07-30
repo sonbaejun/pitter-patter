@@ -3,6 +3,7 @@ import LandingPage from "./pages/LandingPage/LandingPage"
 import ChildPage from "./pages/Child/ChildPage"
 import Login from "./pages/User/Login"
 import Attendance from "./pages/ETC/Attendance/Attendance"
+import AttendanceEvent from "./pages/ETC/Attendance/AttendanceEvent"
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
 
           {/* ETC */}
           <Route path="/attendance" element={<Attendance />} />
+          <Route path="/attendance-event" element={<AttendanceEvent />} />
 
         </Routes>
       </div>
