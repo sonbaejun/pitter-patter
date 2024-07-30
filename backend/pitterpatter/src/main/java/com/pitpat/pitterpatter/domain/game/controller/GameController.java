@@ -2,6 +2,7 @@ package com.pitpat.pitterpatter.domain.game.controller;
 
 import com.pitpat.pitterpatter.domain.game.model.dto.GameResultRequestDTO;
 import com.pitpat.pitterpatter.domain.game.service.GameResultService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ public class GameController {
     private final GameResultService gameResultService;
 
     @PostMapping("/{childId}")
-    public ResponseEntity<Boolean> addGameResult(@PathVariable("childId") Long childId, @RequestBody GameResultRequestDTO gameResultRequestDTO) {
+    public ResponseEntity<Boolean> addGameResult(@PathVariable("childId") Long childId, @Valid @RequestBody GameResultRequestDTO gameResultRequestDTO) {
         boolean isFirstPlayToday = gameResultService.addGameResult(childId, gameResultRequestDTO);
         return new ResponseEntity<>(isFirstPlayToday, HttpStatus.OK);
     }

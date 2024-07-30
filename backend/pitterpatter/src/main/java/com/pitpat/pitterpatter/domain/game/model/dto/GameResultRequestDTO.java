@@ -12,15 +12,14 @@ import java.time.LocalDateTime;
 @Builder
 public class GameResultRequestDTO {
 
-    @NotNull
+    @NotNull(message = "score는 필수 값입니다.")
     private Integer score;
-    @NotNull
+    @NotNull(message = "playtime는 필수 값입니다.")
     private Integer playtime;
-    @NotNull
+    @NotNull(message = "burnedCalorie는 필수 값입니다.")
     private Integer burnedCalorie;
-    @NotNull
+    
     private LocalDateTime createdAt;
-    @NotNull
     private LocalDateTime updatedAt;
 
     public PlayRecord toAddEntity(Child child, GameResultRequestDTO gameResultRequestDTO) {
