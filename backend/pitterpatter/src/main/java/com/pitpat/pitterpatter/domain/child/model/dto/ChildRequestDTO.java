@@ -4,6 +4,7 @@ import com.pitpat.pitterpatter.entity.Child;
 import com.pitpat.pitterpatter.entity.UserEntity;
 import com.pitpat.pitterpatter.entity.enums.Gender;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,17 +15,31 @@ import java.util.Optional;
 @Data
 @Builder
 public class ChildRequestDTO {
+
     private String profileImage;
-    @NotNull
+
+    @NotNull(message = "닉네임은 필수 값입니다.")
+    @Size(max = 10, message = "닉네임은 최대 10자까지 입력 가능합니다.")
     private String nickname;
-    @NotNull(message = "유효하지 않은 성별입니다.")
+
+    @NotNull(message = "성별은 필수 값입니다.")
     private Gender gender;
-    @NotNull
+
+    @NotNull(message = "생일은 필수 값입니다.")
     private LocalDate birth;
-    @NotNull
+
     private LocalDateTime createdAt;
-    @NotNull
     private LocalDateTime updatedAt;
+
+    public Child toAddEntity(UserEntity user) {
+        return Child.builder()
+                .profileImage(profileImage)
+                .user(user)
+                .nickname(nickname)
+                .gender(gender)
+                .birth(birth)
+                .build();
+    }
 
     public Child toAddEntity(UserEntity user, ChildRequestDTO childRequestDTO) {
         return Child.builder()

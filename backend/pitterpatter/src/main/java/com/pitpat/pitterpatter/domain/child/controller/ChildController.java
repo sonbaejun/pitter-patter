@@ -8,13 +8,17 @@ import com.pitpat.pitterpatter.entity.Child;
 import com.pitpat.pitterpatter.global.exception.exceptions.DataNotFoundException;
 import com.pitpat.pitterpatter.global.exception.exceptions.TokenExpiredException;
 import com.pitpat.pitterpatter.global.exception.exceptions.UserProblemException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/child")
@@ -31,7 +35,13 @@ public class ChildController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> addChild(@RequestBody ChildRequestDTO childRequestDTO) {
+    public ResponseEntity<?> addChild(@Valid @RequestBody ChildRequestDTO childRequestDTO, BindingResult bindingResult) {
+
+        ResponseEntity<List<String>> validatedChildRequest = validateChildRequest(bindingResult);
+        if (validatedChildRequest != null) {
+            return validatedChildRequest;
+        }
+
         childService.addChild(childRequestDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -52,5 +62,16 @@ public class ChildController {
     public ResponseEntity<Void> deleteChild(@PathVariable Long childId) {
         childService.deleteChild(childId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    private static ResponseEntity<List<String>> validateChildRequest(BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            // 유효성 검증 실패 시, 에러 메시지를 담아서 반환
+            List<String> errors = bindingResult.getAllErrors().stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .collect(Collectors.toList());
+            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+        }
+        return null;
     }
 }
