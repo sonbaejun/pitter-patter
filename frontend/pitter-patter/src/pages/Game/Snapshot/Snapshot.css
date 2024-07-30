@@ -1,33 +1,129 @@
-.center-row {
-  display: flex;
-  flex-direction: row;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.frame {
-  height: fit-content;
-  margin: 0 50px;
-  height: 75vh;
-  width: 60vh;
-  background-image: url("../../../assets/frame/basic2.png");
+.main-wrap {
+  width: 100vw;
+  height: 100vh;
+  background-image: url("../../../assets/img/Background/YellowWave.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
 }
 
+.center-column {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.center-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.title {
+  font-family: "TTLaundryGothicB";
+  font-size: 30px;
+  color: #f9810a;
+  margin-bottom: 30px;
+}
+
+.frame {
+  height: fit-content;
+  margin: 0 50px;
+  height: 400px;
+  width: 328px;
+  border-radius: 10px;
+  background-image: url("../../../assets/frame/frame1.png");
+}
+
+.toolbar {
+  margin: 0 50px;
+  height: 400px;
+  width: 328px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
 .blank-row {
+  position: relative;
+  top: 0;
+  left: 0;
   display: flex;
   flex-direction: row;
 }
 
 .blank {
-  height: 27vh;
-  width: 27vh;
-  margin-left: 2vh;
-  margin-top: 2vh;
+  height: 126px;
+  width: 140px;
+  margin-left: 16px;
+  margin-top: 16px;
   position: relative;
   background-color: white;
+}
+
+.user-img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.add-img {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 30px;
+}
+
+button {
+  width: 60%;
+  background-color: var(--box-yellow-color);
+  box-shadow: 0 6px 0 0 #ffc139;
+  font-family: "NEXON Lv1 Gothic OTF";
+  font-weight: bold;
+  font-size: 15px;
+  color: var(--font-color);
+}
+
+.tool-wrap {
+  height: 50%;
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 30px;
+}
+
+.tool-title {
+  font-family: "NEXON Lv1 Gothic OTF";
+  font-size: 17px;
+  color: #616161;
+  font-weight: bold;
+}
+
+.tool-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.tool {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.tool > img {
+  height: 120px;
 }
