@@ -7,9 +7,6 @@ function LandingPage() {
         <MainWrap>
             <HeaderBody>
                 <Header />
-                {/* <NavBar />
-                <InputH />
-                <ProfileList /> */}
             </HeaderBody>
             <MainColumn>
                 <SubTitle>웹 캠을 통한 유아, 소아 피트니스 게임 서비스</SubTitle>

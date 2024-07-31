@@ -45,6 +45,7 @@ export const HeaderButton = styled.img`
   width: 50%;
   height: 50%;
   margin: 0 20%;
+  cursor: pointer;
 `;
 
 export const MainColumn = styled.div`
