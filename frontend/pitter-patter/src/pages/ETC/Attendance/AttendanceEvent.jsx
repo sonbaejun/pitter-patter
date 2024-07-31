@@ -1,20 +1,9 @@
 import 'react-calendar/dist/Calendar.css';
 import {
-  LayoutBase,
-  LayoutMyPage,
-  LayoutRow,
-  LayoutColumn,
-  MenuWrap,
-  BackArrow,
-  ArrowPic,
-  MenuItemWrap,
-  MenuItem,
-  MainWrap,
   Board,
   Stone,
   SVGContainer
 } from './AttendanceEventStyle';
-import ArrowLeftIcon from '/src/assets/icons/ArrowLeft.png';
 import UndoneImage from '/src/assets/icons/Undone.png'
 import DoneImage from '/src/assets/icons/Done.png'
 
@@ -60,39 +49,22 @@ function generatePathData(positions) {
 
 function AttendanceEvent() {
   return (
-    <LayoutBase>
-      <LayoutMyPage>
-        <LayoutRow>
-          <LayoutColumn as={MenuWrap}>
-            <BackArrow href=''>
-              <ArrowPic src={ArrowLeftIcon} alt="ArrowLeft" />
-            </BackArrow>
-            <MenuItemWrap>
-              <MenuItem>출석 달력 보기</MenuItem>
-              <MenuItem className="selected">이벤트 확인</MenuItem>
-            </MenuItemWrap>
-          </LayoutColumn>
-          <LayoutColumn as={MainWrap}>
-            <Board>
-              <SVGContainer>
-                <svg viewBox="0 0 100 100" preserveAspectRatio="none" width="100%" height="100%">
-                  <path
-                    d={generatePathData(stonePositions)}
-                    stroke="#629d1b"
-                    strokeWidth="0.5"
-                    fill="none"
-                    strokeDasharray="1, 1"
-                  />
-                </svg>
-                {stonePositions.map((pos, index) => (
-                  <Stone key={index} src={pos.src} alt={pos.alt} style={pos.style} />
-                ))}
-              </SVGContainer>
-            </Board>
-          </LayoutColumn>
-        </LayoutRow>
-      </LayoutMyPage>
-    </LayoutBase>
+    <Board>
+      <SVGContainer>
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none" width="100%" height="100%">
+          <path
+            d={generatePathData(stonePositions)}
+            stroke="#629d1b"
+            strokeWidth="0.5"
+            fill="none"
+            strokeDasharray="1, 1"
+          />
+        </svg>
+        {stonePositions.map((pos, index) => (
+          <Stone key={index} src={pos.src} alt={pos.alt} style={pos.style} />
+        ))}
+      </SVGContainer>
+    </Board>
   );
 }
 
