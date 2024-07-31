@@ -8,10 +8,10 @@ function SnapshotShop() {
   const Navigator = useNavigate();
 
   const [frames, setFrames] = useState([
-    "/src/assets/frame/frame1.png",
-    "/src/assets/frame/frame2.png",
-    "/src/assets/frame/frame3.png",
-    "/src/assets/frame/frame4.png",
+    "/src/assets/img/Shop/frame/frame1.png",
+    "/src/assets/img/Shop/frame/frame2.png",
+    "/src/assets/img/Shop/frame/frame3.png",
+    "/src/assets/img/Shop/frame/frame4.png",
   ]);
 
   const [currentIdx, setCurrentIdx] = useState(0);
