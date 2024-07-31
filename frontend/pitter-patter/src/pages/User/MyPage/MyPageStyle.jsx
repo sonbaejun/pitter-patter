@@ -45,6 +45,10 @@ export const MenuItem = styled.div`
   margin-bottom: 1vw;
   font-weight: 700;
   color: ${(props) => props.color? props.color:"#616161"};
+
+  &:hover {
+    color: white;
+  }
 `;
 
 export const MainWrap = styled.div`
