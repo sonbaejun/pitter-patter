@@ -3,6 +3,8 @@ package com.pitpat.pitterpatter.domain.user.controller;
 import com.pitpat.pitterpatter.domain.user.model.dto.*;
 import com.pitpat.pitterpatter.domain.user.service.UserService;
 import com.pitpat.pitterpatter.global.exception.user.DuplicateResourceException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,10 +26,10 @@ public class UserController {
     // =================== 로그인 관련 ===========================
     // email 유저 로그인 메서드
     @PostMapping("/login/email")
-    public ResponseEntity<JwtAcceessTokenDto> emailLogin(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<JwtTokenDto> emailLogin(@RequestBody LoginDto loginDto) {
         String email = loginDto.getEmail();
         String password = loginDto.getPassword();
-        JwtAcceessTokenDto jwtToken = userService.emailLogin(email, password);
+        JwtTokenDto jwtToken = userService.emailLogin(email, password);
         log.info("request email = {}, password = {}", email, password);
         log.info("jwtToken accessToken = {}", jwtToken.getAccessToken());
 
@@ -155,6 +157,30 @@ public class UserController {
             int userId = Integer.parseInt(userDetails.getUsername());
             userService.deleteUser(userId);
             return ResponseEntity.ok("User deleted successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    // acccess token, refresh token 재발급 요청
+    // (Refresh Token Rotation을 위해 access 토큰이 만료될 때 refresh token도 같이 새로 발급)
+    @PatchMapping("/reissue")
+    public ResponseEntity reissue(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            // Request Header에서 토큰 정보 추출
+            String refreshToken = userService.resolveRefreshToken(request);
+
+            // 토큰이 없는 경우(Security Filter에서 없는 경우는 어차피 걸러질 것이지만 혹시나를 대비)
+            if (refreshToken == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("JWT Token missing");
+            }
+
+            JwtTokenDto newJwtToken = userService.reissueToken(refreshToken);
+            return ResponseEntity.status(HttpStatus.OK).body(newJwtToken);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }

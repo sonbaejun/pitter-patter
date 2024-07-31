@@ -24,10 +24,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         // 1. Request Header에서 JWT 토큰 추출
-        String token = resolveToken((HttpServletRequest) request);
+        String token = jwtTokenProvider.resolveToken((HttpServletRequest) request);
 
-        // TODO: 잘못된 JWT 토큰이 들어올 경우 DeserializationException 발생 처리
-        // TODO: access token이 만료되었을 경우 처리
+        // TODO: 잘못된 JWT 토큰이 들어올 경우 예외를 응답으로 던져주기
         
         // 2. validateToken으로 토큰 유효성 검사
         if (token != null && jwtTokenProvider.validateToken(token)) {
@@ -38,15 +37,5 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // 토큰 정보가 없거나 유효하지 않다면 다음 체인으로 이동
         chain.doFilter(request, response);
     }
-
-    // Request Header에서 토큰 정보 추출
-    private String resolveToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7);
-        }
-        return null;
-    }
-
 
 }

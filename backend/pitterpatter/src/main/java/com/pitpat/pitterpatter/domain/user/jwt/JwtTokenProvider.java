@@ -1,12 +1,12 @@
 package com.pitpat.pitterpatter.domain.user.jwt;
 
-import com.pitpat.pitterpatter.domain.user.model.dto.JwtAcceessTokenDto;
-import com.pitpat.pitterpatter.domain.user.model.dto.RefreshTokenDto;
+import com.pitpat.pitterpatter.domain.user.model.dto.JwtTokenDto;
+import com.pitpat.pitterpatter.entity.RefreshTokenEntity;
 import com.pitpat.pitterpatter.domain.user.repository.RefreshTokenRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import lombok.RequiredArgsConstructor;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,8 +15,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
-import java.awt.dnd.DropTarget;
 import java.security.Key;
 import java.util.*;
 
@@ -34,7 +34,7 @@ public class JwtTokenProvider {
 
     // application.yml에서 secret 값 가져와서 key에 저장
     public JwtTokenProvider(@Value("${jwt.secret}") String secretKey, RefreshTokenRepository refreshTokenRepository) {
-        // 생성자 주입
+        // 생성자 주입 방식
         this.refreshTokenRepository = refreshTokenRepository;
         // secretkey를 base64로 디코딩
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
@@ -43,7 +43,7 @@ public class JwtTokenProvider {
     }
 
     // User 정보를 가지고 AccessToken, RefreshToken을 생성하는 메서드
-    public JwtAcceessTokenDto generateToken(Authentication authentication) {
+    public JwtTokenDto generateToken(Authentication authentication) {
 
         // 1. 시간 설정
         long nowMillis = System.currentTimeMillis();
@@ -55,16 +55,17 @@ public class JwtTokenProvider {
         String refreshToken = generateRefreshToken(authentication.getName(), nowMillis, REFRESH_TOKEN_EXPIRATION_TIME);
         saveRefreshToken(Integer.parseInt(authentication.getName()), refreshToken, REFRESH_TOKEN_EXPIRATION_TIME);
 
-        return JwtAcceessTokenDto.builder()
+        return JwtTokenDto.builder()
                 .grantType("Bearer")
                 .accessToken(accessToken)
+                .refreshToken(refreshToken)
                 .build();
     }
 
     // Refresh Token을 Redis에 저장
     public void saveRefreshToken(int userId, String refreshToken, long expirationTime) {
         long seconds = expirationTime / 1000; // 초 단위로 바꿈
-        RefreshTokenDto refreshTokenDto = RefreshTokenDto.builder()
+        RefreshTokenEntity refreshTokenDto = RefreshTokenEntity.builder()
                                                         .userId(userId)
                                                         .refreshToken(refreshToken)
                                                         .ttl(seconds)
@@ -103,9 +104,9 @@ public class JwtTokenProvider {
     }
 
     // Jwt 토큰을 복호화하여 토큰에 들어있는 정보를 꺼내는 메서드
-    public Authentication getAuthentication(String accessToken) {
+    public Authentication getAuthentication(String token) {
         // Jwt 토큰 복호화
-        Claims claims = parseClaims(accessToken);
+        Claims claims = parseClaims(token);
 
         // 빈 권한 리스트
         Collection<? extends GrantedAuthority> authorities = Collections.emptyList();
@@ -125,22 +126,24 @@ public class JwtTokenProvider {
                     .build()
                     .parseClaimsJws(token);
             return true;
-        } catch (SecurityException | MalformedJwtException e) {
-            log.info("Invalid JWT Token", e);
+        } catch (SecurityException e) {
+            log.error("Not expected JWT Token format", e);
+        } catch (MalformedJwtException e) {
+            log.error("Invalid JWT Token", e);
         } catch (ExpiredJwtException e) {
-            log.info("Expired JWT Token", e);
+            log.error("Expired JWT Token", e);
         } catch (UnsupportedJwtException e) {
-            log.info("Unsupported JWT Token", e);
+            log.error("Unsupported JWT Token", e);
         } catch (IllegalArgumentException e) {
-            log.info("JWT claims string is empty.", e);
+            log.error("JWT claims string is empty.", e);
         } catch (Exception e) {
-            log.info("Internal server error.", e);
+            log.error("Internal server error.", e);
         }
         return false;
     }
 
     // jwt 토큰 복호화
-    private Claims parseClaims(String token) {
+    public Claims parseClaims(String token) {
         try {
             return Jwts.parser()
                     .setSigningKey(key)
@@ -150,6 +153,15 @@ public class JwtTokenProvider {
         } catch (ExpiredJwtException e) {
             return e.getClaims();
         }
+    }
+
+    // Request Header에서 토큰 정보 추출
+    public String resolveToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
+        }
+        return null;
     }
 
 }

@@ -1,10 +1,9 @@
-package com.pitpat.pitterpatter.domain.user.model.dto;
+package com.pitpat.pitterpatter.entity;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
-import org.springframework.data.redis.core.index.Indexed;
 
 @RedisHash("RefreshToken")
 @AllArgsConstructor
@@ -12,7 +11,7 @@ import org.springframework.data.redis.core.index.Indexed;
 @Builder
 @Setter
 @NoArgsConstructor
-public class RefreshTokenDto {
+public class RefreshTokenEntity {
     @Id
     private int userId;
     private String refreshToken;

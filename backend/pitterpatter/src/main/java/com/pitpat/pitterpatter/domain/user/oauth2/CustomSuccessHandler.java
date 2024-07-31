@@ -2,7 +2,7 @@ package com.pitpat.pitterpatter.domain.user.oauth2;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pitpat.pitterpatter.domain.user.jwt.JwtTokenProvider;
-import com.pitpat.pitterpatter.domain.user.model.dto.JwtAcceessTokenDto;
+import com.pitpat.pitterpatter.domain.user.model.dto.JwtTokenDto;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,7 +26,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         //OAuth2User
-        JwtAcceessTokenDto tokenDto = jwtTokenProvider.generateToken(authentication);
+        JwtTokenDto tokenDto = jwtTokenProvider.generateToken(authentication);
 
         // 응답 본문에 JSON 형식으로 TokenDto 객체를 포함시키기 위해 ObjectMapper 사용
         response.setContentType("application/json");

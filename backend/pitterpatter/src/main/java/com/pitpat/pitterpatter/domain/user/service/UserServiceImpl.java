@@ -2,10 +2,14 @@ package com.pitpat.pitterpatter.domain.user.service;
 
 import com.pitpat.pitterpatter.domain.user.jwt.JwtTokenProvider;
 import com.pitpat.pitterpatter.domain.user.model.dto.*;
+import com.pitpat.pitterpatter.domain.user.repository.RefreshTokenRepository;
 import com.pitpat.pitterpatter.domain.user.repository.UserRepository;
+import com.pitpat.pitterpatter.entity.RefreshTokenEntity;
 import com.pitpat.pitterpatter.entity.UserEntity;
 import com.pitpat.pitterpatter.global.exception.user.DuplicateResourceException;
 import com.pitpat.pitterpatter.global.util.user.TeamNameGenerator;
+import io.jsonwebtoken.Claims;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,9 +17,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -24,6 +34,7 @@ import java.util.Optional;
 @Slf4j
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
@@ -37,7 +48,7 @@ public class UserServiceImpl implements UserService{
     // email 유저 로그인
     @Transactional
     @Override
-    public JwtAcceessTokenDto emailLogin(String email, String password) {
+    public JwtTokenDto emailLogin(String email, String password) {
 
         // 1. `email + password 를 기반으로 Authentication 객체 생성
         // 이때 authentication 은 인증 여부를 확인하는 authenticated 값이 false
@@ -48,7 +59,7 @@ public class UserServiceImpl implements UserService{
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
-        JwtAcceessTokenDto jwtToken = jwtTokenProvider.generateToken(authentication);
+        JwtTokenDto jwtToken = jwtTokenProvider.generateToken(authentication);
 
         return jwtToken;
     }
@@ -195,6 +206,48 @@ public class UserServiceImpl implements UserService{
         // TODO: REDIS에서 refresh Token도 삭제
     }
 
+    // acccess token, refresh token 재발급 요청
+    @Override
+    public JwtTokenDto reissueToken(String refreshToken) throws IllegalArgumentException, NoSuchElementException {
+        // 1. 토큰 복호화
+        Claims claims = jwtTokenProvider.parseClaims(refreshToken);
+        String userId = claims.getSubject();
+
+        // 2. redis에 저장된 refresh 토큰과 맞는지 검증
+        // 맞지 않을 경우 IllegalArgumentException 예외 발생
+        this.verifyRefreshToken(refreshToken, userId);
+
+        // 3. db에서 userId에 맞는 user 꺼내오기
+        // user가 없을 경우 NoSuchElementException 발생
+        UserDto userDto = this.getUserById(Integer.parseInt(userId));
+
+        // 4. UserDetails 객체를 만들어서 Authentication 생성
+        UserDetails principal = new CustomUserDetailsDto(userDto);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(principal, "", principal.getAuthorities());
+
+        // JWT 토큰 발급
+        return jwtTokenProvider.generateToken(authentication);
+    }
+
+    // redis에 저장된 refresh 토큰과 맞는지 검증
+    @Override
+    public void verifyRefreshToken(String refreshToken, String userId) {
+        // 2. redis에 있는 refresh 토큰 꺼내오기
+        Optional<RefreshTokenEntity> existingRefreshTokenOptional = refreshTokenRepository.findByUserId(userId);
+
+        // redis에 refresh 토큰이 존재하는 경우
+        if (existingRefreshTokenOptional.isPresent()) {
+            // redis에 있는 토큰과 같은지 비교
+            String redisRefreshToken = existingRefreshTokenOptional.get().getRefreshToken();
+            if (redisRefreshToken.equals(refreshToken)) {
+                return;
+            }
+        }
+
+        // redis에 토큰이 존재하지 않거나 redis에 있는 토큰과 들어온 토큰이 같지 않은 경우 예외 발생
+        throw new IllegalArgumentException("JWT Token is not same");
+    }
+
 
     // ====================== 기타 ============================
     // TODO: CustomOAuth2UserService에도 getUniqueTeamName()이 있으므로 따로 빼서 사용하기
@@ -216,5 +269,10 @@ public class UserServiceImpl implements UserService{
             log.error("IllegalArgumentException: Password is invalid: {}", password);
             throw new IllegalArgumentException("This password is invalid");
         }
+    }
+
+    // Request Header에서 토큰 정보 추출
+    public String resolveRefreshToken(HttpServletRequest request) {
+        return jwtTokenProvider.resolveToken(request);
     }
 }
