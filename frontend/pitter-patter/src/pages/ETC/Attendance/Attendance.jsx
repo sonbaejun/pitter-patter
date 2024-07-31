@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import 'react-calendar/dist/Calendar.css';
 import CalendarPage from './CalendarPage';
 import AttendanceEvent from './AttendanceEvent';
@@ -17,14 +18,15 @@ import {
 import ArrowLeftIcon from '/src/assets/icons/ArrowLeft.png';
 
 function Atd() {
-  const [selectedMenu, setSelectedMenu] = useState('attendance'); // Default to 'attendance'
+  const [selectedMenu, setSelectedMenu] = useState('attendance');
+  const navigate = useNavigate();
 
   return (
     <LayoutBase>
       <LayoutMyPage>
         <LayoutRow>
           <LayoutColumn as={MenuWrap}>
-            <BackArrow href=''>
+            <BackArrow onClick={() => navigate(-1)}>
               <ArrowPic src={ArrowLeftIcon} alt="ArrowLeft" />
             </BackArrow>
             <MenuItemWrap>
