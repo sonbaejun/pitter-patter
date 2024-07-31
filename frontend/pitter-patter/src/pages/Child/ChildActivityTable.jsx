@@ -1,6 +1,13 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import styled from 'styled-components';
+import { 
+  LayoutActivityPage, 
+  LayoutGraphList, 
+  PlaytimeGraph, 
+  GraphHeader, 
+  GraphFooter, 
+  ContentBody 
+} from './ChildActivityTableStyle';
 
 const data = [
   {
@@ -25,95 +32,42 @@ const data = [
   },
 ];
 
-const LayoutActivityPage = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-`;
-
-const LayoutGraphList = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-`;
-
-const PlaytimeGraph = styled.div`
-  width: 80%;
-  height: 300px; /* 적절한 높이 설정 */
-`;
-
 function ChildActivityTable() {
   return (
-    <LayoutActivityPage>
-      <LayoutGraphList>
-        <PlaytimeGraph>
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              data={data}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5,
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="playtime" stroke="#8884d8" activeDot={{ r: 8 }} />
-            </LineChart>
-          </ResponsiveContainer>
-        </PlaytimeGraph>
-      </LayoutGraphList>
-
-      <LayoutGraphList>
-        <PlaytimeGraph>
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              data={data}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5,
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="playtime" stroke="#8884d8" activeDot={{ r: 8 }} />
-            </LineChart>
-          </ResponsiveContainer>
-        </PlaytimeGraph>
-
-        <PlaytimeGraph>
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              data={data}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5,
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="playtime" stroke="#8884d8" activeDot={{ r: 8 }} />
-            </LineChart>
-          </ResponsiveContainer>
-        </PlaytimeGraph>
-      </LayoutGraphList>
-    </LayoutActivityPage>
+    <ContentBody>
+      <GraphHeader>
+        <span>키나 몸무게를 최근에 새로 측정하셨나요? 지금 추가해서 그래프를 업데이트 해보세요! </span>
+        <a>추가하러 가기</a>
+      </GraphHeader>
+      <LayoutActivityPage>
+        <LayoutGraphList>
+          <PlaytimeGraph>
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart
+                data={data}
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 20,
+                  bottom: 5,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line type="monotone" dataKey="playtime" stroke="#003f89" activeDot={{ r: 8 }} />
+              </LineChart>
+            </ResponsiveContainer>
+          </PlaytimeGraph>
+        </LayoutGraphList>
+      </LayoutActivityPage>
+      <GraphFooter>
+        <p>현재 BMI는 ### 입니다. </p>
+        <p>### 님의 나이에서 해당 BMI는 ### 입니다. </p>
+      </GraphFooter>
+    </ContentBody>
   );
 }
 
