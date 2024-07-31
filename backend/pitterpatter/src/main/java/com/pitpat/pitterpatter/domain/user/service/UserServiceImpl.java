@@ -10,11 +10,15 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -186,6 +190,12 @@ public class UserServiceImpl implements UserService{
             log.error("IllegalArgumentException: 2FA has not been verified: {}", twoFaDto.getTwoFa());
             throw new IllegalArgumentException("This 2FA has not been verified.");
         }
+    }
+
+    // jwt 토큰에서 userId 값을 꺼내와 회원 탈퇴
+    @Override
+    public void deleteUser(int userId) {
+        userRepository.deleteById((long) userId);
     }
 
 

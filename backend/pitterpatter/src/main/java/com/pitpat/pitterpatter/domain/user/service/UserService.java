@@ -25,6 +25,8 @@ public interface UserService {
     public void resetPassword(int userId, PasswordDto passwordDto);
     // jwt 토큰에서 userId 값을 꺼내와 2차 비밀번호 검증
     public void verify2fa(int userId, TwoFaDto twoFaDto);
+    // jwt 토큰에서 userId 값을 꺼내와 회원 탈퇴
+    public void deleteUser(int userId);
 
     // ====================== 기타 ============================
     // 팀 이름 생성기를 이용하여 db에 없는 유니크한 팀 이름 반환

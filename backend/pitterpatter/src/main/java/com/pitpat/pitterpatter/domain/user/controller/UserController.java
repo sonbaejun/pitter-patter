@@ -3,13 +3,18 @@ package com.pitpat.pitterpatter.domain.user.controller;
 import com.pitpat.pitterpatter.domain.user.model.dto.*;
 import com.pitpat.pitterpatter.domain.user.service.UserService;
 import com.pitpat.pitterpatter.global.exception.user.DuplicateResourceException;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.NoSuchElementException;
 
@@ -147,5 +152,17 @@ public class UserController {
         }
     }
 
+    // TODO: 예외 처리 구체적으로
+    // jwt 토큰에서 userId 값을 꺼내와 회원 탈퇴
+    @DeleteMapping
+    public ResponseEntity<?> deleteUser(@AuthenticationPrincipal UserDetails userDetails) {
+        try {
+            int userId = Integer.parseInt(userDetails.getUsername());
+            userService.deleteUser(userId);
+            return ResponseEntity.ok("User deleted successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
 }
 
