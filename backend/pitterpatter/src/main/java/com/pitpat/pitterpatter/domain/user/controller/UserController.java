@@ -3,18 +3,13 @@ package com.pitpat.pitterpatter.domain.user.controller;
 import com.pitpat.pitterpatter.domain.user.model.dto.*;
 import com.pitpat.pitterpatter.domain.user.service.UserService;
 import com.pitpat.pitterpatter.global.exception.user.DuplicateResourceException;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.NoSuchElementException;
 
@@ -29,12 +24,12 @@ public class UserController {
     // =================== 로그인 관련 ===========================
     // email 유저 로그인 메서드
     @PostMapping("/login/email")
-    public ResponseEntity<JwtTokenDto> emailLogin(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<JwtAcceessTokenDto> emailLogin(@RequestBody LoginDto loginDto) {
         String email = loginDto.getEmail();
         String password = loginDto.getPassword();
-        JwtTokenDto jwtToken = userService.emailLogin(email, password);
+        JwtAcceessTokenDto jwtToken = userService.emailLogin(email, password);
         log.info("request email = {}, password = {}", email, password);
-        log.info("jwtToken accessToken = {}, refreshToken = {}", jwtToken.getAccessToken(), jwtToken.getRefreshToken());
+        log.info("jwtToken accessToken = {}", jwtToken.getAccessToken());
 
         return ResponseEntity.status(HttpStatus.OK).body(jwtToken);
     }
@@ -164,5 +159,6 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
+
 }
 

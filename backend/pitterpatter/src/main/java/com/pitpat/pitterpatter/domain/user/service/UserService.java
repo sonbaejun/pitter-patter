@@ -6,7 +6,7 @@ public interface UserService {
 
     // ===================== 로그인 관련 ==========================
     // email 유저 로그인
-    public JwtTokenDto emailLogin(String email, String password);
+    public JwtAcceessTokenDto emailLogin(String email, String password);
 
     // ===================== 회원가입 관련 ========================
     // email 유저 회원가입

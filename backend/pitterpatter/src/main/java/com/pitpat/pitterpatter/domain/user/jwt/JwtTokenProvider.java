@@ -1,9 +1,12 @@
 package com.pitpat.pitterpatter.domain.user.jwt;
 
-import com.pitpat.pitterpatter.domain.user.model.dto.JwtTokenDto;
+import com.pitpat.pitterpatter.domain.user.model.dto.JwtAcceessTokenDto;
+import com.pitpat.pitterpatter.domain.user.model.dto.RefreshTokenDto;
+import com.pitpat.pitterpatter.domain.user.repository.RefreshTokenRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,20 +16,26 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import java.awt.dnd.DropTarget;
 import java.security.Key;
 import java.util.*;
 
 @Slf4j
 @Component
 public class JwtTokenProvider {
+
     private final Key key;
+    private final RefreshTokenRepository refreshTokenRepository;
+
     // 900000 == 15분
     private static final long ACCESS_TOKEN_EXPIRATION_TIME = 900000;
     // 604800000 == 7일
     private static final long REFRESH_TOKEN_EXPIRATION_TIME = 604800000;
 
     // application.yml에서 secret 값 가져와서 key에 저장
-    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
+    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey, RefreshTokenRepository refreshTokenRepository) {
+        // 생성자 주입
+        this.refreshTokenRepository = refreshTokenRepository;
         // secretkey를 base64로 디코딩
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         // hmac에서 사용할 수 있는 Key 객체로 변환
@@ -34,37 +43,50 @@ public class JwtTokenProvider {
     }
 
     // User 정보를 가지고 AccessToken, RefreshToken을 생성하는 메서드
-    public JwtTokenDto generateToken(Authentication authentication) {
+    public JwtAcceessTokenDto generateToken(Authentication authentication) {
 
-        // Access Token 생성
-        String accessToken = generateAccessToken(authentication.getName());
+        // 1. 시간 설정
+        long nowMillis = System.currentTimeMillis();
 
-        // Refresh Token 생성
-        String refreshToken = generateRefreshToken(authentication.getName());
+        // 2. Access Token 생성
+        String accessToken = generateAccessToken(authentication.getName(), nowMillis, ACCESS_TOKEN_EXPIRATION_TIME);
 
-        return JwtTokenDto.builder()
+        // 3. Refresh Token 생성 후 저장
+        String refreshToken = generateRefreshToken(authentication.getName(), nowMillis, REFRESH_TOKEN_EXPIRATION_TIME);
+        saveRefreshToken(Integer.parseInt(authentication.getName()), refreshToken, REFRESH_TOKEN_EXPIRATION_TIME);
+
+        return JwtAcceessTokenDto.builder()
                 .grantType("Bearer")
                 .accessToken(accessToken)
-                .refreshToken(refreshToken)
                 .build();
     }
 
+    // Refresh Token을 Redis에 저장
+    public void saveRefreshToken(int userId, String refreshToken, long expirationTime) {
+        long seconds = expirationTime / 1000; // 초 단위로 바꿈
+        RefreshTokenDto refreshTokenDto = RefreshTokenDto.builder()
+                                                        .userId(userId)
+                                                        .refreshToken(refreshToken)
+                                                        .ttl(seconds)
+                                                        .build();
+        refreshTokenRepository.save(refreshTokenDto);
+    }
+
     // Access Token 생성
-    public String generateAccessToken(String userId) {
+    public String generateAccessToken(String userId, long nowMillis, long expirationTime) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, userId, ACCESS_TOKEN_EXPIRATION_TIME);
+        return createToken(claims, userId, nowMillis, expirationTime);
     }
 
     // Refresh Token 생성
-    public String generateRefreshToken(String userId) {
+    public String generateRefreshToken(String userId, long nowMillis, long expirationTime) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, userId, REFRESH_TOKEN_EXPIRATION_TIME);
+        return createToken(claims, userId, nowMillis, expirationTime);
     }
 
     // 전달받은 파라미터로부터 토큰 생성
-    private String createToken(Map<String, Object> claims, String subject, long expirationTime) {
+    public String createToken(Map<String, Object> claims, String subject, long nowMillis, long expirationTime) {
         String ISSUER = "com.pitpat.pitterpatter";
-        long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
         Date exp = new Date(nowMillis + expirationTime);
 

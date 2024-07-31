@@ -10,15 +10,11 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -41,7 +37,7 @@ public class UserServiceImpl implements UserService{
     // email 유저 로그인
     @Transactional
     @Override
-    public JwtTokenDto emailLogin(String email, String password) {
+    public JwtAcceessTokenDto emailLogin(String email, String password) {
 
         // 1. `email + password 를 기반으로 Authentication 객체 생성
         // 이때 authentication 은 인증 여부를 확인하는 authenticated 값이 false
@@ -52,7 +48,7 @@ public class UserServiceImpl implements UserService{
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
-        JwtTokenDto jwtToken = jwtTokenProvider.generateToken(authentication);
+        JwtAcceessTokenDto jwtToken = jwtTokenProvider.generateToken(authentication);
 
         return jwtToken;
     }
@@ -196,6 +192,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public void deleteUser(int userId) {
         userRepository.deleteById((long) userId);
+        // TODO: REDIS에서 refresh Token도 삭제
     }
 
 
