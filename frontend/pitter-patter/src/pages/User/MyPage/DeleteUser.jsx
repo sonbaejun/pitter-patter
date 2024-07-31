@@ -38,7 +38,7 @@ const SubmitButton = styled.button`
 
 function DeleteUser({ onClose }) {
     return(
-        <LayoutBase style={{ top:'0', left: '0' }} onClick={onClose}>
+        <LayoutBase style={{ top:'0', left: '0', zIndex: 10 }} onClick={onClose}>
             <LayoutModal onClick={(e) => e.stopPropagation()}>
                 <DeleteUserImage src={userdelete} alt="userdelete" />
                 <LayoutTitle style={{ marginBottom: '1rem' }}>탈퇴가 완료되었습니다.</LayoutTitle>
