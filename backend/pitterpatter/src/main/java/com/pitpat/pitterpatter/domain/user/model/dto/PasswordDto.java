@@ -2,13 +2,12 @@ package com.pitpat.pitterpatter.domain.user.model.dto;
 
 import lombok.*;
 
-@ToString
 @Getter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class LoginDto {
+public class PasswordDto {
 
-    private String email;
     private String password;
 }

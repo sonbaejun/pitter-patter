@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @ToString
+@Setter
 public class UserDto {
 
     private Integer userId;

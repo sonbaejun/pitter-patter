@@ -11,6 +11,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.NoSuchElementException;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -38,6 +40,8 @@ public class UserController {
         return "home";
     }
 
+
+    // ============================= 회원가입 관련 ================================
     // email 유저 회원가입
     @PostMapping("/email")
     public ResponseEntity<?> emailSignUp(@RequestBody EmailUserSignUpDto emailUserSignUpDto) {
@@ -78,7 +82,6 @@ public class UserController {
     }
 
 
-
     // ====================== 조회, 변경, 탈퇴 ==========================
     // jwt 토큰에서 userId 값을 꺼내와 회원정보 조회
     @GetMapping
@@ -87,7 +90,7 @@ public class UserController {
             int userId = Integer.parseInt(userDetails.getUsername());
             UserDto userDto = userService.getUserById(userId);
             return ResponseEntity.ok(userDto);
-        } catch (IllegalArgumentException e) {
+        } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
@@ -101,10 +104,29 @@ public class UserController {
             int userId = Integer.parseInt(userDetails.getUsername());
             UserDto userDto = userService.updateUserById(userId, updatedUser);
             return ResponseEntity.ok(userDto);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (DuplicateResourceException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    // jwt 토큰에서 userId 값을 꺼내와 비밀번호 재설정
+    @PatchMapping("/reset_password")
+    public ResponseEntity<String> resetPassword(@AuthenticationPrincipal UserDetails userDetails, @RequestBody PasswordDto passwordDto) {
+        try {
+            System.out.println("resetPassword: " + passwordDto.getPassword());
+            int userId = Integer.parseInt(userDetails.getUsername());
+            userService.resetPassword(userId, passwordDto);
+            return ResponseEntity.ok("Password update completed successfully.");
+        } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }

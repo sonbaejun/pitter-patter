@@ -1,9 +1,7 @@
 package com.pitpat.pitterpatter.domain.user.service;
 
-import com.pitpat.pitterpatter.domain.user.model.dto.JwtTokenDto;
-import com.pitpat.pitterpatter.domain.user.model.dto.EmailUserSignUpDto;
-import com.pitpat.pitterpatter.domain.user.model.dto.AdditionalUserInfoDto;
-import com.pitpat.pitterpatter.domain.user.model.dto.UserDto;
+import com.pitpat.pitterpatter.domain.user.model.dto.*;
+import org.springframework.security.core.userdetails.UserDetails;
 
 public interface UserService {
 
@@ -24,6 +22,8 @@ public interface UserService {
     public UserDto getUserById(int userId);
     // jwt 토큰에서 userId 값을 꺼내와 회원정보 변경
     public UserDto updateUserById(int userId, AdditionalUserInfoDto updatedUser);
+    // jwt 토큰에서 userId 값을 꺼내와 비밀번호 재설정
+    public void resetPassword(int userId, PasswordDto passwordDto);
 
     // ====================== 기타 ============================
     // 팀 이름 생성기를 이용하여 db에 없는 유니크한 팀 이름 반환

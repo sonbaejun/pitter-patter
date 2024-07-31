@@ -3,18 +3,26 @@ package com.pitpat.pitterpatter.domain.user.model.dto;
 import com.pitpat.pitterpatter.entity.UserEntity;
 import lombok.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @ToString
 @Getter
-public class EmailUserSignUpDto extends LoginDto {
+@NoArgsConstructor
+public class EmailUserSignUpDto {
 
-    private Boolean isSocial;
+    private final Boolean isSocial = false;
+    private String email;
+    private String password;
+
+    // 생성자
+    @Builder
+    public EmailUserSignUpDto(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 
     public UserEntity toEntity(String encodedPassword) {
         return UserEntity.builder()
                 .isSocial(isSocial)
-                .email(super.getEmail())
+                .email(email)
                 .password(encodedPassword)
                 .build();
     }
