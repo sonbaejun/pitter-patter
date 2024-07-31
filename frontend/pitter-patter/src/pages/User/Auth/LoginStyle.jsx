@@ -1,56 +1,71 @@
-@import "./User-common.css";
+import styled from 'styled-components';
 
-.layout-base {
+export const LayoutBase = styled.div`
   background-color: var(--box-yellow-color);
   min-height: 100vh;
   min-width: 100vw;
+  display: flex;
   justify-content: center;
   align-items: center;
-}
+`;
 
-.layout-login {
+export const LayoutLogin = styled.div`
+  display: flex;
   flex-direction: column;
   align-items: center;
-  height: 75vh;
+  justify-content: center;
+  height: 70vh;
   width: 25vw;
   border-radius: 40px;
   background-color: var(--background);
   box-shadow: 0px 11px 39.6px 0px rgba(0, 0, 0, 0.25);
-}
+`;
 
-.main-text {
+export const MainText = styled.h1`
   font-size: 2vw;
   font-weight: bold;
-  margin-top: 1vw;
+  margin: 1vw 0;
   color: var(--logo-yellow-color);
-}
+  font-family: 'TTLaundryGothicB';
+`;
 
-button#button-login {
+export const ButtonLogin = styled.button`
   width: 15vw;
   height: 2.5vw;
-  margin-top: 2vw;
+  margin-top: 1vh;
   border-radius: 6px;
   border: none;
   background-color: #5a5a5a;
   color: var(--background);
   font-size: 1vw;
-}
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
-.forgot-password {
+export const ForgotPassword = styled.a`
   font-size: 0.8vw;
   color: #b3b3b3;
-  margin-top: 0.5vw;
+  /* margin-bottom: 3vw; */
   text-decoration: none;
-}
 
-.sign-up {
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+export const SignUp = styled.span`
   font-size: 0.8vw;
   color: #b3b3b3;
   margin-top: 0.5vw;
   font-weight: 400;
-}
 
-a.sign-up {
-  font-weight: 700;
-  display: inline;
-}
+  a {
+    font-weight: 700;
+    display: inline;
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;

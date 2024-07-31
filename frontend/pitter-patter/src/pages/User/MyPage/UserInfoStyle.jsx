@@ -1,42 +1,44 @@
-.layout-mypage {
+import styled from 'styled-components';
+
+export const LayoutMyPage = styled.div`
+  display: flex;
   flex-direction: column;
   align-items: center;
-}
+`;
 
-.main-img {
+export const MainImg = styled.img`
   width: 8vw;
-  margin-top: 2vw;
-}
+`;
 
-.input-wrap {
+export const InputWrap = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 2vw;
-}
+  gap: 1vw;
+`;
 
-.input-item {
+export const InputItem = styled.div`
   margin-top: 0.5vw;
   width: 22vw;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-}
+`;
 
-.input-title {
+export const InputTitle = styled.span`
   font-size: 1.2vw;
   color: #616161;
-}
+`;
 
-.profile {
+export const Profile = styled.div`
   width: 10vw;
   height: 10vw;
   background: radial-gradient(lightpink, white 50%, white);
-  margin-top: 2vw;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
-}
+`;
