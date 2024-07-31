@@ -162,7 +162,6 @@ public class UserServiceImpl implements UserService{
         // 2. password가 유효한 지 확인
         // 비밀번호가 유효하지 않을 경우 IllegalArgumentException 발생
         String password = passwordDto.getPassword();
-        System.out.println("UserSersviceImpl: " + password);
         isValidPassword(password);
 
         // 3. password가 유효한 경우 UserEntity에 비밀번호 업데이트
@@ -172,12 +171,28 @@ public class UserServiceImpl implements UserService{
         userRepository.save(existingUser);
     }
 
+    // jwt 토큰에서 userId 값을 꺼내와 2차 비밀번호 검증
+    @Override
+    public void verify2fa(int userId, TwoFaDto twoFaDto) throws NoSuchElementException {
+        // 1. userId에 해당하는 유저를 DB에서 가져옴
+        // userId에 해당하는 유저가 없을 경우 NoSuchElementException 발생
+        UserEntity existingUser = this.getUserById(userId).toEntity();
+
+        // 2. 입력한 2차 비밀번호와 저장되어있는 해시된 2차 비밀번호를 비교
+        boolean isValid = passwordEncoder.matches(twoFaDto.getTwoFa(), existingUser.getTwoFa());
+
+        // 3. 입력한 2차 비밀번호와 저장되어있는 해시된 2차 비밀번호가 다르다면 IllegalArgumentException 발생
+        if (!isValid) {
+            log.error("IllegalArgumentException: 2FA has not been verified: {}", twoFaDto.getTwoFa());
+            throw new IllegalArgumentException("This 2FA has not been verified.");
+        }
+    }
+
 
     // ====================== 기타 ============================
     // TODO: CustomOAuth2UserService에도 getUniqueTeamName()이 있으므로 따로 빼서 사용하기
     // 팀 이름 생성기를 이용하여 db에 없는 유니크한 팀 이름 반환
     @Override
-    @Transactional
     public String getUniqueTeamName() {
         String teamName = null;
         do {
@@ -188,7 +203,8 @@ public class UserServiceImpl implements UserService{
 
     // TODO: 좀 더 디테일하게 구현하기
     // 입력으로 들어온 password가 유효한 지 한번 더 확인
-    private void isValidPassword(String password) {
+    @Override
+    public void isValidPassword(String password) {
         if (password == null || password.trim().equals("")) {
             log.error("IllegalArgumentException: Password is invalid: {}", password);
             throw new IllegalArgumentException("This password is invalid");
