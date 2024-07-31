@@ -6,7 +6,6 @@ export const LayoutBase = styled.div`
   display: flex;
   min-height: 100vh;
   min-width: 100vw;
-  display: flex;
   justify-content: center;
   align-items: center;
   background-image: url(${AttendanceBackground});
@@ -23,7 +22,6 @@ export const LayoutMyPage = styled.div`
   width: 70vw;
   border-radius: 40px;
   box-shadow: 0px 11px 39.6px 0px rgba(0, 0, 0, 0.25);
-  display: flex;
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
@@ -32,13 +30,11 @@ export const LayoutMyPage = styled.div`
 
 export const LayoutRow = styled.div`
   display: flex;
-  display: flex;
   flex-direction: row;
   width: 100%;
 `;
 
 export const LayoutColumn = styled.div`
-  display: flex;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -133,11 +129,15 @@ export const CalendarWrapper = styled.div`
         background: none;
         color: inherit; /* 글자색 변경 방지 */
         outline: none; /* 선택된 테두리 변경 방지 */
-      }
+    }
 
-      &.react-calendar__tile--now {
+    &.react-calendar__tile--now {
       border: 4px dashed rgba(0,0,256, .1); /* 점선 테두리 추가 */
       background-color: white;
+    }
+
+    &:hover {
+      background-color: inherit; /* 호버 시 반응 제거 */
     }
   }
 
