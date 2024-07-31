@@ -201,9 +201,18 @@ public class UserServiceImpl implements UserService{
 
     // jwt 토큰에서 userId 값을 꺼내와 회원 탈퇴
     @Override
-    public void deleteUser(int userId) {
+    @Transactional
+    public void deleteUser(int userId) throws NoSuchElementException {
+        // 1. userId로 User 엔티티를 조회
+        // 없을 경우 NoSuchElementException 발생
+        UserDto user = this.getUserById(userId);
+
+        // 2. DB에서 User 엔티티 삭제
         userRepository.deleteById((long) userId);
-        // TODO: REDIS에서 refresh Token도 삭제
+
+        // 3. redis에서 userId에 해당하는 refresh token도 같이 삭제
+        // 없을 경우 아무일도 일어나지 않음
+        refreshTokenRepository.deleteById(String.valueOf(userId));
     }
 
     // acccess token, refresh token 재발급 요청
