@@ -14,7 +14,7 @@ export const Wallpaper = styled.div`
 `;
 
 export const GuideText = styled.span`
-  font-size: 1.5vw;
+  font-size: 3vh;
   font-weight: 700;
   color: #000;
   font-family: "TTLaundryGothicB";
