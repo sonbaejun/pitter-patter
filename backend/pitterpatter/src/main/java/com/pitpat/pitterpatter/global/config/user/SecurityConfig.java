@@ -1,5 +1,6 @@
 package com.pitpat.pitterpatter.global.config.user;
 
+import com.pitpat.pitterpatter.domain.user.jwt.EmailTokenAuthenticationFilter;
 import com.pitpat.pitterpatter.domain.user.jwt.JwtAuthenticationFilter;
 import com.pitpat.pitterpatter.domain.user.jwt.JwtTokenProvider;
 import com.pitpat.pitterpatter.domain.user.oauth2.CustomSuccessHandler;
@@ -42,7 +43,6 @@ public class SecurityConfig {
                 // 경로별 인가 작업
                 .authorizeHttpRequests(authorize -> authorize
                                 .requestMatchers("/",
-                                        "/api/user/password/reset",
                                         "/oauth2/**",
                                         "/api/user/email",
                                         "/api/user/login/email",
@@ -54,7 +54,8 @@ public class SecurityConfig {
                 // JWT를 사용하기 때문에 세션을 사용하지 않음
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 // 필터 추가 및 순서 설정
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class) // JWT 필터 추가
+                .addFilterAfter(new EmailTokenAuthenticationFilter(jwtTokenProvider), JwtAuthenticationFilter.class) // 이메일 토큰 필터 추가
                 // oauth2
                 .oauth2Login((oauth2) -> oauth2
                         .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig

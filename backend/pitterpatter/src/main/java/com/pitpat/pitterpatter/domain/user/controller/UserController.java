@@ -136,31 +136,32 @@ public class UserController {
         }
     }
 
-//    // TODO: 구현
-//    @GetMapping("/password/reset")
-//    public ResponseEntity<?> verifyEmailToken () {
-//        try {
-//
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-//        }
-//    }
+    @GetMapping("/password/reset")
+    public ResponseEntity<String> test(@AuthenticationPrincipal UserDetails userDetails) {
+        try {
+            String email = userDetails.getUsername();
+            return ResponseEntity.ok(email + "님의 비밀번호 재설정 페이지 입니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
 
     // 비밀번호 재설정 메일 발송
     @PostMapping("/password/reset_token")
     public ResponseEntity<?> sendMailForResetPassword (@RequestBody EmailDto emailDto) {
         try {
             // 이메일 토큰 생성
+            // TODO: token 암호화 해서 보내기
             String emailToken =  userService.createEmailToken(emailDto);
             
             // 메일 발송
             String resetUrl = "http://localhost:8080/api/user/password/reset?token=" + emailToken;
             String subject = "[피터패터] 비밀번호 재설정 요청 메일입니다.";
             String htmlContent = "<h1>비밀번호 재설정을 요청하셨습니다.</h1><br>" +
-                    "<p>안녕하세요, <b>서 지헌</b>님</p>" +
+                    "<p>안녕하세요.</p>" +
                     "<p>피터패터 계정의 비밀번호 재설정을 요청하셨습니다.</p><br>" +
                     "<p>비밀번호를 재설정하시려면 아래 링크를 클릭해주세요.</p>" +
-                    "<p>링크는 30분 후에 만료됩니다.</p><br>" +
+                    "<p><b>링크는 30분 후에 만료됩니다.</b></p><br>" +
                     "<a href=\"" +
                     resetUrl +
                     "\">비밀번호 재설정</a>";

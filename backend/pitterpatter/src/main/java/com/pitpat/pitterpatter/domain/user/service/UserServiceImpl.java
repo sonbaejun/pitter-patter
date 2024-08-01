@@ -312,6 +312,6 @@ public class UserServiceImpl implements UserService{
 
     // Request Header에서 토큰 정보 추출
     public String resolveRefreshToken(HttpServletRequest request) {
-        return jwtTokenProvider.resolveToken(request);
+        return jwtTokenProvider.resolveTokenFromRequestHeader(request);
     }
 }
