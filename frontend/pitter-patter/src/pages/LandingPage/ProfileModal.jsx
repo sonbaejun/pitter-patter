@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import home from '/src/assets/img/Landing/home.png';
+import { Link } from 'react-router-dom';
 
 const ModalOverlay = styled.div`
   display: flex;
@@ -56,16 +57,24 @@ function ProfileModal({ isOpen, onClose }) {
     <ModalOverlay onClick={onClose}>
       <ModalContent onClick={e => e.stopPropagation()}>
         <GridItem>
-          <ProfilePicture src='' alt="자녀 1" />
+          <Link to='/'>
+            <ProfilePicture src='' alt="자녀 1" />
+          </Link>
         </GridItem>
         <GridItem>
-          <ProfilePicture src='' alt="자녀 2" />
+          <Link to='/'>
+            <ProfilePicture src='' alt="자녀 2" />
+          </Link>
         </GridItem>
         <GridItem>
-          <ProfilePicture src='' alt="자녀 3" />
+          <Link to='/'>
+            <ProfilePicture src='' alt="자녀 3" />
+          </Link>
         </GridItem>
         <GridItem>
-          <ProfilePicture src='' alt="자녀 4" />
+          <Link to='/'>
+            <ProfilePicture src='' alt="자녀 4" />
+          </Link>
         </GridItem>
       </ModalContent>
     </ModalOverlay>
