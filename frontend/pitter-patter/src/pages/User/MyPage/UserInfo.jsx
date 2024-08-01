@@ -34,6 +34,18 @@ const SubmitButton = styled.button`
     font-size: 1.2rem;
     height: 5vh;
     padding: .5rem 1.8rem;
+
+    &:hover {
+      box-shadow: #FA6DA1 0 .4vh;
+      transform: translateY(.3vh);
+    }
+
+    &:active {
+      box-shadow: #FA6DA1 0 0;
+      transform: translateY(.6vh);
+    }
+
+    transition: all .1s;
 `
 
 function UserInfo() {

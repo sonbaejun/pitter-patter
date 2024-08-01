@@ -6,6 +6,28 @@ export const LayoutBase = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  user-select: none;
+  
+  scroll-behavior: smooth;
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--box-pink-color);
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: white;
+  }
+  ::-webkit-scrollbar-button {
+    display: none;
+  }
+  ::-webkit-scrollbar-corner {
+    display: none;
+  }
+  ::-webkit-resizer {
+    display: none;
+  }
 `;
 
 export const LayoutMyPage = styled.div`

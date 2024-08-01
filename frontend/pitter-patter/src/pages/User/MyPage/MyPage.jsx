@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import {
   LayoutBase,
@@ -18,17 +18,17 @@ import DeleteUser from './DeleteUser';
 function MyPage() {
   const [modalOpen, setModalOpen] = useState(false);
 
+  const Navigate = useNavigate();
+
   return (
     <LayoutBase>
       {/* <DeleteUser /> */}
       <LayoutMyPage>
         <div style={{ display: 'flex', flexDirection: 'row', width: '100%', height: '100%'}}>
           <MenuWrap>
-            <div>
-              <button>
-                <MenuIcon src={ArrowLeft} alt="ArrowLeft" />
-              </button>
-            </div>
+            <button onClick={() => Navigate(-1)}>
+              <MenuIcon src={ArrowLeft} alt="ArrowLeft" />
+            </button>
             <MenuItemWrap>
               <MenuItem color='white'><Link to='/userinfo'>프로필 수정</Link></MenuItem>
               <MenuItem><Link to='/changePW'>비밀번호 변경</Link></MenuItem>

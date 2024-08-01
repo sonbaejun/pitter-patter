@@ -4,6 +4,7 @@ export const LayoutMyPage = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 80%;
 `;
 
 export const MainImg = styled.img`
