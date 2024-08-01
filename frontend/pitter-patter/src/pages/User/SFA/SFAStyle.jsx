@@ -1,41 +1,46 @@
-@import "./User-common.css";
+import styled from 'styled-components';
 
-.layout-base {
+export const LayoutBase = styled.div`
   min-height: 100vh;
   min-width: 100vw;
+  display: flex;
   justify-content: center;
   align-items: center;
-}
+`;
 
-.layout-sfa {
+export const LayoutSFA = styled.div`
   background-color: var(--box-pink-color);
   height: 80vh;
-  width: 30vw;
+  width: 40vw;
   border-radius: 40px;
   box-shadow: 0px 11px 39.6px 0px rgba(0, 0, 0, 0.25);
+  display: flex;
   flex-direction: column;
   align-items: center;
-}
+  justify-content: space-around;
+`;
 
-.dot-wrap {
+export const DotWrap = styled.div`
   width: 14vw;
   height: 1vw;
   margin-top: 1vh;
-}
+  display: flex;
+  justify-content: space-evenly;
+`;
 
-.password-dot {
+export const PasswordDot = styled.div`
   width: 1vw;
   height: 1vw;
   background-color: #757575;
   border-radius: 50%;
   margin-left: 0.5vw;
-}
 
-.filled {
-  background-color: #ffffff;
-}
+  &.filled {
+    background-color: #ffffff;
+  }
+`;
 
-.numpad-wrap {
+export const NumpadWrap = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -46,44 +51,52 @@
   color: #757575;
   font-weight: bold;
   padding: 2vh 2vw;
-}
+`;
 
-.numpad-row {
+export const NumpadRow = styled.div`
   width: 100%;
   height: 9vh;
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
-  display: flex;
-}
 
-.numpad {
+  &:not(:nth-child(4)) {
+    border-bottom: 2px solid #d9d9d9;
+  }
+`;
+
+export const Numpad = styled.div`
   width: 33%;
   font-size: 1.5vw;
+  font-family: 'LOTTERIACHAB';
+  font-weight: 200;
   display: flex;
   justify-content: center;
   align-items: center;
   user-select: none;
   cursor: pointer;
-}
 
-.numpad:not(:nth-child(3n)) {
-  border-right: 2px solid #d9d9d9;
-}
+  &:not(:nth-child(3n)) {
+    border-right: 2px solid #d9d9d9;
+  }
+`;
 
-.numpad-row:not(:nth-child(4)) {
-  border-bottom: 2px solid #d9d9d9;
-}
-
-.icon-backspace {
+export const IconBackspace = styled.img`
   width: 2vw;
   height: 2vw;
   padding: 0;
-}
+`;
 
-.forgot-password {
+export const ForgotPassword = styled.div`
   margin-bottom: 1.5vh;
   color: #616161;
   text-decoration: underline;
   cursor: pointer;
   user-select: none;
-}
+`;
+
+export const IconX = styled.img`
+  width: 2vw;
+  height: 2vw;
+  margin-left: 1vw;
+`;

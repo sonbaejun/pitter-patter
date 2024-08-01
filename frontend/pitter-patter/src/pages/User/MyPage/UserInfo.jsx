@@ -1,38 +1,80 @@
-import "./UserInfo.css";
+import React from 'react';
+import styled from 'styled-components';
+
+import {
+  LayoutMyPage,
+  Profile,
+  MainImg,
+  InputWrap,
+  InputItem,
+  InputTitle,
+} from './UserInfoStyle';
 import SingingBanana from "../../../assets/img/User/SingingBanana.png";
+
+const InputBox = styled.input`
+  width: 15vw;
+  padding: 0.5vw;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1vw;
+`;
+
+const SelectBox = styled.select`
+  width: 15vw;
+  padding: 0.5vw;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1vw;
+`;
+
+const SubmitButton = styled.button`
+    border-radius: 1.5rem;
+    background-color: #FFD8DF;
+    box-shadow: #FA6DA1 0 .6vh;
+    font-size: 1.2rem;
+    height: 5vh;
+    padding: .5rem 1.8rem;
+`
 
 function UserInfo() {
   return (
-    <div className="layout-mypage">
-      <button className="profile">
-        <img src={SingingBanana} alt="SingingBanana" className="main-img" />
-      </button>
-      <div className="input-wrap">
-        <div className="input-item">
-          <div className="input-title">아이디</div>
-          <input type="text" className="input-box" placeholder="아이디" />
-        </div>
-        <div className="input-item">
-          <div className="input-title">닉네임</div>
-          <input type="text" className="input-box" placeholder="닉네임" />
-        </div>
-        <div className="input-item">
-          <div className="input-title">이름</div>
-          <input type="text" className="input-box" placeholder="이름" />
-        </div>
-        <div className="input-item">
-          <div className="input-title">생년월일</div>
-          <input type="date" className="input-box" placeholder="생년월일" />
-        </div>
-        <div className="input-item">
-          <div className="input-title">성별</div>
-          <select className="input-box">
+    <LayoutMyPage>
+      <Profile>
+        <MainImg src={SingingBanana} alt="SingingBanana" />
+      </Profile>
+      <InputWrap>
+        <InputItem>
+          <InputTitle>아이디</InputTitle>
+          <InputBox type="text" placeholder="아이디" />
+        </InputItem>
+        <InputItem>
+          <InputTitle>이름</InputTitle>
+          <InputBox type="text" placeholder="이름" />
+        </InputItem>
+        <InputItem>
+          <InputTitle>닉네임</InputTitle>
+          <InputBox type="text" placeholder="닉네임" />
+        </InputItem>
+        <InputItem>
+          <InputTitle>가족 팀 이름</InputTitle>
+          <InputBox type="text" placeholder="팀이름" />
+        </InputItem>
+        <InputItem>
+          <InputTitle>생년월일</InputTitle>
+          <InputBox type="date" placeholder="생년월일" />
+        </InputItem>
+        <InputItem>
+          <InputTitle>성별</InputTitle>
+          <SelectBox>
             <option value="male">남자</option>
             <option value="female">여자</option>
-          </select>
-        </div>
-      </div>
-    </div>
+          </SelectBox>
+        </InputItem>
+      </InputWrap>
+      <Profile style={{background: 'none', height: '13vh'}}>
+        <SubmitButton>저장</SubmitButton>
+      </Profile>
+    </LayoutMyPage>
   )
 }
 
