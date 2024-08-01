@@ -59,9 +59,11 @@ public class Child {
     private int point = 0;
 
     @OneToMany(mappedBy = "child", fetch = FetchType.LAZY ,cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<ChildItem> childItems = new ArrayList<>();
 
     @OneToMany(mappedBy = "child", fetch = FetchType.LAZY ,cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<PointRecord> points = new ArrayList<>();
 
     @OneToMany(mappedBy = "child", fetch = FetchType.LAZY ,cascade = CascadeType.ALL, orphanRemoval = true)

@@ -23,7 +23,7 @@ public class PointRecordController {
 
     private final PointRecordService pointRecordService;
 
-    @PatchMapping("/point/{child_id}")
+    @PatchMapping("/point")
     public ResponseEntity<?> createPointRecord(@RequestBody CreatePointRecordDto createPointRecordDto) {
         try {
             FindPointRecordDto createdRecord = pointRecordService.createPointRecord(createPointRecordDto);

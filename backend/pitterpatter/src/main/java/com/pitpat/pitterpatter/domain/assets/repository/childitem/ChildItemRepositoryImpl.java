@@ -66,6 +66,10 @@ public class ChildItemRepositoryImpl implements ChildItemRepositoryCustom {
     // 소유 아이템 리스트 조회
     @Override
     public List<ChildItem> haveItems(Long childId) {
+        Child child = em.find(Child.class, childId);
+        System.out.println(child.getId());
+        System.out.println(child.toString());
+        System.out.println(child.getChildItems());
         return queryFactory
                 .selectFrom(childItem)
                 .join(childItem.item, item).fetchJoin()
