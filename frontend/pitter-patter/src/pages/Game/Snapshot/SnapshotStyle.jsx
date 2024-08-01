@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import YellowWaveBackground from "../../../assets/img/Background/YellowWave.png";
-import FrameImage from "../../../assets/frame/frame1.png";
+import YellowWaveBackground from "/src/assets/img/Background/YellowWave.png";
+import FrameImage from "/src/assets/img/Shop/frame/frame1.png";
 
 export const MainWrap = styled.div`
   width: 100vw;
@@ -87,6 +87,8 @@ export const Toolbar = styled.div`
 
 export const Button = styled.button`
   width: 60%;
+  padding: 10px;
+  border-radius: 30px;
   background-color: var(--box-yellow-color);
   box-shadow: 0 6px 0 0 #ffc139;
   font-family: "NEXON Lv1 Gothic OTF";
