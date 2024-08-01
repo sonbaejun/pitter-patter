@@ -43,7 +43,7 @@ function App() {
         <Route path="/calendar" element={<CalendarPage />} />
         <Route path="/rank" element={<Rank />} />
 
-        <Route path="/child" element={<ChildPage />} />
+        <Route path="/child/*" element={<ChildPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
 
