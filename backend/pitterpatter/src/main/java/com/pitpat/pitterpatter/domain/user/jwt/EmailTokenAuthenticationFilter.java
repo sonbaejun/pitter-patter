@@ -21,13 +21,16 @@ public class EmailTokenAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         // TODO: 잘못된 JWT 토큰이 들어올 경우 예외를 응답으로 던져주기
+        // TODO: JWT가 아닌 UUID로 바꾸기
 
         // request parameter에서 토큰 정보 추출
         String token = jwtTokenProvider.resolveTokenFromRequestParam(request);
 
+        System.out.println("EmailTokenAuthenticationFilter 들어옴: " + token);
         // TODO: 이메일 토큰 복호화?
 
         if (("/api/user/password/reset".equals(request.getRequestURI()) && token != null && jwtTokenProvider.validateToken(token))) {
+            System.out.println("EmailTokenAuthenticationFilter 검증됨");
             Authentication authentication = jwtTokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }

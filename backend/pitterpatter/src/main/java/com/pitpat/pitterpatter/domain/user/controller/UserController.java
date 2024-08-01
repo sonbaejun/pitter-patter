@@ -12,7 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.NavigableMap;
 import java.util.NoSuchElementException;
@@ -120,7 +122,7 @@ public class UserController {
         }
     }
 
-    // jwt 토큰에서 userId 값을 꺼내와 비밀번호 재설정
+    // jwt 토큰에서 email 값을 꺼내와 비밀번호 재설정
     @PatchMapping("/password/reset")
     public ResponseEntity<String> resetPassword(@AuthenticationPrincipal UserDetails userDetails, @RequestBody PasswordDto passwordDto) {
         try {
@@ -136,14 +138,11 @@ public class UserController {
         }
     }
 
+    // TODO: 이메일 토큰이 들어오면 맞는 토큰인지 검증하도록 바꾸기
+    // 이메일 토큰이 맞는지 검증
     @GetMapping("/password/reset")
-    public ResponseEntity<String> test(@AuthenticationPrincipal UserDetails userDetails) {
-        try {
-            String email = userDetails.getUsername();
-            return ResponseEntity.ok(email + "님의 비밀번호 재설정 페이지 입니다.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-        }
+    public ResponseEntity<?> viewResetPassword (@AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.status(HttpStatus.OK).body(userDetails.getUsername() + "님의 비밀번호 변경 페이지");
     }
 
     // 비밀번호 재설정 메일 발송
