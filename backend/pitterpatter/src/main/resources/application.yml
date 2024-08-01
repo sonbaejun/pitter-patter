@@ -45,6 +45,21 @@ spring:
             restart:
                 enabled: true
 
+    mail:
+        host: smtp.gmail.com
+        port: 587
+        # 발신자 메일
+        username: wlgjs8474@gmail.com
+        # 앱 비밀번호(jasypt로 암호화)
+        password: ENC(avgF1efHFqRGPStWwWQrXqI/VCSyYY0Exa6MHnBcaXs=)
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
+                        required: true
+
 jasypt:
     encryptor:
         bean: stringEncryptor

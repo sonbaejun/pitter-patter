@@ -93,7 +93,7 @@ public class JwtTokenProvider {
 
         return Jwts.builder()
                 .claims(claims) // 기타 정보
-                .subject(subject) // 사용자 식별자(user의 user_id 컬럼 값)
+                .subject(subject) // 사용자 식별자
                 .issuer(ISSUER) // 토큰 발행자
                 .notBefore(now) // 활성화 시간
                 .issuedAt(now) // 발행 시간

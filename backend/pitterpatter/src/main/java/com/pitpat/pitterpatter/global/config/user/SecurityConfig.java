@@ -42,6 +42,7 @@ public class SecurityConfig {
                 // 경로별 인가 작업
                 .authorizeHttpRequests(authorize -> authorize
                                 .requestMatchers("/",
+                                        "/api/user/password/reset",
                                         "/oauth2/**",
                                         "/api/user/email",
                                         "/api/user/login/email",

@@ -9,25 +9,24 @@ import com.pitpat.pitterpatter.entity.UserEntity;
 import com.pitpat.pitterpatter.global.exception.user.DuplicateResourceException;
 import com.pitpat.pitterpatter.global.util.user.TeamNameGenerator;
 import io.jsonwebtoken.Claims;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -38,9 +37,13 @@ public class UserServiceImpl implements UserService{
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
+    private final JavaMailSender mailSender;
 
     @Value("${custom.random-2fa}")
     private String random2Fa;
+
+    // 1800000 == 30분
+    private static final long EMAIL_TOKEN_EXPIRATION_TIME = 1800000;
 
     // ============================= 로그인 관련 ================================
     // TODO: 로그인은 추후 Spring Security Filter로 구현하기
@@ -180,6 +183,33 @@ public class UserServiceImpl implements UserService{
 
         // 4. DB에 저장
         userRepository.save(existingUser);
+    }
+
+    // 비밀번호 재설정 메일 발송을 위한 토큰 생성
+    @Override
+    @Transactional
+    public String createEmailToken(EmailDto emailDto) {
+        String email = emailDto.getEmail();
+
+        // 1. JWT 토큰 생성
+        long nowMillis = System.currentTimeMillis();
+        String jwtToken = jwtTokenProvider.generateAccessToken(email, nowMillis, EMAIL_TOKEN_EXPIRATION_TIME);
+
+        return jwtToken;
+    }
+
+    // 비밀번호 재설정 메일 발송
+    @Override
+    public void sendEmail(EmailDto emailDto, String subject, String text) throws MessagingException {
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true); // true indicates multipart message
+
+        helper.setTo(emailDto.getEmail());
+        helper.setSubject(subject);
+        helper.setText(text, true); // true indicates HTML
+
+        mailSender.send(message);
     }
 
     // jwt 토큰에서 userId 값을 꺼내와 2차 비밀번호 검증

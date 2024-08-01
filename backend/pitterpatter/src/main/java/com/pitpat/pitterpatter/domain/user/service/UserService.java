@@ -1,7 +1,9 @@
 package com.pitpat.pitterpatter.domain.user.service;
 
 import com.pitpat.pitterpatter.domain.user.model.dto.*;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.constraints.Email;
 
 public interface UserService {
 
@@ -24,6 +26,10 @@ public interface UserService {
     public UserDto updateUserById(int userId, AdditionalUserInfoDto updatedUser);
     // jwt 토큰에서 userId 값을 꺼내와 비밀번호 재설정
     public void resetPassword(int userId, PasswordDto passwordDto);
+    // 비밀번호 재설정 메일 발송을 위한 토큰 생성
+    public String createEmailToken(EmailDto emailDto);
+    // 비밀번호 재설정 메일 발송
+    public void sendEmail(EmailDto emailDto, String subject, String text) throws MessagingException;
     // jwt 토큰에서 userId 값을 꺼내와 2차 비밀번호 검증
     public void verify2fa(int userId, TwoFaDto twoFaDto);
     // jwt 토큰에서 userId 값을 꺼내와 회원 탈퇴

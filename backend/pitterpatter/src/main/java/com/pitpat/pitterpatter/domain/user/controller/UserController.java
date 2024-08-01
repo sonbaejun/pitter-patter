@@ -5,6 +5,7 @@ import com.pitpat.pitterpatter.domain.user.service.UserService;
 import com.pitpat.pitterpatter.global.exception.user.DuplicateResourceException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -13,7 +14,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.NavigableMap;
 import java.util.NoSuchElementException;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -118,7 +121,7 @@ public class UserController {
     }
 
     // jwt 토큰에서 userId 값을 꺼내와 비밀번호 재설정
-    @PatchMapping("/reset_password")
+    @PatchMapping("/password/reset")
     public ResponseEntity<String> resetPassword(@AuthenticationPrincipal UserDetails userDetails, @RequestBody PasswordDto passwordDto) {
         try {
             int userId = Integer.parseInt(userDetails.getUsername());
@@ -128,6 +131,42 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+//    // TODO: 구현
+//    @GetMapping("/password/reset")
+//    public ResponseEntity<?> verifyEmailToken () {
+//        try {
+//
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+//        }
+//    }
+
+    // 비밀번호 재설정 메일 발송
+    @PostMapping("/password/reset_token")
+    public ResponseEntity<?> sendMailForResetPassword (@RequestBody EmailDto emailDto) {
+        try {
+            // 이메일 토큰 생성
+            String emailToken =  userService.createEmailToken(emailDto);
+            
+            // 메일 발송
+            String resetUrl = "http://localhost:8080/api/user/password/reset?token=" + emailToken;
+            String subject = "[피터패터] 비밀번호 재설정 요청 메일입니다.";
+            String htmlContent = "<h1>비밀번호 재설정을 요청하셨습니다.</h1><br>" +
+                    "<p>안녕하세요, <b>서 지헌</b>님</p>" +
+                    "<p>피터패터 계정의 비밀번호 재설정을 요청하셨습니다.</p><br>" +
+                    "<p>비밀번호를 재설정하시려면 아래 링크를 클릭해주세요.</p>" +
+                    "<p>링크는 30분 후에 만료됩니다.</p><br>" +
+                    "<a href=\"" +
+                    resetUrl +
+                    "\">비밀번호 재설정</a>";
+            userService.sendEmail(emailDto, subject, htmlContent);
+
+            return ResponseEntity.ok("Password reset email sent.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
@@ -157,6 +196,8 @@ public class UserController {
             int userId = Integer.parseInt(userDetails.getUsername());
             userService.deleteUser(userId);
             return ResponseEntity.ok("User deleted successfully.");
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
