@@ -22,6 +22,7 @@ export const OuterBox = styled.div`
   border-top-left-radius: 60px;
   border-top-right-radius: 60px;
   box-shadow: 0px -3px 33.4px 0px rgba(0, 0, 0, 0.25);
+  user-select: none;
 `;
 
 export const RankBarOverlay = styled.div`
