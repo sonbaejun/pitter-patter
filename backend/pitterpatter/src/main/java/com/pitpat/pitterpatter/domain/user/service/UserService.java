@@ -46,4 +46,6 @@ public interface UserService {
     public void isValidPassword(String password);
     // Request Header에서 토큰 정보 추출
     public String resolveRefreshToken(HttpServletRequest request);
+    // 암호화
+    public String encode(String text);
 }

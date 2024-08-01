@@ -151,8 +151,9 @@ public class UserController {
     public ResponseEntity<?> sendMailForResetPassword (@RequestBody EmailDto emailDto) {
         try {
             // 이메일 토큰 생성
-            // TODO: token 암호화 해서 보내기
             String emailToken =  userService.createEmailToken(emailDto);
+
+            // TODO: 이메일 토큰 암호화?
             
             // 메일 발송
             String resetUrl = "http://localhost:8080/api/user/password/reset?token=" + emailToken;

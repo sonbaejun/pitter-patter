@@ -16,7 +16,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -86,12 +85,13 @@ public class UserServiceImpl implements UserService{
 
         // 4. Password 암호화
         // password가 유효한 경우 password 암호화
-        encodedPassword = passwordEncoder.encode(password);
+        encodedPassword = this.encode(password);
+        String encoded2Fa = this.encode(random2Fa);
 
         // 5. emailUserSignUpDto를 UserEntity로 변경하고 2차 비밀번호와 팀 이름을 임의로 넣는다.
         userEntity = emailUserSignUpDto.toEntity(encodedPassword);
+        userEntity.setTwoFa(encoded2Fa);
         userEntity.setTeamName(getUniqueTeamName());
-        userEntity.setTwoFa(passwordEncoder.encode(random2Fa));
 
         // 6. DB에 유저 정보를 저장하고 UserDto로 변환하여 return
         return UserDto.toDto(userRepository.save(userEntity));
@@ -159,7 +159,7 @@ public class UserServiceImpl implements UserService{
         isValidPassword(updatedUser.getTwoFa());
 
         // 4. 2차 비밀번호가 유효할 경우 UsetEntity 업데이트
-        existingUser.setTwoFa(passwordEncoder.encode(updatedUser.getTwoFa()));
+        existingUser.setTwoFa(this.encode(updatedUser.getTwoFa()));
 
         // 5. 업데이트된 유저 정보를 DB에 저장 후 UserDto 형태로 변환하여 return
         return UserDto.toDto(userRepository.save(existingUser));
@@ -179,7 +179,7 @@ public class UserServiceImpl implements UserService{
         isValidPassword(password);
 
         // 3. password가 유효한 경우 UserEntity에 비밀번호 업데이트
-        existingUser.setPassword(passwordEncoder.encode(password));
+        existingUser.setPassword(this.encode(password));
 
         // 4. DB에 저장
         userRepository.save(existingUser);
@@ -313,5 +313,10 @@ public class UserServiceImpl implements UserService{
     // Request Header에서 토큰 정보 추출
     public String resolveRefreshToken(HttpServletRequest request) {
         return jwtTokenProvider.resolveTokenFromRequestHeader(request);
+    }
+
+    // 암호화
+    public String encode(String text) {
+        return passwordEncoder.encode(text);
     }
 }

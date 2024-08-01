@@ -25,6 +25,8 @@ public class EmailTokenAuthenticationFilter extends OncePerRequestFilter {
         // request parameter에서 토큰 정보 추출
         String token = jwtTokenProvider.resolveTokenFromRequestParam(request);
 
+        // TODO: 이메일 토큰 복호화?
+
         if (("/api/user/password/reset".equals(request.getRequestURI()) && token != null && jwtTokenProvider.validateToken(token))) {
             Authentication authentication = jwtTokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
