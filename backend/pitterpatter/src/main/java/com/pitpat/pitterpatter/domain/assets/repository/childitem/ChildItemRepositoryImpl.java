@@ -30,7 +30,7 @@ public class ChildItemRepositoryImpl implements ChildItemRepositoryCustom {
         }
 
         // 아이템이 이미 소유되었는지 확인
-        boolean alreadyOwned = child.getChildItem().stream()
+        boolean alreadyOwned = child.getChildItems().stream()
                 .anyMatch(childItem -> childItem.getItem().getId().equals(itemId));
 
         if (alreadyOwned) {
@@ -55,7 +55,7 @@ public class ChildItemRepositoryImpl implements ChildItemRepositoryCustom {
 
         // 소유 아이템 리스트 추가
         ChildItem childItem = new ChildItem(child, item);
-        child.getChildItem().add(childItem);
+        child.getChildItems().add(childItem);
         item.getChildItems().add(childItem);
 
         em.persist(childItem);
@@ -98,7 +98,7 @@ public class ChildItemRepositoryImpl implements ChildItemRepositoryCustom {
         Child child = childItemToDelete.getChild();
         Item item = childItemToDelete.getItem();
 
-        child.getChildItem().remove(childItemToDelete);
+        child.getChildItems().remove(childItemToDelete);
         item.getChildItems().remove(childItemToDelete);
 
         em.remove(childItemToDelete);

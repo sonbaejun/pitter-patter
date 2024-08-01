@@ -25,7 +25,6 @@ public class Child {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "child_id")
-    @NotNull
     private Long id;
 
     // TODO: user_id FK 필요.

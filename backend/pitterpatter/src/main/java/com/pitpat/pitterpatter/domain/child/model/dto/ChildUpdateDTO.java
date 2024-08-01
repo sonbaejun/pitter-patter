@@ -35,6 +35,14 @@ public class ChildUpdateDTO {
                 .gender(Optional.ofNullable(childUpdateDTO.getGender()).orElse(child.getGender()))
                 .birth(Optional.ofNullable(childUpdateDTO.getBirth()).orElse(child.getBirth()))
                 .createdAt(child.getCreatedAt())
+                .updatedAt(child.getUpdatedAt())
+                .personalRecord(child.getPersonalRecord())
+                .point(child.getPoint())
+                .childItems(child.getChildItems())
+                .points(child.getPoints())
+                .physicalRecords(child.getPhysicalRecords())
+                .playRecords(child.getPlayRecords())
+                .user(child.getUser())
                 .build();
     }
 }
