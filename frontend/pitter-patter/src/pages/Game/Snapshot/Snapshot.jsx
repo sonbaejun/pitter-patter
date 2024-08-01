@@ -11,11 +11,11 @@ import {
   UserImg,
   AddImg,
 } from "./SnapshotStyle";
-import AddImageIcon from "../../../assets/icons/AddImage.png";
-import EG1 from "../../../assets/img/Snapshot/eg1.png";
-import EG2 from "../../../assets/img/Snapshot/eg2.png";
-import EG3 from "../../../assets/img/Snapshot/eg3.png";
-import EG4 from "../../../assets/img/Snapshot/eg4.png";
+import AddImageIcon from "/src/assets/icons/AddImage.png";
+import EG1 from "/src/assets/img/Snapshot/eg1.png";
+import EG2 from "/src/assets/img/Snapshot/eg2.png";
+import EG3 from "/src/assets/img/Snapshot/eg3.png";
+import EG4 from "/src/assets/img/Snapshot/eg4.png";
 
 function Snapshot() {
   const frameRef = useRef(null);
@@ -42,7 +42,7 @@ function Snapshot() {
 
   useEffect(() => {
     if (imageList.every((img) => img !== null)) {
-      navigate("/snapshot/result", { state: { imageList } }); // 이미지가 모두 채워지면 navigate 함수를 통해 /snapshot/result로 이동
+      navigate("./result", { state: { imageList } }); // 이미지가 모두 채워지면 navigate 함수를 통해 /snapshot/result로 이동
     }
   }, [imageList, navigate]);
 
@@ -71,24 +71,24 @@ function Snapshot() {
           </Frame>
           <Frame ref={frameRef}>
             <BlankRow>
-              <Blank onClick={() => getImage(0)}>
+              <Blank onClick={() => getImage(0)} active>
                 {(imageList[0] && <UserImg src={imageList[0]} alt="snapshot" />) || (
                   <AddImg src={AddImageIcon} alt="add" />
                 )}
               </Blank>
-              <Blank onClick={() => getImage(1)}>
+              <Blank onClick={() => getImage(1)} active>
                 {(imageList[1] && <UserImg src={imageList[1]} alt="snapshot" />) || (
                   <AddImg src={AddImageIcon} alt="add" />
                 )}
               </Blank>
             </BlankRow>
             <BlankRow>
-              <Blank onClick={() => getImage(2)}>
+              <Blank onClick={() => getImage(2)} active>
                 {(imageList[2] && <UserImg src={imageList[2]} alt="snapshot" />) || (
                   <AddImg src={AddImageIcon} alt="add" />
                 )}
               </Blank>
-              <Blank onClick={() => getImage(3)}>
+              <Blank onClick={() => getImage(3)} active>
                 {(imageList[3] && <UserImg src={imageList[3]} alt="snapshot" />) || (
                   <AddImg src={AddImageIcon} alt="add" />
                 )}

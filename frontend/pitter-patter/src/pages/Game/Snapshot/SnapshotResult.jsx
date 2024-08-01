@@ -16,8 +16,8 @@ import {
   Tool,
   ToolImg,
 } from "./SnapshotStyle";
-import Share from "../../../assets/img/Snapshot/share.png";
-import Save from "../../../assets/img/Snapshot/save.png";
+import Share from "/src/assets/img/Snapshot/share.png";
+import Save from "/src/assets/img/Snapshot/save.png";
 
 function SnapshotResult() {
   const location = useLocation();

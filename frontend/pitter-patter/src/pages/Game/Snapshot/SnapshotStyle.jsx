@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import YellowWaveBackground from "../../../assets/img/Background/YellowWave.png";
-import FrameImage from "../../../assets/frame/frame1.png";
+import YellowWaveBackground from "/src/assets/img/Background/YellowWave.png";
+import FrameImage from "/src/assets/img/Shop/frame/frame1.png";
 
 export const MainWrap = styled.div`
   width: 100vw;
@@ -9,6 +9,7 @@ export const MainWrap = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  user-select: none;
 `;
 
 export const CenterColumn = styled.div`
@@ -59,6 +60,19 @@ export const Blank = styled.div`
   margin-top: 16px;
   position: relative;
   background-color: white;
+
+  // if props.active is true, set hover and active styles
+  ${(props) =>
+    props.active &&
+    `
+    &:hover {
+      background-color: lightgray;
+    }
+    &:active {
+      background-color: gray;
+    }
+    transition: 0.3s;
+  `}
 `;
 
 export const UserImg = styled.img`
@@ -87,12 +101,26 @@ export const Toolbar = styled.div`
 
 export const Button = styled.button`
   width: 60%;
+  padding: 10px;
+  border-radius: 30px;
   background-color: var(--box-yellow-color);
   box-shadow: 0 6px 0 0 #ffc139;
   font-family: "NEXON Lv1 Gothic OTF";
   font-weight: bold;
   font-size: 15px;
   color: var(--font-color);
+
+  &:hover {
+    box-shadow: 0 4px 0 0 #ffc139;
+    transform: translateY(3px);
+  }
+
+  &:active {
+    box-shadow: 0 0 0 0 #ffc139;
+    transform: translateY(6px);
+  }
+
+  transition: 0.3s;
 `;
 
 export const ToolWrap = styled.div`
@@ -126,6 +154,15 @@ export const Tool = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+  &:active {
+    transform: scale(0.9);
+  }
+  transition: 0.3s;
 `;
 
 export const ToolImg = styled.img`
