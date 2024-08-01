@@ -5,19 +5,27 @@ import home from '/src/assets/img/Landing/home.png';
 const ModalOverlay = styled.div`
   display: flex;
   justify-content: end;
-  align-items: center;
-  padding-right: 20px;
+  align-items: start;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
 `;
 
 const ModalContent = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+  gap: .5rem;
   background: white;
-  padding: 10px;
-  border-radius: 20px;
-  width: 20%;
+  padding: 20px;
+  border-radius: 25px;
+  width: 150px; 
+  height: 150px;
   box-shadow: 0px 11px 39.6px 0px rgba(0, 0, 0, 0.25);
+  position: absolute;
+  right: 30px;
+  top: 60px;
 `;
 
 const GridItem = styled.div`
@@ -27,10 +35,10 @@ const GridItem = styled.div`
 `;
 
 const ProfilePicture = styled.img`
-  width: 5vw;
-  height: 5vw;
-  border-radius: 100%;
-  background-color: gray;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #D9D9D9;
 `;
 
 function ProfileModal({ isOpen, onClose }) {
