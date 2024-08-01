@@ -7,7 +7,7 @@ import {
   GraphHeader, 
   GraphFooter, 
   ContentBody 
-} from './ChildActivityTableStyle';
+} from './BMIGraphStyle';
 
 const data = [
   {
@@ -32,7 +32,7 @@ const data = [
   },
 ];
 
-function ChildActivityTable() {
+function BMIGraph() {
   return (
     <ContentBody>
       <GraphHeader>
@@ -71,4 +71,4 @@ function ChildActivityTable() {
   );
 }
 
-export default ChildActivityTable;
+export default BMIGraph;
