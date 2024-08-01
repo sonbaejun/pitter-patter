@@ -13,7 +13,7 @@ import java.util.List;
 public interface ChildService {
     List<ChildResponseDTO> getChildrenByUserId(Integer userId);
 
-    void addChild(ChildRequestDTO childRequestDTO);
+    void addChild(int userId, ChildRequestDTO childRequestDTO);
 
     void childExceptionHandling(List<ChildResponseDTO> children);
 

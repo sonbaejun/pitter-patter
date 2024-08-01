@@ -4,6 +4,8 @@ import com.pitpat.pitterpatter.domain.child.model.dto.ChildRequestDTO;
 import com.pitpat.pitterpatter.domain.child.model.dto.ChildResponseDTO;
 import com.pitpat.pitterpatter.domain.child.model.dto.ChildUpdateDTO;
 import com.pitpat.pitterpatter.domain.child.repository.ChildRepository;
+import com.pitpat.pitterpatter.domain.user.model.dto.UserDto;
+import com.pitpat.pitterpatter.domain.user.service.UserService;
 import com.pitpat.pitterpatter.entity.Child;
 import com.pitpat.pitterpatter.entity.UserEntity;
 import com.pitpat.pitterpatter.global.exception.exceptions.DataNotFoundException;
@@ -18,6 +20,7 @@ import java.util.Optional;
 public class ChildServiceImpl implements ChildService {
 
     private final ChildRepository childRepository;
+    private final UserService userService;
 
     @Override
     public List<ChildResponseDTO> getChildrenByUserId(Integer userId) {
@@ -27,15 +30,10 @@ public class ChildServiceImpl implements ChildService {
     }
 
     @Override
-    public void addChild(ChildRequestDTO childRequestDTO) {
-        // TODO : 유저 정보 가져오는 로직 필요
-        UserEntity user = new UserEntity();
-        user.setUserId(1); // 테스트용 데이터
-
-        // TODO : user가 없는 경우에 대한 예외처리 : user도메인 개발 완료 시 추가.(ForeignKeyConstraintException)
-        userExceptionHandling(user);
-
-        Child child = childRequestDTO.toAddEntity(user, childRequestDTO);
+    public void addChild(int userId, ChildRequestDTO childRequestDTO) {
+        UserDto userDto = userService.getUserById(userId);
+        UserEntity userEntity = userDto.toEntity();
+        Child child = childRequestDTO.toAddEntity(userEntity, childRequestDTO);
         childRepository.save(child);
     }
 

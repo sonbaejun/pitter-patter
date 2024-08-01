@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
@@ -36,8 +38,9 @@ public class ChildController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> addChild(@Valid @RequestBody ChildRequestDTO childRequestDTO) {
-        childService.addChild(childRequestDTO);
+    public ResponseEntity<Void> addChild(@AuthenticationPrincipal UserDetails userDetails, @Valid @RequestBody ChildRequestDTO childRequestDTO) {
+        int userId = Integer.parseInt(userDetails.getUsername());
+        childService.addChild(userId, childRequestDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
