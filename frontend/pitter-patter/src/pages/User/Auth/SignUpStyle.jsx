@@ -11,8 +11,9 @@ export const LayoutBase = styled.div`
 
 export const LayoutSignup = styled.div`
   background-color: var(--box-yellow-color);
-  height: 78vh;
+  // height: 78vh;
   width: 30vw;
+  padding: 4vh 0;
   border-radius: 40px;
   box-shadow: 0px 11px 39.6px 0px rgba(0, 0, 0, 0.25);
   display: flex;
@@ -40,9 +41,6 @@ export const ButtonCheckId = styled.button`
   color: #757575;
   font-size: 1vw;
   font-weight: bold;
-  display: flex;
-  justify-content: center;
-  align-content: center;
 `;
 
 export const ButtonSignup = styled.button`
@@ -56,9 +54,6 @@ export const ButtonSignup = styled.button`
   color: var(--background);
   font-size: 1vw;
   font-weight: bold;
-  display: flex;
-  justify-content: center;
-  align-content: center;
 `;
 
 export const LoginText = styled.span`
