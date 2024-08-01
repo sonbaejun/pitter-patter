@@ -1,4 +1,15 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const slideUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
 
 export const OuterBox = styled.div`
   z-index: -1;
@@ -6,11 +17,20 @@ export const OuterBox = styled.div`
   bottom: 0;
   left: 0;
   width: 100vw;
-  height: 50vh;
+  height: 50vh; 
   background-color: var(--box-yellow-color);
   border-top-left-radius: 60px;
   border-top-right-radius: 60px;
   box-shadow: 0px -3px 33.4px 0px rgba(0, 0, 0, 0.25);
+`;
+
+export const RankBarOverlay = styled.div`
+  overflow: hidden;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
 `;
 
 export const InnerBox = styled.div`
@@ -52,6 +72,9 @@ export const RankBarWrap = styled.div`
   justify-content: space-between;
   flex-direction: column;
   align-items: center;
+  opacity: 0;
+  animation: ${slideUp} 1s forwards;
+  animation-delay: ${({ delay }) => delay}s;
 `;
 
 export const RankBar = styled.div`

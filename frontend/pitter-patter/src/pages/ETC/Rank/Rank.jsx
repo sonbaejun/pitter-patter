@@ -6,7 +6,8 @@ import {
   RankBarWrap,
   RankBar,
   RankName,
-  ProfileImg
+  ProfileImg,
+  RankBarOverlay
 } from './RankStyle';
 import Trophy from '/src/assets/img/Rank/Trophy.png';
 
@@ -48,24 +49,26 @@ function Rank() {
     <div>
       {/* <NavBar /> */}
       <OuterBox>
-        <RankBarWrap style={{ left: "41vw" }}>
-          <ProfileImg src={Trophy} alt="Trophy" />
-          <RankBar style={{ height: "66vh" }}>
-            <RankName>{rankData[0].name}</RankName>
-          </RankBar>
-        </RankBarWrap>
-        <RankBarWrap style={{ left: "11vw" }}>
-          <ProfileImg src={Trophy} alt="Trophy" />
-          <RankBar style={{ height: "62vh" }}>
-            <RankName>{rankData[1].name}</RankName>
-          </RankBar>
-        </RankBarWrap>
-        <RankBarWrap style={{ left: "71vw" }}>
-          <ProfileImg src={Trophy} alt="Trophy" />
-          <RankBar style={{ height: "58vh" }}>
-            <RankName>{rankData[2].name}</RankName>
-          </RankBar>
-        </RankBarWrap>
+        <RankBarOverlay>
+          <RankBarWrap style={{ left: "41vw" }} delay={0}>
+            <ProfileImg src={Trophy} alt="Trophy" />
+            <RankBar style={{ height: "66vh" }}>
+              <RankName>{rankData[0].name}</RankName>
+            </RankBar>
+          </RankBarWrap>
+          <RankBarWrap style={{ left: "11vw" }} delay={0.3}>
+            <ProfileImg src={Trophy} alt="Trophy" />
+            <RankBar style={{ height: "62vh" }}>
+              <RankName>{rankData[1].name}</RankName>
+            </RankBar>
+          </RankBarWrap>
+          <RankBarWrap style={{ left: "71vw" }} delay={0.5}>
+            <ProfileImg src={Trophy} alt="Trophy" />
+            <RankBar style={{ height: "58vh" }}>
+              <RankName>{rankData[2].name}</RankName>
+            </RankBar>
+          </RankBarWrap>
+        </RankBarOverlay>
         <InnerBox>
           <RankWrap>
             <div>
