@@ -56,6 +56,14 @@ const CloseButtonImg = styled.img`
   cursor: pointer;
 `;
 
+const BackDrop = styled.div`
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+`
+
 function MenuModal({ isOpen, onClose }) {
   if (!isOpen) {
     return null;
@@ -63,6 +71,7 @@ function MenuModal({ isOpen, onClose }) {
 
   return (
     <>
+    <BackDrop onClick={onClose} />
       <Navbar>
         <LayoutNav>
           <Link to='/game/select-mode'>

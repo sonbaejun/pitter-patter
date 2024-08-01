@@ -25,7 +25,7 @@ const ModalContent = styled.div`
   box-shadow: 0px 11px 39.6px 0px rgba(0, 0, 0, 0.25);
   position: absolute;
   right: 30px;
-  top: 60px;
+  top: 70px;
 `;
 
 const GridItem = styled.div`
@@ -40,6 +40,14 @@ const ProfilePicture = styled.img`
   border-radius: 50%;
   background-color: #D9D9D9;
 `;
+
+const BackDrop = styled.div`
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+`
 
 function ProfileModal({ isOpen, onClose }) {
   if (!isOpen) return null;
