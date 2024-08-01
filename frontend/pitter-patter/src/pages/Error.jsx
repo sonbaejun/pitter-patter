@@ -33,7 +33,7 @@ const Ellipse = styled.div`
   transform: translate(-50%, -50%); /* 타원형 도형을 가운데 정렬 */
   z-index: -1; /* 이미지 뒤에 배치 */
   filter: blur(25.55px); /* 블러 효과 */
-  opacity: var(--sds-size-stroke-border); /* 투명도 설정 */
+  opacity: var(--sds-size-stroke-border); /* 투명도설정 */
 `;
 
 const ErrorImg = styled.img`
