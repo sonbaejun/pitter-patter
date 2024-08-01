@@ -1,14 +1,16 @@
 import styled from "styled-components";
 
-export const CenterRow = styled.div`
+export const MainWrap = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  height: 100vh;
+  width: 100vw;
+  background-image: url(/src/assets/img/Background/YellowWave.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 `;
 
 export const BoxWrap = styled.div`
