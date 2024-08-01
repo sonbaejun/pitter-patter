@@ -41,6 +41,12 @@ public class ChildPhysicalController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/{childId}/physical/list")
+    public ResponseEntity<List<ChildPhysicalResponseDTO>> getPhysicalRecordListByChildId(@PathVariable Long childId) {
+        List<ChildPhysicalResponseDTO> latestPhysicalRecord = childPhysicalService.getPhysicalRecordListByChildId(childId);
+        return new ResponseEntity<>(latestPhysicalRecord, HttpStatus.OK);
+    }
+
     @GetMapping("/{childId}/bmi/{startDate}/{endDate}")
     public ResponseEntity<List<BMIResponseDTO>> getBMIHistory(@PathVariable Long childId,
                                                         @PathVariable LocalDate startDate,

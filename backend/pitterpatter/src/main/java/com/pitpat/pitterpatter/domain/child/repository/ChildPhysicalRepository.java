@@ -19,4 +19,7 @@ public interface ChildPhysicalRepository extends JpaRepository<PhysicalRecord, L
     List<PhysicalRecord> findPhysicalRecordsByDateRangeWithFetchJoin(@Param("childId") Long childId,
                                                              @Param("startDate") LocalDateTime startDate,
                                                              @Param("endDate") LocalDateTime endDate);
+
+    @Query("SELECT pr FROM PhysicalRecord pr WHERE pr.child.id = :childId")
+    List<PhysicalRecord> findByChildId(@Param("childId") Long childId);
 }

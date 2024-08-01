@@ -1,10 +1,13 @@
 package com.pitpat.pitterpatter.domain.child.model.dto;
 
+import com.pitpat.pitterpatter.entity.PhysicalRecord;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 public class ChildPhysicalResponseDTO {
@@ -27,5 +30,22 @@ public class ChildPhysicalResponseDTO {
         this.bmi = bmi;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    public static ChildPhysicalResponseDTO fromEntity(PhysicalRecord record) {
+        return ChildPhysicalResponseDTO.builder()
+                .id(record.getId())
+                .height(record.getHeight())
+                .weight(record.getWeight())
+                .bmi(record.getBmi())
+                .createdAt(record.getCreatedAt())
+                .updatedAt(record.getUpdatedAt())
+                .build();
+    }
+
+    public static List<ChildPhysicalResponseDTO> fromEntityList(List<PhysicalRecord> records) {
+        return records.stream()
+                .map(ChildPhysicalResponseDTO::fromEntity)
+                .collect(Collectors.toList());
     }
 }

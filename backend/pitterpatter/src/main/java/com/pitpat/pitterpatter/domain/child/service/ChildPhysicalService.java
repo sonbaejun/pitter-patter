@@ -14,4 +14,6 @@ public interface ChildPhysicalService {
     void updateChild(Long childId, ChildPhysicalUpdateDTO childPhysicalUpdateDTO);
 
     List<BMIResponseDTO> getBMIHistory(Long childId, LocalDateTime start, LocalDateTime end);
+
+    List<ChildPhysicalResponseDTO> getPhysicalRecordListByChildId(Long childId);
 }

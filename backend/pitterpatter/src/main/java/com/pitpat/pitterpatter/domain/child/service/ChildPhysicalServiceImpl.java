@@ -83,6 +83,14 @@ public class ChildPhysicalServiceImpl implements ChildPhysicalService{
         return result;
     }
 
+    @Override
+    public List<ChildPhysicalResponseDTO> getPhysicalRecordListByChildId(Long childId) {
+        validateChildExists(childId);
+        List<PhysicalRecord> physicalRecordList = childPhysicalRepository.findByChildId(childId);
+        validateNotEmptyList(physicalRecordList);
+        return ChildPhysicalResponseDTO.fromEntityList(physicalRecordList);
+    }
+
     private static List<BMIResponseDTO> convertPhysicalRecordToBMIResponseDTO(List<PhysicalRecord> physicalRecords) {
         List<BMIResponseDTO> result = new ArrayList<>();
         physicalRecords.forEach(pr -> {
