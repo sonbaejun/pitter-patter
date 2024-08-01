@@ -82,7 +82,14 @@ export const ActionButton = styled.button`
   user-select: none;
   z-index: 1;
   background-color: ${(props) => (props.highlight ? "var(--box-green-color)" : "#D9D9D9")};
-  box-shadow: ${(props) => (props.highlight ? "0 3px 0 0 #629D1B" : "0 3px 0 0 #757575")};
+  box-shadow: ${(props) => (props.highlight ? "0 5px 0 0 #629D1B" : "0 5px 0 0 #757575")};
+
+  transition: ease-in-out 0.1s;
+
+  &:hover:not(:disabled) {
+    box-shadow: ${(props) => (props.highlight ? "0 4px 0 0 #629D1B" : "0 4px 0 0 #757575")};
+    transform: translateY(1px);
+  }
 
   &:active:not(:disabled) {
     box-shadow: ${(props) => (props.highlight ? "0 1px 0 0 #629D1B" : "0 1px 0 0 #757575")};
@@ -101,10 +108,25 @@ export const TransparentButton = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
-  width: 50px;
+  width: 60px;
   z-index: 1;
   position: relative;
   user-select: none;
+  border-radius: 50%;
+  padding: 2vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  &:hover {
+    background-color: rgba(255,255,255, 0.3);
+  }
+
+  &:active {
+    background-color: rgba(255,255,255, 0.5);
+  }
+
+  transition: ease-in-out 0.2s;
 `;
 
 export const ButtonIcon = styled.img`

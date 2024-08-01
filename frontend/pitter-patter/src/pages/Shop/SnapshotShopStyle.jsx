@@ -87,11 +87,16 @@ export const ActionButton = styled.button`
   border-radius: 30px;
   user-select: none;
   background-color: ${(props) => (props.highlight ? "var(--box-green-color)" : "#D9D9D9")};
-  box-shadow: ${(props) => (props.highlight ? "0 3px 0 0 #629D1B" : "0 3px 0 0 #757575")};
-  // transition: ease-in-out 0.1s;
+  box-shadow: ${(props) => (props.highlight ? "0 5px 0 0 #629D1B" : "0 5px 0 0 #757575")};
+  transition: ease-in-out 0.1s;
+
+  &:hover:not(:disabled) {
+    box-shadow: ${(props) => (props.highlight ? "0 4px 0 0 #629D1B" : "0 4px 0 0 #757575")};
+    transform: translateY(1px);
+  }
 
   &:active:not(:disabled) {
-    box-shadow: ${(props) => (props.highlight ? "0 1px 0 0 #629D1B" : "0 1px 0 0 #757575")};
+    box-shadow: ${(props) => (props.highlight ? "0 0 0 0 #629D1B" : "0 0 0 0 #757575")};
     transform: translateY(2px);
   }
 
