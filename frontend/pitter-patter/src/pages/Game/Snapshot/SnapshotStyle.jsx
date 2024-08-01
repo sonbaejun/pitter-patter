@@ -1,6 +1,17 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import YellowWaveBackground from "/src/assets/img/Background/YellowWave.png";
 import FrameImage from "/src/assets/img/Shop/frame/frame1.png";
+
+const slideUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translate(-50%, 80%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+`;
 
 export const MainWrap = styled.div`
   width: 100vw;
@@ -167,4 +178,34 @@ export const Tool = styled.div`
 
 export const ToolImg = styled.img`
   height: 120px;
+`;
+
+export const GoResultButton = styled.button`
+  width:fit-content;
+  padding:1.5vh 2vw;
+  border-radius: 30px;
+  background-color: var(--box-yellow-color);
+  box-shadow: 0 6px 0 0 #ffc139;
+  font-family: "NEXON Lv1 Gothic OTF";
+  font-weight: bold;
+  font-size: 15px;
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+
+  animation: ${slideUp} 1s forwards;
+
+  &:hover {
+    box-shadow: 0 4px 0 0 #ffc139;
+    transform: translate(-50%, 3px);
+  }
+
+  &:active {
+    box-shadow: 0 0 0 0 #ffc139;
+    transform: translate(-50%, 6px);
+  }
+
+  transition: 0.3s;
 `;

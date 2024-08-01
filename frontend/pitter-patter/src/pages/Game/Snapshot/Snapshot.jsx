@@ -11,6 +11,8 @@ import {
   Blank,
   UserImg,
   AddImg,
+  Button,
+  GoResultButton,
 } from "./SnapshotStyle";
 import AddImageIcon from "/src/assets/icons/AddImage.png";
 import EG1 from "/src/assets/img/Snapshot/eg1.png";
@@ -22,6 +24,8 @@ function Snapshot() {
   const frameRef = useRef(null);
   const [imageList, setImageList] = useState([null, null, null, null]);
   const navigate = useNavigate();
+
+  const [isFilled, setIsFilled] = useState(false);
 
   function getImage(index) {
     const input = document.createElement("input");
@@ -43,7 +47,8 @@ function Snapshot() {
 
   useEffect(() => {
     if (imageList.every((img) => img !== null)) {
-      navigate("./result", { state: { imageList } }); // 이미지가 모두 채워지면 navigate 함수를 통해 /snapshot/result로 이동
+      // navigate("./result", { state: { imageList } }); // 이미지가 모두 채워지면 navigate 함수를 통해 /snapshot/result로 이동
+      setIsFilled(true);
     }
   }, [imageList, navigate]);
 
@@ -99,6 +104,11 @@ function Snapshot() {
           </Frame>
         </CenterRow>
       </CenterColumn>
+      {
+        isFilled && <GoResultButton onClick={() => navigate("./result", { state: { imageList } })}>
+          결과 확인하기
+        </GoResultButton>
+      }
     </MainWrap>
   );
 }
