@@ -3,6 +3,7 @@ package com.pitpat.pitterpatter.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Entity
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class ChildItem {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "child_item_id")
     private Long id;
 
@@ -22,11 +23,15 @@ public class ChildItem {
     @JoinColumn(name = "item_id")
     private Item item;
 
-    private boolean is_on;
+    @Column(name = "is_on")
+    private boolean isOn = false;
 
-    public ChildItem(Child child, Item item, boolean is_on) {
+    public void toggle() {
+        isOn = !isOn;
+    }
+
+    public ChildItem(Child child, Item item) {
         this.child = child;
         this.item = item;
-        this.is_on = is_on;
     }
 }

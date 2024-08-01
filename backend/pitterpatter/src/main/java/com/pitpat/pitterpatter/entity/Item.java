@@ -1,8 +1,7 @@
 package com.pitpat.pitterpatter.entity;
 
-import com.pitpat.pitterpatter.entity.ItemType;
+import com.pitpat.pitterpatter.entity.enums.ItemType;
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -19,13 +18,19 @@ import java.util.List;
 public class Item {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "item_id")
     private Long id;
 
+    @Column(name = "item_name")
+    private String itemName;
+
     private int price;
 
+    private String photo;
+
     @Enumerated(EnumType.STRING)
+    @Column(name = "item_type")
     private ItemType itemType;
 
     private String category;
@@ -34,12 +39,14 @@ public class Item {
     private List<ChildItem> childItems = new ArrayList<>();
 
     @CreatedDate
-    private LocalDateTime created_at;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-    public Item(int price, ItemType itemType, String category, List<ChildItem> childItems) {
+    public Item(String itemName, int price, String photo, ItemType itemType, String category) {
+        this.itemName = itemName;
         this.price = price;
+        this.photo = photo;
         this.itemType = itemType;
         this.category = category;
-        this.childItems = childItems;
     }
 }

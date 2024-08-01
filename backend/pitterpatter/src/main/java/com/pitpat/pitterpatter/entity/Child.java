@@ -1,7 +1,5 @@
 package com.pitpat.pitterpatter.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pitpat.pitterpatter.entity.enums.Gender;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -15,6 +13,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Builder
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 @EntityListeners(AuditingEntityListener.class)
 @Entity
 @Getter
@@ -25,8 +25,10 @@ public class Child {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "child_id")
+    @NotNull
     private Long id;
 
+    // TODO: user_id FK 필요.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity user;
@@ -34,9 +36,11 @@ public class Child {
     @Column(name = "profile_image")
     private String profileImage;
 
+    @NotNull
     private String nickname;
 
     @Enumerated(EnumType.STRING)
+    @NotNull
     private Gender gender;
 
     @CreatedDate
@@ -47,6 +51,7 @@ public class Child {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @NotNull
     private LocalDate birth;
 
     @Column(name = "personal_record")
@@ -65,6 +70,10 @@ public class Child {
 
     @OneToMany(mappedBy = "child", fetch = FetchType.LAZY ,cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PlayRecord> playRecords = new ArrayList<>();
+
+    public void addPoint(int amount) {
+        this.point += amount;
+    }
 
     @Builder
     public Child(Long id, String profileImage, UserEntity user, String nickname, Gender gender, LocalDateTime createdAt, LocalDate birth, int personalRecord, int point, List<ChildItem> childItems, List<PointRecord> points, List<PhysicalRecord> physicalRecords, List<PlayRecord> playRecords) {

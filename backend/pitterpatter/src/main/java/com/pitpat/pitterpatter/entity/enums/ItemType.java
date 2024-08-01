@@ -1,6 +1,7 @@
 package com.pitpat.pitterpatter.entity.enums;
 
-public enum Gender {
-    MALE, FEMALE
+public enum ItemType {
+    WALL, FRAME, CLOTHES
 }
+
 
