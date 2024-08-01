@@ -65,25 +65,25 @@ function MenuModal({ isOpen, onClose }) {
     <>
       <Navbar>
         <LayoutNav>
-          <Link to='/'>
+          <Link to='/game'>
             <NavItemWrap>
               <NavIcon src="src/assets/img/NavBar/toGame.png" alt="game" />
               <NavText>게임 시작하기</NavText>
             </NavItemWrap>
           </Link>
-          <Link to='/'>
+          <Link to='/shop'>
             <NavItemWrap>
               <NavIcon src="src/assets/img/NavBar/toMarket.png" alt="market" />
               <NavText>상점 둘러보기</NavText>
             </NavItemWrap>
           </Link>
-          <Link to='/'>
+          <Link to='/rank'>
             <NavItemWrap>
               <NavIcon src="src/assets/img/NavBar/toRanking.png" alt="ranking" />
               <NavText>랭킹 확인하기</NavText>
             </NavItemWrap>
           </Link>
-          <Link to='/'>
+          <Link to='/mypage'>
             <NavItemWrap>
               <NavIcon src="src/assets/img/NavBar/toMypage.png" alt="mypage" />
               <NavText>마이 페이지</NavText>
