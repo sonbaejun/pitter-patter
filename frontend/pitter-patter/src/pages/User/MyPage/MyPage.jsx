@@ -30,9 +30,9 @@ function MyPage() {
               </button>
             </div>
             <MenuItemWrap>
-              <MenuItem color='white'><Link to='/userinfo'>회원 정보 수정</Link></MenuItem>
-              <MenuItem><Link to='/'>자녀 정보 수정</Link></MenuItem>
+              <MenuItem color='white'><Link to='/userinfo'>프로필 수정</Link></MenuItem>
               <MenuItem><Link to='/changePW'>비밀번호 변경</Link></MenuItem>
+              <MenuItem><Link to='/changePW'>2차 비밀번호 변경</Link></MenuItem>
               <button onClick={() => setModalOpen(true)} style={{ border: 'none', background: 'none', padding: 0 }}>
                 <MenuItem>회원 탈퇴</MenuItem>
               </button>
@@ -40,8 +40,8 @@ function MyPage() {
             {modalOpen && <DeleteUser onClose={() => setModalOpen(false)} />}
           </MenuWrap>
           <MainWrap>
-            {/* <UserInfo /> */}
-            <ChangePassword />
+            <UserInfo />
+            {/* <ChangePassword /> */}
           </MainWrap>
         </div>
       </LayoutMyPage>

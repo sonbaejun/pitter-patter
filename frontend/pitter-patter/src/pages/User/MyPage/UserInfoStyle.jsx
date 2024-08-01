@@ -17,15 +17,18 @@ export const InputWrap = styled.div`
   align-items: center;
   margin-top: 2vw;
   gap: 1vw;
+  overflow-y: scroll;
+  height: 30vh;
 `;
 
 export const InputItem = styled.div`
   margin-top: 0.5vw;
-  width: 22vw;
+  width: 30vw;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  padding: 0 .5rem;
 `;
 
 export const InputTitle = styled.span`

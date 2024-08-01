@@ -27,6 +27,15 @@ const SelectBox = styled.select`
   font-size: 1vw;
 `;
 
+const SubmitButton = styled.button`
+    border-radius: 1.5rem;
+    background-color: #FFD8DF;
+    box-shadow: #FA6DA1 0 .6vh;
+    font-size: 1.2rem;
+    height: 5vh;
+    padding: .5rem 1.8rem;
+`
+
 function UserInfo() {
   return (
     <LayoutMyPage>
@@ -39,12 +48,16 @@ function UserInfo() {
           <InputBox type="text" placeholder="아이디" />
         </InputItem>
         <InputItem>
+          <InputTitle>이름</InputTitle>
+          <InputBox type="text" placeholder="이름" />
+        </InputItem>
+        <InputItem>
           <InputTitle>닉네임</InputTitle>
           <InputBox type="text" placeholder="닉네임" />
         </InputItem>
         <InputItem>
-          <InputTitle>이름</InputTitle>
-          <InputBox type="text" placeholder="이름" />
+          <InputTitle>가족 팀 이름</InputTitle>
+          <InputBox type="text" placeholder="팀이름" />
         </InputItem>
         <InputItem>
           <InputTitle>생년월일</InputTitle>
@@ -58,6 +71,9 @@ function UserInfo() {
           </SelectBox>
         </InputItem>
       </InputWrap>
+      <Profile style={{background: 'none', height: '13vh'}}>
+        <SubmitButton>저장</SubmitButton>
+      </Profile>
     </LayoutMyPage>
   )
 }
