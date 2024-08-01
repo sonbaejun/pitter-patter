@@ -1,24 +1,24 @@
-import './modal.css';
+import React from 'react';
+import { LayoutIsReady, LayoutInModal, ModalIcon, Title, Context, Button } from './modalStyel';
+import warningSign from 'src/assets/icons/warningSign.png'; // 이미지 경로가 맞는지 확인하세요
 
 function IsReady() {
-    return (
-        <body>
-            <div className='layout-isready'>
-                <div className='layout-inModal'>
-                    <img src="src/assets/icons/warningSign.png" alt="" className='modal-icon'/>
-                </div>
-                <div className='layout-inModal'>
-                    <span className='title'>스트레칭은 하셨나요?</span>
-                </div>
-                <div className='layout-inModal'>
-                    <span className='context'>안전한 진행을 위해 충분한 몸풀기 운동을 권장합니다.</span>
-                </div>
-                <div className='layout-inModal' style={{marginTop: "10px"}}>
-                    <button>시작</button>
-                </div>
-            </div>
-        </body>
-    )
+  return (
+    <LayoutIsReady>
+      <LayoutInModal>
+        <ModalIcon src={warningSign} alt="Warning Sign" />
+      </LayoutInModal>
+      <LayoutInModal>
+        <Title>스트레칭은 하셨나요?</Title>
+      </LayoutInModal>
+      <LayoutInModal>
+        <Context>안전한 진행을 위해 충분한 몸풀기 운동을 권장합니다.</Context>
+      </LayoutInModal>
+      <LayoutInModal style={{ marginTop: "10px" }}>
+        <Button>시작</Button>
+      </LayoutInModal>
+    </LayoutIsReady>
+  );
 }
 
 export default IsReady;
