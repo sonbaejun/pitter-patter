@@ -23,6 +23,16 @@ export const BoxWrap = styled.div`
   align-items: center;
   padding: 2vw;
   margin: 0 2vw;
+
+  &:hover {
+    transform: translateY(-1vw);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  transition: all 0.3s;
 `;
 
 export const ImageBox = styled.div`
