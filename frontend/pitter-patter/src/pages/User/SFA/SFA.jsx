@@ -39,6 +39,7 @@ function SFA() {
       setTimeout(() => {
         alert(`입력된 암호: ${password}`);
         setPassword("");
+        navigate("/mypage");
       }, 100);
     }
   }, [password]);

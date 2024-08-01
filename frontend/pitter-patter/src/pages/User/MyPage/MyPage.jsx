@@ -18,6 +18,11 @@ import DeleteUser from './DeleteUser';
 function MyPage() {
   const [modalOpen, setModalOpen] = useState(false);
 
+  const [activeComponent, setActiveComponent] = useState('userInfo');
+  const handleMenuItemClick = (component) => {
+    setActiveComponent(component);
+  };
+
   const Navigate = useNavigate();
 
   return (
@@ -30,18 +35,33 @@ function MyPage() {
               <MenuIcon src={ArrowLeft} alt="ArrowLeft" />
             </button>
             <MenuItemWrap>
-              <MenuItem color='white'><Link to='/userinfo'>프로필 수정</Link></MenuItem>
-              <MenuItem><Link to='/changePW'>비밀번호 변경</Link></MenuItem>
-              <MenuItem><Link to='/changePW'>2차 비밀번호 변경</Link></MenuItem>
-              <button onClick={() => setModalOpen(true)} style={{ border: 'none', background: 'none', padding: 0 }}>
+              <MenuItem
+                color={activeComponent === 'userInfo' ? 'white' : 'initial'}
+                onClick={() => handleMenuItemClick('userInfo')}
+              > 
+              프로필 수정               
+              </MenuItem>
+              <MenuItem
+                color={activeComponent === 'changePassword' ? 'white' : 'initial'}
+                onClick={() => handleMenuItemClick('changePassword')}
+              >
+                비밀번호 변경
+              </MenuItem>
+              <MenuItem>
+                <Link to="/changeSFA">2차 비밀번호 변경</Link>
+              </MenuItem>
+              <button
+                onClick={() => setModalOpen(true)}
+                style={{ border: 'none', background: 'none', padding: 0 }}
+              >
                 <MenuItem>회원 탈퇴</MenuItem>
               </button>
-            </MenuItemWrap>
-            {modalOpen && <DeleteUser onClose={() => setModalOpen(false)} />}
+              </MenuItemWrap>
+              {modalOpen && <DeleteUser onClose={() => setModalOpen(false)} />}
           </MenuWrap>
           <MainWrap>
-            <UserInfo />
-            {/* <ChangePassword /> */}
+            {activeComponent === 'userInfo' && <UserInfo />}
+            {(activeComponent === 'changePassword' || activeComponent === 'changePassword2') && <ChangePassword />}
           </MainWrap>
         </div>
       </LayoutMyPage>

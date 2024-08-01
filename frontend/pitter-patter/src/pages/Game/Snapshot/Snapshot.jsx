@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Header from "../../LandingPage/Header";
 import {
   MainWrap,
   CenterColumn,
@@ -48,6 +49,7 @@ function Snapshot() {
 
   return (
     <MainWrap>
+      <Header />
       <CenterColumn>
         <Title>피터와 패터를 따라 사진을 찍어보세요 !</Title>
         <CenterRow>

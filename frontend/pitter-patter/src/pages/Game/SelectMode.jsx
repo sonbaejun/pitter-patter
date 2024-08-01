@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import VS from "../../assets/img/Game/vs.png";
+import Header from "../LandingPage/Header";
 import { MainWrap, BoxWrap, ImageBox, GameImage, ItemName } from "./SelectModeStyle";
 
 function SelectMode() {
   return (
     <MainWrap>
+      <Header />
       <Link to={"/game"}>
         <BoxWrap bgColor="var(--logo-pink-color)">
           <ImageBox shadow="4px 4px 27.5px 0px #933557 inset">

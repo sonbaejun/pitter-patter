@@ -10,6 +10,7 @@ import {
   RankBarOverlay
 } from './RankStyle';
 import Trophy from '/src/assets/img/Rank/Trophy.png';
+import Header from '../../LandingPage/Header';
 
 function Rank() {
   const rankData = [
@@ -47,12 +48,12 @@ function Rank() {
 
   return (
     <div>
-      {/* <NavBar /> */}
+      <Header />
       <OuterBox>
         <RankBarOverlay>
           <RankBarWrap style={{ left: "41vw" }} delay={0}>
             <ProfileImg src={Trophy} alt="Trophy" />
-            <RankBar style={{ height: "66vh" }}>
+            <RankBar style={{ height: "69vh" }}>
               <RankName>{rankData[0].name}</RankName>
             </RankBar>
           </RankBarWrap>
