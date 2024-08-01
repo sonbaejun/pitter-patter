@@ -9,6 +9,7 @@ export const MainWrap = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  user-select: none;
 `;
 
 export const CenterColumn = styled.div`
@@ -59,6 +60,19 @@ export const Blank = styled.div`
   margin-top: 16px;
   position: relative;
   background-color: white;
+
+  // if props.active is true, set hover and active styles
+  ${(props) =>
+    props.active &&
+    `
+    &:hover {
+      background-color: lightgray;
+    }
+    &:active {
+      background-color: gray;
+    }
+    transition: 0.3s;
+  `}
 `;
 
 export const UserImg = styled.img`
@@ -95,6 +109,18 @@ export const Button = styled.button`
   font-weight: bold;
   font-size: 15px;
   color: var(--font-color);
+
+  &:hover {
+    box-shadow: 0 4px 0 0 #ffc139;
+    transform: translateY(3px);
+  }
+
+  &:active {
+    box-shadow: 0 0 0 0 #ffc139;
+    transform: translateY(6px);
+  }
+
+  transition: 0.3s;
 `;
 
 export const ToolWrap = styled.div`
@@ -128,6 +154,15 @@ export const Tool = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+  &:active {
+    transform: scale(0.9);
+  }
+  transition: 0.3s;
 `;
 
 export const ToolImg = styled.img`

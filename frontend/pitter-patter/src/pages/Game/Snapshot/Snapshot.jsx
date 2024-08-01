@@ -71,24 +71,24 @@ function Snapshot() {
           </Frame>
           <Frame ref={frameRef}>
             <BlankRow>
-              <Blank onClick={() => getImage(0)}>
+              <Blank onClick={() => getImage(0)} active>
                 {(imageList[0] && <UserImg src={imageList[0]} alt="snapshot" />) || (
                   <AddImg src={AddImageIcon} alt="add" />
                 )}
               </Blank>
-              <Blank onClick={() => getImage(1)}>
+              <Blank onClick={() => getImage(1)} active>
                 {(imageList[1] && <UserImg src={imageList[1]} alt="snapshot" />) || (
                   <AddImg src={AddImageIcon} alt="add" />
                 )}
               </Blank>
             </BlankRow>
             <BlankRow>
-              <Blank onClick={() => getImage(2)}>
+              <Blank onClick={() => getImage(2)} active>
                 {(imageList[2] && <UserImg src={imageList[2]} alt="snapshot" />) || (
                   <AddImg src={AddImageIcon} alt="add" />
                 )}
               </Blank>
-              <Blank onClick={() => getImage(3)}>
+              <Blank onClick={() => getImage(3)} active>
                 {(imageList[3] && <UserImg src={imageList[3]} alt="snapshot" />) || (
                   <AddImg src={AddImageIcon} alt="add" />
                 )}
