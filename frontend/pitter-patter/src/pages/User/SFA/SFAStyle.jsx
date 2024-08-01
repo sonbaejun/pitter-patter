@@ -79,6 +79,16 @@ export const Numpad = styled.div`
   &:not(:nth-child(3n)) {
     border-right: 2px solid #d9d9d9;
   }
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+
+  &:active {
+    background-color: #e0e0e0;
+  }
+
+  transition: background-color 0.1s ease-in-out;
 `;
 
 export const IconBackspace = styled.img`
