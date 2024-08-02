@@ -122,13 +122,13 @@ function ChildPhysicalInfo() {
                                     type="number" 
                                     value={editHeight} 
                                     onChange={(e) => setEditHeight(e.target.value)} 
-                                    style={{width: '11em', height: '.8em'}}
+                                    style={{width: '11em', height: '1em', border: 'none'}}
                                 />
                                 <input 
                                     type="number" 
                                     value={editWeight} 
                                     onChange={(e) => setEditWeight(e.target.value)} 
-                                    style={{width: '8.5em', height: '.8em'}}
+                                    style={{width: '8.8em', height: '1em', border: 'none'}}
                                 />
                                 <button onClick={() => handleSave(index)}>저장하기</button>
                             </div>

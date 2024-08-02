@@ -87,6 +87,7 @@ export const InputInnerDiv = styled.div`
     justify-content: center;
     align-items: center;
 
+
     div {
         display: flex;
         justify-content: center;
@@ -96,6 +97,10 @@ export const InputInnerDiv = styled.div`
     label {
         color: #616161;
         font-size: 20px;
+    }
+
+    input {
+        padding-left: 1rem;
     }
 
     input[type="number"]::-webkit-outer-spin-button,

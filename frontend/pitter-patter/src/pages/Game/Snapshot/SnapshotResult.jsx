@@ -21,11 +21,14 @@ import {
 import Share from "/src/assets/img/Snapshot/share.png";
 import Save from "/src/assets/img/Snapshot/save.png";
 import Header from "../../LandingPage/Header";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function SnapshotResult() {
   const location = useLocation();
   const { imageList } = location.state;
   const frameRef = useRef(null);
+  const navigate = useNavigate();
 
   const downloadFrameImage = () => {
     const frameElement = frameRef.current;
@@ -39,6 +42,10 @@ function SnapshotResult() {
         document.body.removeChild(link);
       }, "image/png");
     });
+  };
+
+  const goBack = () => {
+    navigate('/select-mode');
   };
 
   return (
@@ -66,8 +73,8 @@ function SnapshotResult() {
             </BlankRow>
           </Frame>
           <Toolbar>
-            <Button>게임 선택으로 돌아가기</Button>
-            <Button>메인 화면으로 돌아가기</Button>
+            <Button onClick={goBack}>게임 선택으로 돌아가기</Button>
+            <Link to='/'><Button>메인 화면으로 돌아가기</Button></Link>
             <ToolWrap>
               <ToolTitle>다양한 방법으로 사진을 보관해보세요!</ToolTitle>
               <ToolRow>
