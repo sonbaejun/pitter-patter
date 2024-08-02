@@ -12,6 +12,9 @@ function ChildPhysicalInfo() {
     const [physicalInfoData, setPhysicalInfoData] = useState(initialPhysicalInfoData);
     const [height, setHeight] = useState('');
     const [weight, setWeight] = useState('');
+    const [editIndex, setEditIndex] = useState(null);
+    const [editHeight, setEditHeight] = useState('');
+    const [editWeight, setEditWeight] = useState('');
 
     const handleAdd = () => {
         if (!height || !weight) {
@@ -39,11 +42,45 @@ function ChildPhysicalInfo() {
         setWeight('');
     };
 
+    const handleEdit = (index) => {
+        setEditIndex(index);
+        setEditHeight(physicalInfoData[index].height.replace('cm', ''));
+        setEditWeight(physicalInfoData[index].weight.replace('kg', ''));
+    };
+
+    const handleSave = (index) => {
+        if (!editHeight || !editWeight) {
+            alert("키와 몸무게를 입력해주세요.");
+            return;
+        }
+
+        if (editHeight <= 20 || editHeight >= 255) {
+            alert("키는 20 이상 255 이하의 값을 입력해주세요.");
+            return;
+        }
+
+        if (editWeight < 0 || editWeight >= 255) {
+            alert("몸무게는 0 이상 255 이하의 값을 입력해주세요.");
+            return;
+        }
+
+        const updatedData = [...physicalInfoData];
+        updatedData[index] = {
+            ...updatedData[index],
+            height: `${editHeight}cm`,
+            weight: `${editWeight}kg`,
+        };
+        setPhysicalInfoData(updatedData);
+        setEditIndex(null);
+        setEditHeight('');
+        setEditWeight('');
+    };
+
     return (
       <ContentBody>
         <PhysicalInfoInput>
             <ImgDiv>
-                <img src='/src/assets/img/Game/vs.png'  alt="Attendance Background" />
+                <img src='/src/assets/img/Game/vs.png' alt="Attendance Background" />
             </ImgDiv>
             <InputDiv>
                 <InputInnerDiv>
@@ -79,15 +116,35 @@ function ChildPhysicalInfo() {
             <PhysicalInfoHistoryInnerDiv>
                 {physicalInfoData.map((info, index) => (
                     <div key={index}>
-                        <span>키: {info.height} 몸무게: {info.weight}</span>
-                        <span>{info.date}</span>
-                        <button>수정하기</button>
+                        {editIndex === index ? (
+                            <div>
+                                <input 
+                                    type="number" 
+                                    value={editHeight} 
+                                    onChange={(e) => setEditHeight(e.target.value)} 
+                                    style={{width: '11em', height: '.8em'}}
+                                />
+                                <input 
+                                    type="number" 
+                                    value={editWeight} 
+                                    onChange={(e) => setEditWeight(e.target.value)} 
+                                    style={{width: '8.5em', height: '.8em'}}
+                                />
+                                <button onClick={() => handleSave(index)}>저장하기</button>
+                            </div>
+                        ) : (
+                            <div>
+                                <span>키: {info.height} 몸무게: {info.weight}</span>
+                                <span>{info.date}</span>
+                                <button onClick={() => handleEdit(index)}>수정하기</button>
+                            </div>
+                        )}
                     </div>
                 ))}
             </PhysicalInfoHistoryInnerDiv>
         </PhysicalInfoHistory>
       </ContentBody>
     );
-  }
-  
-  export default ChildPhysicalInfo;
+}
+
+export default ChildPhysicalInfo;

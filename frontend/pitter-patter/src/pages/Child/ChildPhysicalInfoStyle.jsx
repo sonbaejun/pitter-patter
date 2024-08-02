@@ -32,7 +32,9 @@ export const PhysicalInfoHistory = styled.div`
 export const PhysicalInfoHistoryInnerDiv = styled.div`
     width: 68%;
     height: 100%;
-    background-color: #D9D9D9;
+    /* background-color: #D9D9D9; */
+    background-color: #9cb5d429;
+    /* border: 10px solid #D9D9D9; */
     display: flex;
     flex-direction: column;
     gap: 1.7em;
