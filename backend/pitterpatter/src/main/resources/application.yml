@@ -8,9 +8,9 @@ spring:
 
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://mysql:3306/pitterpatter?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
-        username: ssafy
-        password: asdzxcfv10
+        url: ENC(bKKcdM3Or5IpryokPv37DcQzAxASSU3cpUEKE1RRD+dR+vYFqaMNYfC255+EMsxS+QjSAkizMbyQGF3SWuXYyHF9UwDcD4bhak6Ujq/t6xjcsHZSt6rpyArIfEw9El6wzxXzzV/Oc8mKFrf3baaHpxoh3xmXMI6MlMwrj0BjXOw=)
+        username: ENC(3XtvHw7cXKFpmhruB7FskQ==)
+        password: ENC(pyXyGObZhyQDwyuq0URkKTdeN8x4DxNy)
 
     redis:
         host: redis

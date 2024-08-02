@@ -73,10 +73,10 @@ public class Child {
     private List<PlayRecord> playRecords = new ArrayList<>();
 
     public void addPoint(int amount) {
-        if (this.point + amount < Integer.MAX_VALUE) {
-            this.point += amount;
+        if (amount > 0 && point > Integer.MAX_VALUE - amount) {
+            point = Integer.MAX_VALUE;
         } else {
-            this.point = Integer.MAX_VALUE;
+            point += amount;
         }
     }
 
