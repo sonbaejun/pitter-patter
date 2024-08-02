@@ -3,6 +3,7 @@ package com.pitpat.pitterpatter.domain.assets.repository.childitem;
 import com.pitpat.pitterpatter.domain.assets.model.dto.childitem.PurchaseResult;
 import com.pitpat.pitterpatter.domain.assets.model.dto.pointrecord.CreatePointRecordDto;
 import com.pitpat.pitterpatter.entity.*;
+import com.pitpat.pitterpatter.entity.enums.ItemType;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -118,10 +119,27 @@ public class ChildItemRepositoryImpl implements ChildItemRepositoryCustom {
                 .where(childItem.child.id.eq(childId),
                         childItem.item.id.eq(itemId))
                 .fetchOne();
+        ItemType itemType = childItemToToggle.getItem().getItemType();
+        List<ChildItem> items = queryFactory
+                .selectFrom(childItem)
+                .where(childItem.child.id.eq(childId),
+                        childItem.item.itemType.eq(itemType))
+                .fetch();
+
         if (childItemToToggle == null) {
             return null;
         }
+
         childItemToToggle.toggle();
+
+        if (childItemToToggle.isOn()) {
+            for (ChildItem childItem : items) {
+                if (childItem != childItemToToggle && childItem.isOn()) {
+                    childItem.toggle();
+                }
+            }
+        }
+
         return childItemToToggle.isOn();
     }
 }

@@ -29,7 +29,7 @@ public class JwtTokenProvider {
 
     // 900000 == 15분
 //    private static final long ACCESS_TOKEN_EXPIRATION_TIME = 900000;
-    private static final long ACCESS_TOKEN_EXPIRATION_TIME = 1000 * 30;
+    private static final long ACCESS_TOKEN_EXPIRATION_TIME = 1000 * 3000;
     // 604800000 == 7일
     private static final long REFRESH_TOKEN_EXPIRATION_TIME = 604800000;
 
