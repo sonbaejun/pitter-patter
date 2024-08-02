@@ -1,6 +1,17 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import YellowWaveBackground from "/src/assets/img/Background/YellowWave.png";
 import FrameImage from "/src/assets/img/Shop/frame/frame1.png";
+
+const slideUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translate(-50%, 80%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+`;
 
 export const MainWrap = styled.div`
   width: 100vw;
@@ -10,15 +21,14 @@ export const MainWrap = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const CenterColumn = styled.div`
   display: flex;
   flex-direction: column;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -78,6 +88,7 @@ export const Blank = styled.div`
 export const UserImg = styled.img`
   height: 100%;
   width: 100%;
+  // cut overflowed image
   object-fit: cover;
 `;
 
@@ -167,4 +178,51 @@ export const Tool = styled.div`
 
 export const ToolImg = styled.img`
   height: 120px;
+`;
+
+export const GoResultButton = styled.button`
+  width:fit-content;
+  padding:1.5vh 2vw;
+  border-radius: 30px;
+  background-color: var(--box-yellow-color);
+  box-shadow: 0 6px 0 0 #ffc139;
+  font-family: "NEXON Lv1 Gothic OTF";
+  font-weight: bold;
+  font-size: 15px;
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+
+  animation: ${slideUp} 1s forwards;
+
+  &:hover {
+    box-shadow: 0 4px 0 0 #ffc139;
+    transform: translate(-50%, 3px);
+  }
+
+  &:active {
+    box-shadow: 0 0 0 0 #ffc139;
+    transform: translate(-50%, 6px);
+  }
+
+  transition: 0.3s;
+`;
+
+export const Countdown = styled.div`
+  font-size: 40px;
+  color: #f9810a;
+  font-family: "LOTTERIACHAB";
+  background-color: rgba(255, 255, 255, ${(props) => (props.timer) / 6});
+  transition: ease-in-out 0.5s;
+  z-index: 1;
+  position: absolute;
+  top: 16px;
+  left: ${(props) => props.index % 2 == 0 ? "16px" : "172px"};
+  width: 140px;
+  height: 126px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
