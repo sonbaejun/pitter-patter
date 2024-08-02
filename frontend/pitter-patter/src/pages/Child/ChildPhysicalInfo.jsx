@@ -55,6 +55,7 @@ function ChildPhysicalInfo() {
                         placeholder="키를 입력하세요" 
                         value={height}
                         onChange={(e) => setHeight(e.target.value)} 
+                        style={{height: '3vh', border: '1px solid var(--font-color)', borderRadius: '.5rem'}}
                     />
                 </InputInnerDiv>
                 <InputInnerDiv>
@@ -66,6 +67,7 @@ function ChildPhysicalInfo() {
                         placeholder="몸무게를 입력하세요" 
                         value={weight}
                         onChange={(e) => setWeight(e.target.value)} 
+                        style={{height: '3vh', border: '1px solid var(--font-color)', borderRadius: '.5rem'}}
                     />
                 </InputInnerDiv>
             </InputDiv>
