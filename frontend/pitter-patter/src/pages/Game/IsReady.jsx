@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutIsReady, LayoutInModal, ModalIcon, Title, Context, Button } from './modalStyel';
+import { LayoutIsReady, LayoutInModal, ModalIcon, Title, Context, Button } from '../../style/modalStyel';
 import warningSign from 'src/assets/icons/warningSign.png'; // 이미지 경로가 맞는지 확인하세요
 
 function IsReady() {
