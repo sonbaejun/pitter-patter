@@ -12,6 +12,7 @@ pipeline {
         FTP_SERVER = credentials('ftp-server')
         DEPLOY_SERVER_USER = credentials('deploy-server-user')
         DEPLOY_SERVER_HOST = credentials('deploy-server-host')
+        JASYPT_ENCRYPTOR_PASSWORD = credentials('jasypt-encrypt-password')
     }
 
     stages {
@@ -47,7 +48,7 @@ pipeline {
       steps {
         script {
           dir('backend/pitterpatter') {
-            // run dockerfile build
+            sh 'sed -i "s/ENV JASYPT_ENCRYPTOR_PASSWORD=.*/ENV JASYPT_ENCRYPTOR_PASSWORD=${JASYPT_ENCRYPTOR_PASSWORD}/" Dockerfile'
             sh """
               docker build -t ssafy-common-backend .
               docker login -u ${DOCKER_HUB_CREDENTIALS_USR} -p ${DOCKER_HUB_CREDENTIALS_PSW}
