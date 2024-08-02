@@ -49,6 +49,7 @@ export const BackArrow = styled.a`
   padding: 2vw 1vh;
   display: flex;
   justify-content: flex-start;
+  cursor: pointer;
 `;
 
 export const ArrowPic = styled.img`

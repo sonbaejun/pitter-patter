@@ -20,6 +20,7 @@ import {
 } from "./SnapshotStyle";
 import Share from "/src/assets/img/Snapshot/share.png";
 import Save from "/src/assets/img/Snapshot/save.png";
+import Header from "../../LandingPage/Header";
 
 function SnapshotResult() {
   const location = useLocation();
@@ -42,6 +43,7 @@ function SnapshotResult() {
 
   return (
     <MainWrap>
+      <Header />
       <CenterColumn>
         <Title>우와 멋진 사진이네요 !</Title>
         <CenterRow>

@@ -19,6 +19,6 @@ export const Stone = styled.img`
 export const SVGContainer = styled.div`
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: 95%;
   pointer-events: none;
 `;

@@ -1,11 +1,21 @@
 import 'react-calendar/dist/Calendar.css';
+import styled from 'styled-components';
 import {
   Board,
   Stone,
   SVGContainer
 } from './AttendanceEventStyle';
-import UndoneImage from '/src/assets/icons/Undone.png'
-import DoneImage from '/src/assets/icons/Done.png'
+import UndoneImage from '/src/assets/icons/Undone.png';
+import DoneImage from '/src/assets/icons/Done.png';
+
+const Info = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  height: 2rem;
+  color: #629d1b;
+`;
 
 const stonePositions = [
   { src: DoneImage, alt: "done", style: { top: '10%', left: '10%' } },
@@ -50,6 +60,7 @@ function generatePathData(positions) {
 function AttendanceEvent() {
   return (
     <Board>
+      <Info>14일 이상 출석해 엄청난 보상을 획득해 보세요!</Info>
       <SVGContainer>
         <svg viewBox="0 0 100 100" preserveAspectRatio="none" width="100%" height="100%">
           <path

@@ -64,6 +64,12 @@ const BackDrop = styled.div`
   top: 0;
 `
 
+import Game from '/src/assets/img/NavBar/toGame.png';
+import Market from '/src/assets/img/NavBar/toMarket.png';
+import Mypage from '/src/assets/img/NavBar/toMypage.png';
+import Attendance from '/src/assets/img/NavBar/toAttendance.png';
+import Ranking from '/src/assets/img/NavBar/toRanking.png';
+
 function MenuModal({ isOpen, onClose }) {
   if (!isOpen) {
     return null;
@@ -76,25 +82,31 @@ function MenuModal({ isOpen, onClose }) {
         <LayoutNav>
           <Link to='/game/select-mode'>
             <NavItemWrap>
-              <NavIcon src='/src/assets/img/NavBar/toGame.png' alt="game" />
+              <NavIcon src={Game} alt="game" />
               <NavText>게임 시작하기</NavText>
             </NavItemWrap>
           </Link>
           <Link to='/shop'>
             <NavItemWrap>
-              <NavIcon src="/src/assets/img/NavBar/toMarket.png" alt="market" />
+              <NavIcon src={Market} alt="market" />
               <NavText>상점 둘러보기</NavText>
             </NavItemWrap>
           </Link>
           <Link to='/rank'>
             <NavItemWrap>
-              <NavIcon src="/src/assets/img/NavBar/toRanking.png" alt="ranking" />
+              <NavIcon src={Ranking} alt="ranking" />
               <NavText>랭킹 확인하기</NavText>
             </NavItemWrap>
           </Link>
+          <Link to='/attendance'>
+            <NavItemWrap>
+              <NavIcon src={Attendance} alt="attendance" />
+              <NavText>출석 체크</NavText>
+            </NavItemWrap>
+          </Link> 
           <Link to='/SFA'>
             <NavItemWrap>
-              <NavIcon src="/src/assets/img/NavBar/toMypage.png" alt="mypage" />
+              <NavIcon src={Mypage} alt="mypage" />
               <NavText>마이 페이지</NavText>
             </NavItemWrap>
           </Link>

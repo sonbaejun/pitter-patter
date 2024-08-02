@@ -53,12 +53,17 @@ export const RankWrap = styled.div`
   width: 70%;
   padding: 2.5vh 2vw;
   padding-right: 10vw;
-  margin: 1vw 0;
+  /* margin: 1vw 0; */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #d9d9d9;
+  /* background-color: #d9d9d9; */
+  border-bottom: 1px solid #ccc; /* 구분선 추가 */
   font-size: 1.5vw;
+
+  &:last-child {
+    border-bottom: none; /* 마지막 요소는 구분선 제거 */
+  }
 `;
 
 export const RankOrder = styled.span`
@@ -89,8 +94,14 @@ export const RankBar = styled.div`
 export const RankName = styled.div`
   position: relative;
   top: 2vh;
-  text-align: center;
+  /* text-align: center; */
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
   font-size: 1.5vw;
+  gap: 1rem;
+  width: 100%;
+  padding-left: 2.5rem;
 `;
 
 export const ProfileImg = styled.img`
