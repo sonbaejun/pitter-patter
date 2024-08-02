@@ -76,6 +76,7 @@ function Rank() {
       <OuterBox>
         <RankBarOverlay>
           <RankBarWrap style={{ left: "41vw" }} delay={0}>
+            {/* trophy 사진 대신 유저 프로필 사진 넣어야 함 */}
             <ProfileImg src={Trophy} alt="Trophy" />
             <RankBar style={{ height: "69vh" }}>
               <RankName>
@@ -104,6 +105,7 @@ function Rank() {
           </RankBarWrap>
         </RankBarOverlay>
         <InnerBox>
+          <RankWrap style={{padding: '2.5vh 0'}}><div style={{width: '100%', textAlign: 'center'}}>⋮</div></RankWrap>
           <RankWrap>
             <div>
               <RankOrder># {rankData[3].rank}</RankOrder>
@@ -111,16 +113,16 @@ function Rank() {
             </div>
             <span>{rankData[3].score}</span>
           </RankWrap>
-          <RankWrap onClick={toggleCollapse} style={{ cursor: 'pointer' }}>
+          <RankWrap  style={{ backgroundColor: '#ffe75c47' }}>
             <div>
               <RankOrder># {rankData[4].rank}</RankOrder>
               <span>{rankData[4].name}</span>
             </div>
             <span>{rankData[4].score}</span>
           </RankWrap>
-            <CollapseContent activate={toggleCollapse}>
+            {/* <CollapseContent activate={toggleCollapse}>
               <p>최고 점수 ##</p>
-            </CollapseContent>
+            </CollapseContent> */}
           <RankWrap>
             <div>
               <RankOrder># {rankData[5].rank}</RankOrder>
@@ -128,6 +130,7 @@ function Rank() {
             </div>
             <span>{rankData[5].score}</span>
           </RankWrap>
+          <RankWrap style={{padding: '2.5vh 0'}}><div style={{width: '100%', textAlign: 'center'}}>⋮</div></RankWrap>
         </InnerBox>
       </OuterBox>
     </div>
