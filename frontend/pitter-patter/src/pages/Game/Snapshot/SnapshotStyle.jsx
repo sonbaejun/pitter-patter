@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import YellowWaveBackground from "/src/assets/img/Background/YellowWave.png";
-import FrameImage from "/src/assets/img/Shop/frame/frame1.png";
+import FrameImage from "/src/assets/img/Shop/frame/frame3.png";
 
 const slideUp = keyframes`
   from {
