@@ -3,7 +3,6 @@ package com.pitpat.pitterpatter.domain.user.controller;
 import com.pitpat.pitterpatter.domain.user.model.dto.*;
 import com.pitpat.pitterpatter.domain.user.service.UserService;
 import com.pitpat.pitterpatter.global.exception.exceptions.DuplicateResourceException;
-import com.pitpat.pitterpatter.global.exception.exceptions.NotInitializedException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -170,8 +169,6 @@ public class UserController {
             int userId = Integer.parseInt(userDetails.getUsername());
             userService.verify2fa(userId, twoFaDto);
             return ResponseEntity.status(HttpStatus.OK).body("2FA verified successfully.");
-        } catch (NotInitializedException e) {
-            return ResponseEntity.status(HttpStatus.RESET_CONTENT).body(e.getMessage());
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (IllegalArgumentException e) {
