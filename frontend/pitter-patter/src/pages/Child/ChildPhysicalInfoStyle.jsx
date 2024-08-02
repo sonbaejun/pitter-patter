@@ -115,5 +115,21 @@ export const AddBtnDiv = styled.div`
         height: 31px;
         box-shadow: 0px 5px 0px 0px #759FD1; /* 그림자 추가 */
         font-size: 12px;
+
+        &:hover:not(:disabled) {
+        transform: translateY(1px);
+        }
+
+        &:active:not(:disabled) {
+            box-shadow: ${(props) => (props.highlight ? "0 1px 0 0 #759FD1" : "0 1px 0 0 #759FD1")};
+            transform: translateY(2px);
+        }
+
+        &:disabled {
+            color: black;
+            background-color: #B3B3B3;
+            box-shadow: 0 -3px 1px 0 #757575;
+            cursor: auto;
+        }
     }
 `;

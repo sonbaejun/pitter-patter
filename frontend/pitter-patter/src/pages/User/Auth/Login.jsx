@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import {
   LayoutBase,
   LayoutLogin,
@@ -70,7 +71,7 @@ function Login() {
     <LayoutBase>
       <LayoutLogin>
         <div style={{ display: 'flex', justifyContent: 'flex-start', width: '80%' }}>
-          <IconX src={X} alt="X" />
+          <Link to='/'><IconX src={X} alt="X" /></Link>
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
           <MainText>로그인</MainText>

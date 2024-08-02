@@ -66,4 +66,20 @@ export const SubmitButton = styled.button`
     font-size: 1.2rem;
     height: 5vh;
     padding: .5rem 1.5rem;
+
+    &:hover:not(:disabled) {
+    transform: translateY(1px);
+    }
+
+    &:active:not(:disabled) {
+        box-shadow: ${(props) => (props.highlight ? "0 1px 0 0 #FA6DA1" : "0 1px 0 0 #FA6DA1")};
+        transform: translateY(2px);
+    }
+
+    &:disabled {
+        color: black;
+        background-color: #B3B3B3;
+        box-shadow: 0 -3px 1px 0 #757575;
+        cursor: auto;
+    }
 `

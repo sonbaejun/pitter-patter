@@ -8,6 +8,7 @@ import {
   ButtonSignup,
   LoginText,
 } from './SignUpStyle';
+import { Link } from 'react-router-dom';
 import X from "../../../assets/img/logo/X.png";
 import kakao from "../../../assets/img/logo/kakao.png";
 import naver from "../../../assets/img/logo/naver.png";
@@ -41,7 +42,7 @@ function SignUp() {
     <LayoutBase>
       <LayoutSignup>
         <div style={{ display: 'flex', justifyContent: 'flex-start', width: '90%' }}>
-          <IconX src={X} alt="X" />
+          <Link to='/'><IconX src={X} alt="X" /></Link>
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
           <MainText>회원 가입</MainText>
