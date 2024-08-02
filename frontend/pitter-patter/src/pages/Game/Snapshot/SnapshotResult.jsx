@@ -1,4 +1,6 @@
 import { useLocation } from "react-router-dom";
+import { useRef } from "react";
+import html2canvas from "html2canvas";
 import {
   MainWrap,
   CenterColumn,
@@ -22,13 +24,28 @@ import Save from "/src/assets/img/Snapshot/save.png";
 function SnapshotResult() {
   const location = useLocation();
   const { imageList } = location.state;
+  const frameRef = useRef(null);
+
+  const downloadFrameImage = () => {
+    const frameElement = frameRef.current;
+    html2canvas(frameElement, { backgroundColor: 'rgba(0, 0, 0, 0)' }).then((canvas) => {
+      canvas.toBlob((blob) => {
+        const link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        link.setAttribute("download", "MyPhoto.png");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }, "image/png");
+    });
+  };
 
   return (
     <MainWrap>
       <CenterColumn>
         <Title>우와 멋진 사진이네요 !</Title>
         <CenterRow>
-          <Frame>
+          <Frame ref={frameRef}>
             <BlankRow>
               <Blank>
                 {imageList && <UserImg src={imageList[0]} alt="snapshot" />}
@@ -56,7 +73,7 @@ function SnapshotResult() {
                   <ToolImg src={Share} alt="share" />
                   <span>공유하기</span>
                 </Tool>
-                <Tool>
+                <Tool onClick={downloadFrameImage}>
                   <ToolImg src={Save} alt="save" />
                   <span>저장하기</span>
                 </Tool>
