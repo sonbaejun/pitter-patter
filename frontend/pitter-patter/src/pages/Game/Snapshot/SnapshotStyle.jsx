@@ -21,15 +21,14 @@ export const MainWrap = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const CenterColumn = styled.div`
   display: flex;
   flex-direction: column;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -89,6 +88,7 @@ export const Blank = styled.div`
 export const UserImg = styled.img`
   height: 100%;
   width: 100%;
+  // cut overflowed image
   object-fit: cover;
 `;
 
@@ -208,4 +208,21 @@ export const GoResultButton = styled.button`
   }
 
   transition: 0.3s;
+`;
+
+export const Countdown = styled.div`
+  font-size: 40px;
+  color: #f9810a;
+  font-family: "LOTTERIACHAB";
+  background-color: rgba(255, 255, 255, ${(props) => (props.timer) / 6});
+  transition: ease-in-out 0.5s;
+  z-index: 1;
+  position: absolute;
+  top: 16px;
+  left: ${(props) => props.index % 2 == 0 ? "16px" : "172px"};
+  width: 140px;
+  height: 126px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
