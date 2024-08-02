@@ -22,6 +22,7 @@ import SFA from './pages/User/SFA/SFA';
 import ChangePassword from './pages/User/MyPage/ChangePassword';
 import DeleteUser from './pages/User/MyPage/DeleteUser';
 import ResetPassword from './pages/User/Auth/ResetPassword';
+import ResetSFA from './pages/User/Auth/ResetSFA';
 
 function App() {
   return (
@@ -48,7 +49,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-
+        <Route path='/reset-sfa' element={<ResetSFA />} />
         <Route path="/select-profile" element={<SelectProfile />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/change-password" element={<ChangePassword />} />
