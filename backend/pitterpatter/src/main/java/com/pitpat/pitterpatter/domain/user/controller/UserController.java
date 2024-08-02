@@ -2,23 +2,18 @@ package com.pitpat.pitterpatter.domain.user.controller;
 
 import com.pitpat.pitterpatter.domain.user.model.dto.*;
 import com.pitpat.pitterpatter.domain.user.service.UserService;
-import com.pitpat.pitterpatter.global.exception.user.DuplicateResourceException;
+import com.pitpat.pitterpatter.global.exception.exceptions.DuplicateResourceException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.util.NavigableMap;
 import java.util.NoSuchElementException;
-import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -39,12 +34,6 @@ public class UserController {
         log.info("jwtToken accessToken = {}", jwtToken.getAccessToken());
 
         return ResponseEntity.status(HttpStatus.OK).body(jwtToken);
-    }
-
-    // TODO: 테스트 완료되면 추후 지울 것
-    @GetMapping("/home")
-    public String home() {
-        return "home";
     }
 
 

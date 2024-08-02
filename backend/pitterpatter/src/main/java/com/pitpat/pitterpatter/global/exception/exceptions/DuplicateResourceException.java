@@ -1,4 +1,4 @@
-package com.pitpat.pitterpatter.global.exception.user;
+package com.pitpat.pitterpatter.global.exception.exceptions;
 
 public class DuplicateResourceException extends RuntimeException {
     public DuplicateResourceException(String message) {

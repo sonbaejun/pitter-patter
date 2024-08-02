@@ -3,7 +3,7 @@ package com.pitpat.pitterpatter.domain.assets.controller.item;
 import com.pitpat.pitterpatter.domain.assets.model.dto.item.FindItemDto;
 import com.pitpat.pitterpatter.domain.assets.model.dto.item.FindItemListDto;
 import com.pitpat.pitterpatter.domain.assets.service.item.ItemService;
-import com.pitpat.pitterpatter.global.exception.EntityNotFoundException;
+import com.pitpat.pitterpatter.global.exception.exceptions.EntityNotFoundException;
 import com.pitpat.pitterpatter.global.exception.ErrorResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.pitpat.pitterpatter.global.exception;
+package com.pitpat.pitterpatter.global.exception.exceptions;
 
 public class EntityNotFoundException extends RuntimeException {
     public EntityNotFoundException(String message) {
