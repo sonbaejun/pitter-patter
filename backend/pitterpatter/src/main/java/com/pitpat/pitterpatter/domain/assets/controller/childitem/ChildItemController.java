@@ -33,7 +33,7 @@ public class ChildItemController {
             return ResponseEntity.ok(items);
         } catch (Exception e) {
             ErrorResponseDto errorResponse = new ErrorResponseDto("아이템 조회 실패: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
         }
     }
 
@@ -45,7 +45,7 @@ public class ChildItemController {
             return ResponseEntity.ok(items);
         } catch (Exception e) {
             ErrorResponseDto errorResponse = new ErrorResponseDto("착용 아이템 조회 실패: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
         }
     }
 
@@ -63,7 +63,7 @@ public class ChildItemController {
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             ErrorResponseDto errorResponse = new ErrorResponseDto("아이템 제거 실패: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
         }
     }
 
@@ -86,7 +86,7 @@ public class ChildItemController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
         } catch (Exception e) {
             ErrorResponseDto errorResponse = new ErrorResponseDto("아이템 구매 실패: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
         }
     }
 
@@ -104,7 +104,7 @@ public class ChildItemController {
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             ErrorResponseDto errorResponse = new ErrorResponseDto("아이템 토글 실패: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
         }
     }
 }
