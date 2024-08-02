@@ -183,7 +183,7 @@ public class UserController {
             String emailToken =  userService.createEmailToken(emailDto);
             
             // 메일 발송
-            String resetUrl = "http://localhost:8080/password/reset?token=" + emailToken + "&email=" + email;
+            String resetUrl = "https://pitter-patter.picel.net/password/reset?token=" + emailToken + "&email=" + email;
             String subject = "[피터패터] 비밀번호 재설정 요청 메일입니다.";
             String htmlContent = "<h1>비밀번호 재설정을 요청하셨습니다.</h1><br>" +
                     "<p>안녕하세요.</p>" +
