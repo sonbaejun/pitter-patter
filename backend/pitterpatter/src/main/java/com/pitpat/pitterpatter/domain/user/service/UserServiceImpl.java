@@ -6,7 +6,8 @@ import com.pitpat.pitterpatter.domain.user.repository.RefreshTokenRepository;
 import com.pitpat.pitterpatter.domain.user.repository.UserRepository;
 import com.pitpat.pitterpatter.entity.RefreshTokenEntity;
 import com.pitpat.pitterpatter.entity.UserEntity;
-import com.pitpat.pitterpatter.global.exception.user.DuplicateResourceException;
+import com.pitpat.pitterpatter.global.exception.exceptions.DuplicateResourceException;
+import com.pitpat.pitterpatter.global.exception.exceptions.NotInitializedException;
 import com.pitpat.pitterpatter.global.util.user.TeamNameGenerator;
 import io.jsonwebtoken.Claims;
 import jakarta.mail.MessagingException;
@@ -215,12 +216,19 @@ public class UserServiceImpl implements UserService{
     // jwt 토큰에서 userId 값을 꺼내와 2차 비밀번호 검증
     @Override
     public void verify2fa(int userId, TwoFaDto twoFaDto) throws NoSuchElementException {
+        String twoFa = twoFaDto.getTwoFa();
+
+        // 만약 2차 비밀번호가 임시 2차 비밀번호라면 NotInitializedException 발생
+        if (twoFa.equals(random2Fa)) {
+            throw new NotInitializedException("Not initialized.");
+        }
+
         // 1. userId에 해당하는 유저를 DB에서 가져옴
         // userId에 해당하는 유저가 없을 경우 NoSuchElementException 발생
         UserEntity existingUser = this.getUserById(userId).toEntity();
 
         // 2. 입력한 2차 비밀번호와 저장되어있는 해시된 2차 비밀번호를 비교
-        boolean isValid = passwordEncoder.matches(twoFaDto.getTwoFa(), existingUser.getTwoFa());
+        boolean isValid = passwordEncoder.matches(twoFa, existingUser.getTwoFa());
 
         // 3. 입력한 2차 비밀번호와 저장되어있는 해시된 2차 비밀번호가 다르다면 IllegalArgumentException 발생
         if (!isValid) {
