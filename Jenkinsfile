@@ -15,33 +15,33 @@ pipeline {
     }
 
     stages {
-      stage('Build Frontend') {
-        steps {
-          script {
-            dir('frontend/pitter-patter') {
-              sh 'npm install'
-              sh 'npm run build-vite'
-            }
-          }
-        }
-        post {
-          success {
-            archiveArtifacts artifacts: 'frontend/pitter-patter/dist/**', allowEmptyArchive: true
-          }
-        }
-      }
+    //   stage('Build Frontend') {
+    //     steps {
+    //       script {
+    //         dir('frontend/pitter-patter') {
+    //           sh 'npm install'
+    //           sh 'npm run build'
+    //         }
+    //       }
+    //     }
+    //     post {
+    //       success {
+    //         archiveArtifacts artifacts: 'frontend/dist/**', allowEmptyArchive: true
+    //       }
+    //     }
+    //   }
 
-    stage('Deploy Frontend') {
-        steps {
-          script {
-            withCredentials([usernamePassword(credentialsId: 'ftp-server-credentials-id', passwordVariable: 'FTP_PASSWORD', usernameVariable: 'FTP_USERNAME')]) {
-              sh """
-                        lftp -c "set ftp:ssl-allow no; set ftp:passive-mode yes; open -u ${FTP_USERNAME},${FTP_PASSWORD} ${FTP_SERVER}; mirror -R frontend/pitter-patter/dist/ ./; bye"
-                      """
-            }
-          }
-        }
-    }
+    // stage('Deploy Frontend') {
+    //     steps {
+    //       script {
+    //         withCredentials([usernamePassword(credentialsId: 'ftp-server-credentials-id', passwordVariable: 'FTP_PASSWORD', usernameVariable: 'FTP_USERNAME')]) {
+    //           sh """
+    //                     lftp -c "set ftp:ssl-allow no; set ftp:passive-mode yes; open -u ${FTP_USERNAME},${FTP_PASSWORD} ${FTP_SERVER}; mirror -R frontend/dist/ ./; bye"
+    //                   """
+    //         }
+    //       }
+    //     }
+    // }
 
       stage('Build Backend') {
         steps {
