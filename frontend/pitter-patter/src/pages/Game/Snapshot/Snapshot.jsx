@@ -20,6 +20,9 @@ import EG2 from "/src/assets/img/Snapshot/eg2.png";
 import EG3 from "/src/assets/img/Snapshot/eg3.png";
 import EG4 from "/src/assets/img/Snapshot/eg4.png";
 
+import Beep from "/src/assets/sound/beep.mp3";
+import Shutter from "/src/assets/sound/shutter.mp3";
+
 function Snapshot() {
   const frameRef = useRef(null);
   const [imageList, setImageList] = useState([null, null, null, null]);
@@ -69,6 +72,11 @@ function Snapshot() {
 
     // 타이머 표시
     let countdown = 3;
+      
+    const beep = new Audio(Beep);
+    beep.volume = 0.5;
+    beep.play();
+
     setTimer(prevTimer => {
       const newTimer = [...prevTimer];
       newTimer[index] = countdown;
@@ -77,6 +85,16 @@ function Snapshot() {
 
     const interval = setInterval(() => {
       countdown -= 1;
+      
+      if (countdown === 0) {
+        const shutter = new Audio(Shutter);
+        shutter.play();
+      } else {
+        const beep = new Audio(Beep);
+        beep.volume = 0.5;
+        beep.play();
+      }
+
       setTimer(prevTimer => {
         const newTimer = [...prevTimer];
         newTimer[index] = countdown;
