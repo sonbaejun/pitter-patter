@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import home from '/src/assets/img/Landing/home.png';
+import { Link } from 'react-router-dom';
 
 const ModalOverlay = styled.div`
   display: flex;
@@ -25,7 +26,7 @@ const ModalContent = styled.div`
   box-shadow: 0px 11px 39.6px 0px rgba(0, 0, 0, 0.25);
   position: absolute;
   right: 30px;
-  top: 60px;
+  top: 70px;
 `;
 
 const GridItem = styled.div`
@@ -41,6 +42,14 @@ const ProfilePicture = styled.img`
   background-color: #D9D9D9;
 `;
 
+const BackDrop = styled.div`
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+`
+
 function ProfileModal({ isOpen, onClose }) {
   if (!isOpen) return null;
 
@@ -48,16 +57,24 @@ function ProfileModal({ isOpen, onClose }) {
     <ModalOverlay onClick={onClose}>
       <ModalContent onClick={e => e.stopPropagation()}>
         <GridItem>
-          <ProfilePicture src='' alt="자녀 1" />
+          <Link to='/'>
+            <ProfilePicture src='' alt="자녀 1" />
+          </Link>
         </GridItem>
         <GridItem>
-          <ProfilePicture src='' alt="자녀 2" />
+          <Link to='/'>
+            <ProfilePicture src='' alt="자녀 2" />
+          </Link>
         </GridItem>
         <GridItem>
-          <ProfilePicture src='' alt="자녀 3" />
+          <Link to='/'>
+            <ProfilePicture src='' alt="자녀 3" />
+          </Link>
         </GridItem>
         <GridItem>
-          <ProfilePicture src='' alt="자녀 4" />
+          <Link to='/'>
+            <ProfilePicture src='' alt="자녀 4" />
+          </Link>
         </GridItem>
       </ModalContent>
     </ModalOverlay>

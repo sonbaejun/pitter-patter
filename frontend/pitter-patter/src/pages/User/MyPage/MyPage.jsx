@@ -48,7 +48,10 @@ function MyPage() {
                 비밀번호 변경
               </MenuItem>
               <MenuItem>
-                <Link to="/changeSFA">2차 비밀번호 변경</Link>
+                <Link to="/NewSFA">2차 비밀번호 변경</Link>
+              </MenuItem>
+              <MenuItem>
+                <Link to="/child">자녀 정보 확인</Link>
               </MenuItem>
               <button
                 onClick={() => setModalOpen(true)}

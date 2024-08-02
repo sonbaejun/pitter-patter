@@ -21,6 +21,9 @@ import MyPage from './pages/User/MyPage/MyPage';
 import SFA from './pages/User/SFA/SFA';
 import ChangePassword from './pages/User/MyPage/ChangePassword';
 import DeleteUser from './pages/User/MyPage/DeleteUser';
+import ResetPassword from './pages/User/Auth/ResetPassword';
+import ResetSFA from './pages/User/Auth/ResetSFA';
+import NewSFA from './pages/User/SFA/NewSFA';
 
 function App() {
   return (
@@ -46,12 +49,14 @@ function App() {
         <Route path="/child/*" element={<ChildPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path='/reset-sfa' element={<ResetSFA />} />
         <Route path="/select-profile" element={<SelectProfile />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/change-password" element={<ChangePassword />} />
         <Route path="/mypage/delete-user" element={<DeleteUser />} />
         <Route path="/sfa" element={<SFA />} />
+        <Route path='/newsfa' element={<NewSFA />} />
         
         <Route path="*" element={<Error />} />
         </Routes>

@@ -5,6 +5,10 @@ export const ContentBody = styled.div`
   width: 75vw;
   height: 77vh;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const PhysicalInfoInput = styled.div`
@@ -13,12 +17,12 @@ export const PhysicalInfoInput = styled.div`
   overflow: hidden;
   display: flex;
   justify-content: center;
-  gap: 1.5em;
+  gap: 1.5rem;
 `;
 
 export const PhysicalInfoHistory = styled.div`
     width: 100%;
-    height: 60%;
+    height: 50%;
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -62,7 +66,7 @@ export const ImgDiv = styled.div`
     align-items: center;
 
     img {
-        width: 90px;
+        width: 100px;
         border-radius: 50%;
         background-color: #757575;
     }
@@ -89,7 +93,7 @@ export const InputInnerDiv = styled.div`
 
     label {
         color: #616161;
-        font-size: 15px;
+        font-size: 20px;
     }
 
     input[type="number"]::-webkit-outer-spin-button,
