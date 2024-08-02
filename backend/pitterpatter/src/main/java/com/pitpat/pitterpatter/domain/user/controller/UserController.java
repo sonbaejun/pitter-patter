@@ -111,12 +111,12 @@ public class UserController {
         }
     }
 
-    // jwt 토큰에서 email 값을 꺼내와 비밀번호 재설정
-    @PatchMapping("/password/reset")
-    public ResponseEntity<String> resetPassword(@AuthenticationPrincipal UserDetails userDetails, @RequestBody PasswordDto passwordDto) {
+    // jwt 토큰에서 id 값을 꺼내와 비밀번호 재설정
+    @PatchMapping("/password/reset/id")
+    public ResponseEntity<String> resetPasswordByUserId(@AuthenticationPrincipal UserDetails userDetails, @RequestBody PasswordDto passwordDto) {
         try {
-            int userId = Integer.parseInt(userDetails.getUsername());
-            userService.resetPassword(userId, passwordDto);
+            String userId = userDetails.getUsername();
+            userService.resetPassword(userId, passwordDto, "userId");
             return ResponseEntity.ok("Password update completed successfully.");
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -127,24 +127,63 @@ public class UserController {
         }
     }
 
-    // TODO: 이메일 토큰이 들어오면 맞는 토큰인지 검증하도록 바꾸기
+    // email 토큰으로 비밀번호 재설정
+    @PatchMapping("/password/reset/token")
+    public ResponseEntity<?> resetPasswordByEmailToken(@RequestBody ResetPasswordByEmailTokenCombinedDto resetPasswordByEmailTokenCombinedDto) {
+        try {;
+            PasswordDto passwordDto = resetPasswordByEmailTokenCombinedDto.getPasswordDto();
+            EmailTokenVerifyDto emailTokenVerifyDto = resetPasswordByEmailTokenCombinedDto.getEmailTokenVerifyDto();
+            System.out.println("안녕하세요");
+            String email = emailTokenVerifyDto.getEmail();
+            String emailToken = emailTokenVerifyDto.getEmailToken();
+
+            // 1. 이메일 토큰이 맞는지 다시 검증
+            // 만약 검증되지 않은 토큰이라면 IllegalArgumentException 발생
+            userService.verifyEmailToken(email, emailToken);
+            
+            // 2. 비밀번호 재설정
+            userService.resetPassword(email, passwordDto, "email");
+
+            return ResponseEntity.ok("Password update completed successfully.");
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
     // 이메일 토큰이 맞는지 검증
-    @GetMapping("/password/reset")
-    public ResponseEntity<?> viewResetPassword (@AuthenticationPrincipal UserDetails userDetails) {
-        return ResponseEntity.status(HttpStatus.OK).body(userDetails.getUsername() + "님의 비밀번호 변경 페이지");
+    @PostMapping("/verify/password/reset_token")
+    public ResponseEntity<String> verifyEmailToken (@RequestBody EmailTokenVerifyDto emailTokenVerifyDto) {
+         try {
+             String email = emailTokenVerifyDto.getEmail();
+             String emailToken = emailTokenVerifyDto.getEmailToken();
+
+             // 1. 이메일 토큰 검증
+             // 만약 검증되지 않은 토큰이라면 IllegalArgumentException 발생
+             userService.verifyEmailToken(email, emailToken);
+             
+             return ResponseEntity.status(HttpStatus.OK).body("Token verified successfully.");
+         } catch (IllegalArgumentException e) {
+             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+         } catch (Exception e) {
+             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+         }
     }
 
     // 비밀번호 재설정 메일 발송
     @PostMapping("/password/reset_token")
     public ResponseEntity<?> sendMailForResetPassword (@RequestBody EmailDto emailDto) {
         try {
+            String email = emailDto.getEmail();
+
             // 이메일 토큰 생성
             String emailToken =  userService.createEmailToken(emailDto);
-
-            // TODO: 이메일 토큰 암호화?
             
             // 메일 발송
-            String resetUrl = "http://localhost:8080/api/user/password/reset?token=" + emailToken;
+            String resetUrl = "http://localhost:8080/password/reset?token=" + emailToken + "&email=" + email;
             String subject = "[피터패터] 비밀번호 재설정 요청 메일입니다.";
             String htmlContent = "<h1>비밀번호 재설정을 요청하셨습니다.</h1><br>" +
                     "<p>안녕하세요.</p>" +
