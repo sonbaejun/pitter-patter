@@ -15,7 +15,7 @@ import naver from "../../../assets/img/logo/naver.png";
 
 const IconX = styled.img`
   width: 1.5vw;
-  cursor: pointer;
+  cursor: url(/src/assets/cursor/pointer.png), pointer !important;
 `;
 
 const InputText = styled.input`
@@ -34,7 +34,7 @@ const CenterText = styled.span`
 
 const SocialIcon = styled.img`
   width: 3vw;
-  cursor: pointer;
+  cursor: url(/src/assets/cursor/pointer.png), pointer !important;
 `;
 
 function SignUp() {

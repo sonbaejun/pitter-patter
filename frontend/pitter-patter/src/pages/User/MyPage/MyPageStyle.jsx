@@ -68,7 +68,7 @@ export const MenuItem = styled.div`
   font-weight: 700;
   color: #616161;
   /* color: ${(props) => props.color? props.color:"#616161"}; */
-  cursor: pointer;
+  cursor: url(/src/assets/cursor/pointer.png), pointer !important;
 
   &:hover {
     color: white;

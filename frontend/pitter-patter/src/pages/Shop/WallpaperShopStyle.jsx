@@ -58,7 +58,7 @@ export const Preview = styled.div`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  cursor: pointer;
+  cursor: url(/src/assets/cursor/pointer.png), pointer !important;
   box-sizing: border-box;
   border: ${(props) => (props.selected ? "1vh solid var(--box-green-color)" : "none")};
 `;
@@ -75,7 +75,7 @@ export const PreviewFilter = styled.div`
 
 export const ActionButton = styled.button`
   border: none;
-  cursor: pointer;
+  cursor: url(/src/assets/cursor/pointer.png), pointer !important;
   font-weight: 700;
   padding: 1vh 2vh;
   border-radius: 20px;
@@ -107,7 +107,7 @@ export const ActionButton = styled.button`
 export const TransparentButton = styled.button`
   background-color: transparent;
   border: none;
-  cursor: pointer;
+  cursor: url(/src/assets/cursor/pointer.png), pointer !important;
   width: 60px;
   z-index: 1;
   position: relative;

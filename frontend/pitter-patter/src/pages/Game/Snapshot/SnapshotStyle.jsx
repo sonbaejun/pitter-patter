@@ -165,7 +165,7 @@ export const Tool = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
+  cursor: url(/src/assets/cursor/pointer.png), pointer !important;
 
   &:hover {
     transform: scale(1.1);

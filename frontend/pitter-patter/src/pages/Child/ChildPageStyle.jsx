@@ -55,7 +55,7 @@ export const ChildMenuItem = styled.div`
   align-items: center;
   padding-left: 8%;
   position: relative;
-  cursor: pointer;
+  cursor: url(/src/assets/cursor/pointer.png), pointer !important;
 
   ${({ $isActive }) => $isActive && `
     box-shadow: none;
@@ -76,7 +76,7 @@ export const ContextItem = styled.div`
 
 export const Backspace = styled(Link)`
   position: relative;
-  cursor: pointer;
+  cursor: url(/src/assets/cursor/pointer.png), pointer !important;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;

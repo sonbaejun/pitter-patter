@@ -26,7 +26,7 @@ export const BoxWrap = styled.div`
 
   &:hover {
     transform: translateY(-1vw);
-    cursor: pointer;
+    cursor: url(/src/assets/cursor/pointer.png), pointer !important;
   }
 
   &:active {

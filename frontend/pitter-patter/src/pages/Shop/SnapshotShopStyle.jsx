@@ -65,7 +65,7 @@ export const Blank = styled.div`
 export const TransparentButton = styled.button`
   background-color: transparent;
   border: none;
-  cursor: pointer;
+  cursor: url(/src/assets/cursor/pointer.png), pointer !important;
   width: 50px;
   z-index: 1;
   position: absolute;
@@ -81,7 +81,7 @@ export const ButtonIcon = styled.img`
 
 export const ActionButton = styled.button`
   border: none;
-  cursor: pointer;
+  cursor: url(/src/assets/cursor/pointer.png), pointer !important;
   font-weight: 700;
   padding: 10px 20px;
   border-radius: 30px;

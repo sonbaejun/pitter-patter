@@ -59,7 +59,7 @@ export const ProfileImage = styled.div`
   
   &:hover {
     box-shadow: 0px 11px 39.6px 0px rgba(0, 0, 0, 0.25);
-    cursor: pointer;
+    cursor: url(/src/assets/cursor/pointer.png), pointer !important;
   }
 `;
 

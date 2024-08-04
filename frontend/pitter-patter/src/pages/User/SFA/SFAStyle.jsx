@@ -74,7 +74,7 @@ export const Numpad = styled.div`
   justify-content: center;
   align-items: center;
   user-select: none;
-  cursor: pointer;
+  cursor: url(/src/assets/cursor/pointer.png), pointer !important;
 
   &:not(:nth-child(3n)) {
     border-right: 2px solid #d9d9d9;
@@ -101,7 +101,7 @@ export const ForgotPassword = styled.div`
   margin-bottom: 1.5vh;
   color: #616161;
   text-decoration: underline;
-  cursor: pointer;
+  cursor: url(/src/assets/cursor/pointer.png), pointer !important;
   user-select: none;
 `;
 

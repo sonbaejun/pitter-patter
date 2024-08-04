@@ -29,7 +29,7 @@ const NavItemWrap = styled.div`
   align-items: center;
   padding: 15px;
   width: 15vw;
-  cursor: pointer;
+  cursor: url(/src/assets/cursor/pointer.png), pointer !important;
 `;
 
 const NavIcon = styled.img`
@@ -53,7 +53,7 @@ const LayoutNav = styled.div`
 const CloseButtonImg = styled.img`
   width: 20px;
   height: 20px;
-  cursor: pointer;
+  cursor: url(/src/assets/cursor/pointer.png), pointer !important;
 `;
 
 const BackDrop = styled.div`

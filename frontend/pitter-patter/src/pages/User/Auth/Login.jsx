@@ -17,7 +17,7 @@ import Modal from './LoginFailModal.jsx';
 
 const IconX = styled.img`
   width: 1.5vw;
-  cursor: pointer;
+  cursor: url(/src/assets/cursor/pointer.png), pointer !important;
   position: absolute;
 `;
 
@@ -36,7 +36,7 @@ const CenterText = styled.span`
 
 const SocialIcon = styled.img`
   width: 3vw;
-  cursor: pointer;
+  cursor: url(/src/assets/cursor/pointer.png), pointer !important;
 `;
 
 function Login() {

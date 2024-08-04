@@ -1,4 +1,6 @@
 import React from 'react';
+import { useEffect } from 'react';
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage/LandingPage';
 import GamePage from './pages/Game/GamePage';

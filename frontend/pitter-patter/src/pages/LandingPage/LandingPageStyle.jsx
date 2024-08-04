@@ -34,6 +34,7 @@ export const LayoutHeader = styled.div`
 
 export const LogoImg = styled.img`
   height: 80%;
+  cursor: url(/src/assets/cursor/pointer.png), pointer !important;
 `;
 
 export const LayoutHeaderButton = styled.div`
@@ -47,7 +48,7 @@ export const HeaderButton = styled.img`
   width: 50%;
   height: 50%;
   margin: 0 20%;
-  cursor: pointer;
+  cursor: url(/src/assets/cursor/pointer.png), pointer !important;
 `;
 
 export const MainColumn = styled.div`
@@ -85,7 +86,7 @@ export const Button = styled.button`
   border-radius: 2vw;
   padding: 1vw 4vw;
   margin-bottom: 2vw;
-  cursor: pointer;
+  cursor: url(/src/assets/cursor/pointer.png), pointer !important;
   box-shadow: 0 5px 0 0vw var(--logo-yellow-color);
   font-size: 1.2vw;
   font-weight: bold;
@@ -95,5 +96,5 @@ export const TextButton = styled.div`
   font-size: 1em;
   text-decoration: underline;
   color: var(--font-color);
-  cursor: pointer;
+  cursor: url(/src/assets/cursor/pointer.png), pointer !important;
 `;
