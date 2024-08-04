@@ -13,6 +13,6 @@ export const checkDuplicateEmail = async (email) => {
 };
 
 export const login = async (data) => {
-  const response = await userApi.post("/login", data);
+  const response = await userApi.post("/login/email", data);
   return response;
 };
