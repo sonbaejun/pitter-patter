@@ -1,0 +1,24 @@
+pipeline {
+  agent any
+
+  tools {
+      nodejs 'nodejs'
+  }
+
+  stages {
+    stage('Build Frontend') {
+      steps {
+        script {
+          dir('pitter-patter') {
+            sh 'ls -al | grep package'
+            sh 'pwd'
+            // present working branch
+            sh 'git branch'
+            sh 'npm install'
+            sh 'npm run build'
+          }
+        }
+      }
+    }
+  }
+}
