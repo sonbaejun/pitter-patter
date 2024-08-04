@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import LandingBackground from "../../assets/img/Background/Landing.png";
+import LandingBackground from "/src/assets/img/Background/Landing.png";
 
 export const MainWrap = styled.div`
   display: flex;
@@ -9,8 +9,9 @@ export const MainWrap = styled.div`
   height: 100vh;
   width: 100vw;
   background-image: url(${LandingBackground});
-  background-size: 100vw;
+  background-size: 100vw; 
   background-position: center;
+  background-repeat: no-repeat;
 `;
 
 export const HeaderBody = styled.div`
@@ -20,6 +21,7 @@ export const HeaderBody = styled.div`
   position: fixed;
   top: 0;
   background-color: white;
+  z-index: 998;
 `;
 
 export const LayoutHeader = styled.div`
@@ -58,6 +60,7 @@ export const MainColumn = styled.div`
   background-image: url(${LandingBackground});
   background-size: 100vw;
   background-position: center;
+  background-repeat: no-repeat;
 `;
 
 export const SubTitle = styled.div`

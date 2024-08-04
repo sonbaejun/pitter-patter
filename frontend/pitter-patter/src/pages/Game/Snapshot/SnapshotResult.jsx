@@ -74,7 +74,7 @@ function SnapshotResult() {
           </Frame>
           <Toolbar>
             <Button onClick={goBack}>게임 선택으로 돌아가기</Button>
-            <Link to='/'><Button>메인 화면으로 돌아가기</Button></Link>
+            <Link style={{width: '100%', height: '10%'}} to='/'><Button>메인 화면으로 돌아가기</Button></Link>
             <ToolWrap>
               <ToolTitle>다양한 방법으로 사진을 보관해보세요!</ToolTitle>
               <ToolRow>

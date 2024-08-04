@@ -43,7 +43,7 @@ export const Title = styled.span`
   font-family: "TTLaundryGothicB";
   font-size: 30px;
   color: #f9810a;
-  margin-bottom: 30px;
+  margin-bottom: 3rem;
 `;
 
 export const Frame = styled.div`
