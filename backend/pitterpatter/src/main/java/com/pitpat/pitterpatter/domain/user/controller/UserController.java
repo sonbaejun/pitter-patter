@@ -202,7 +202,7 @@ public class UserController {
     }
 
     // jwt 토큰에서 userId 값을 꺼내와 2차 비밀번호 검증
-    @PostMapping("/verify_2fa")
+    @PostMapping("/verify/2fa")
     public ResponseEntity<String> verify2fa(@AuthenticationPrincipal UserDetails userDetails, @RequestBody TwoFaDto twoFaDto) {
         try {
             int userId = Integer.parseInt(userDetails.getUsername());
