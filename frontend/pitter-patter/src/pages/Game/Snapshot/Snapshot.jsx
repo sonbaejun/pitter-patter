@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../LandingPage/Header";
 import {
@@ -13,6 +13,8 @@ import {
   AddImg,
   GoResultButton,
   Countdown,
+  Modal,
+  ModalContent,
 } from "./SnapshotStyle";
 import AddImageIcon from "/src/assets/icons/AddImage.png";
 import EG1 from "/src/assets/img/Snapshot/eg1.png";
@@ -30,11 +32,12 @@ function Snapshot() {
   const BlankRefs = useRef([]);
   const [isFilled, setIsFilled] = useState(false);
   const [timer, setTimer] = useState([null, null, null, null]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalVideoStream, setModalVideoStream] = useState(null);
 
   function getImage(index) {
     const targetRef = BlankRefs.current[index];
 
-    // remove previous image
     if (imageList[index]) {
       setImageList(imageList.map((img, i) => (i === index ? null : img)));
     }
@@ -65,14 +68,15 @@ function Snapshot() {
         video.srcObject = mediaStream;
         video.play();
         targetRef.appendChild(video);
+        setModalVideoStream(mediaStream);
+        setIsModalOpen(true);
       })
       .catch((err) => {
         console.log(err);
       });
 
-    // 타이머 표시
     let countdown = 3;
-      
+
     const beep = new Audio(Beep);
     beep.volume = 0.5;
     beep.play();
@@ -85,7 +89,7 @@ function Snapshot() {
 
     const interval = setInterval(() => {
       countdown -= 1;
-      
+
       if (countdown === 0) {
         const shutter = new Audio(Shutter);
         shutter.play();
@@ -122,12 +126,12 @@ function Snapshot() {
 
         ctx.translate(canvasWidth, 0);
         ctx.scale(-1, 1);
-        
+
         ctx.drawImage(video, cropX, cropY, cropWidth, cropHeight, 0, 0, canvasWidth, canvasHeight);
         const image = canvas.toDataURL("image/png");
         setImageList(imageList.map((img, i) => (i === index ? image : img)));
         video.remove();
-        
+
         let tracks = stream.getTracks();
         tracks.forEach(function(track) {
           track.stop();
@@ -139,6 +143,8 @@ function Snapshot() {
           newTimer[index] = null;
           return newTimer;
         });
+        setIsModalOpen(false);
+        setModalVideoStream(null);
       }
     }, 1000);
   }
@@ -148,6 +154,22 @@ function Snapshot() {
       setIsFilled(true);
     }
   }, [imageList, navigate]);
+
+  useEffect(() => {
+    if (isModalOpen) {
+      const modalTimer = setTimeout(() => {
+        if (modalVideoStream) {
+          let tracks = modalVideoStream.getTracks();
+          tracks.forEach(function(track) {
+            track.stop();
+          });
+        }
+        setIsModalOpen(false);
+        setModalVideoStream(null);
+      }, 3000);
+      return () => clearTimeout(modalTimer);
+    }
+  }, [isModalOpen, modalVideoStream]);
 
   return (
     <MainWrap>
@@ -213,11 +235,20 @@ function Snapshot() {
           </Frame>
         </CenterRow>
       </CenterColumn>
-      {
-        isFilled && <GoResultButton onClick={() => navigate("./result", { state: { imageList } })}>
-          결과 확인하기
-        </GoResultButton>
-      }
+      {isFilled && <GoResultButton onClick={() => navigate("./result", { state: { imageList } })}>
+        결과 확인하기
+      </GoResultButton>}
+      {isModalOpen && (
+        <Modal>
+          <ModalContent>
+            <video autoPlay muted style={{ width: '100%', transform: 'scaleX(-1)' }} ref={videoRef => {
+              if (videoRef) {
+                videoRef.srcObject = modalVideoStream;
+              }
+            }}></video>
+          </ModalContent>
+        </Modal>
+      )}
     </MainWrap>
   );
 }

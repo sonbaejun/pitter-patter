@@ -226,3 +226,14 @@ export const Countdown = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+export const Modal = styled.div`
+  width: 50vw;
+  height: auto;
+  position: absolute;
+  z-index: 10;
+`
+
+export const ModalContent = styled.div`
+  
+`
