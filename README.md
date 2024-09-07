@@ -1,4 +1,4 @@
-🥇 삼성 청년 SW 아카데미(SSAFY) 11기 공통 프로젝트 최우수상(1등)
+# 🥇 삼성 청년 SW 아카데미(SSAFY) 11기 공통 프로젝트 최우수상(1등)
 
 ---
 
@@ -60,7 +60,7 @@
         <img src="https://ssafy.b-cdn.net/image/fbe71ce7-9684-4288-9070-b5867c79656f1723790085626.jpeg" width="150px" height="150px" style="object-fit: cover;">
     </td>
     <td style="text-align: center;">
-        <img src="/uploads/7e7d2ed7e2f16273261908fb6dc8d619/KakaoTalk_20240901_232001184.jpg" width="150px" height="150px" style="object-fit: cover;">
+        <img src="https://github.com/user-attachments/assets/80201abd-a81f-4422-9c8a-fbc2b050e81e" width="150px" height="150px" style="object-fit: cover;">
     </td>
     <td style="text-align: center;">
         <img src="https://ssafy.b-cdn.net/image/64bc64b5-8b79-4bc9-aa44-fc07d85e59691723790117080.jpeg" width="150px" height="150px" style="object-fit: cover;">
@@ -83,9 +83,9 @@
     <td style="text-align: center; word-wrap: break-word;">Backend<br>UCC 영상편집</td>
   </tr>
   <tr>
-    <td style="text-align: center; word-wrap: break-word;">▪ API 및 DB 설계<br>▪ 자녀 API 구현<br>▪ 프로젝트 일정관리<br>▪ 자녀 페이지 프론트 개발 <br>▪ 발표 진행</td>
+    <td style="text-align: center; word-wrap: break-word;">▪ 프로젝트 일정관리<br>▪ API 및 DB 설계<br>▪ 자녀 API 구현<br>▪ 자녀 페이지 프론트 개발 <br>▪ 발표 진행</td>
     <td style="text-align: center; word-wrap: break-word;">▪ 인프라 설계/구축<br>▪ CI/CD 구축<br>▪ 개발 감독</td>
-    <td style="text-align: center; word-wrap: break-word;">▪ Unity 게임 클라이언트 디자인, 구현, 테스트<br>▪ AI 모션인식 MediaPipe 연결<br>▪ Unity & React WebGL 연결 및 데이터 교신<br>▪ 프론트엔드 웹캠 & 게임 페이지 구현</td>
+    <td style="text-align: center; word-wrap: break-word;">▪ Unity 게임 개발<br>▪ AI 모션인식 MediaPipe 연결<br>▪ Unity & React WebGL 연결<br>▪ 프론트 웹캠 구현<br> ▪ 게임 페이지 구현</td>
     <td style="text-align: center; word-wrap: break-word;">▪ UI/UX 기획 및 설계<br>▪ 프론트엔드 구조 설계 및 개발<br>▪ axios를 통한 서버 연결<br>▪ Redux 설계 및 구현<br>▪ 발표 자료 제작</td>
     <td style="text-align: center; word-wrap: break-word;">▪ API 및 DB 설계<br>▪ 유저 및 인증·인가 관련 API 구현<br>▪ 유저 관련 페이지 프론트 개발<br>▪ 노션 작성</td>
     <td style="text-align: center; word-wrap: break-word;">▪ API 및 DB 설계<br>▪ item, point record 관련 API 구현<br>▪ Axios 요청 <br>▪ 출석관련 컴포넌트 제작<br>▪ UCC 영상편집<br>▪ 전문가 인터뷰</td>
