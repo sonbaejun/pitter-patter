@@ -1,3 +1,7 @@
+# 🥇 삼성 청년 SW 아카데미(SSAFY) 11기 공통 프로젝트 최우수상(1등)
+
+---
+
 <img src="https://github.com/user-attachments/assets/1f28a970-d2a6-4365-bac6-7ef320dc8643">
 
 # 피터패터 (Pitter-Patter)
@@ -39,7 +43,7 @@
 | ![Axios](https://img.shields.io/badge/-Axios-5A29E4?style=flat-square&logo=axios) | ![QueryDSL](https://img.shields.io/badge/-QueryDSL-000000?style=flat-square) |  | ![Grafana](https://img.shields.io/badge/-Grafana-F46800?style=flat-square&logo=grafana&logoColor=white) | ![Notion](https://img.shields.io/badge/-Notion-000000?style=flat-square&logo=notion) |
 | ![React Unity WebGL](https://img.shields.io/badge/-React%20Unity%20WebGL-000000?style=flat-square&logo=react) | ![MySQL](https://img.shields.io/badge/-MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white) |  | ![Prometheus](https://img.shields.io/badge/-Prometheus-E6522C?style=flat-square&logo=prometheus&logoColor=white) |  |
 
-## 🍞 피터패터 팀원 소개 🍞
+## 피터패터 팀원 소개
 
 <table style="table-layout: fixed; width: 100%;">
   <tr>
@@ -79,7 +83,7 @@
     <td style="text-align: center; word-wrap: break-word;">Backend<br>UCC 영상편집</td>
   </tr>
   <tr>
-    <td style="text-align: center; word-wrap: break-word;">▪ API 및 DB 설계<br>▪ 자녀 API 구현<br>▪ 자녀 페이지 프론트 개발 <br>▪ 발표 진행</td>
+    <td style="text-align: center; word-wrap: break-word;">▪ API 및 DB 설계<br>▪ 자녀 API 구현<br>▪ 일정관리<br>▪ 자녀 페이지 프론트 개발 <br>▪ 발표 진행</td>
     <td style="text-align: center; word-wrap: break-word;">▪ 인프라 설계/구축<br>▪ CI/CD 구축<br>▪ 개발 감독</td>
     <td style="text-align: center; word-wrap: break-word;">▪ Unity 게임 클라이언트 디자인, 구현, 테스트<br>▪ AI 모션인식 MediaPipe 연결<br>▪ Unity & React WebGL 연결 및 데이터 교신<br>▪ 프론트엔드 웹캠 & 게임 페이지 구현</td>
     <td style="text-align: center; word-wrap: break-word;">▪ UI/UX 기획 및 설계<br>▪ 프론트엔드 구조 설계 및 개발<br>▪ axios를 통한 서버 연결<br>▪ Redux 설계 및 구현<br>▪ 발표 자료 제작</td>
