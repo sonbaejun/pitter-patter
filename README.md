@@ -57,13 +57,13 @@
         <img src="https://avatars.githubusercontent.com/u/149301473?v=4" width="150px" height="150px" style="object-fit: cover;">
     </td>
     <td style="text-align: center;">
-        <img src="https://ssafy.b-cdn.net/image/fbe71ce7-9684-4288-9070-b5867c79656f1723790085626.jpeg" width="150px" height="150px" style="object-fit: cover;">
+        <img src="https://github.com/user-attachments/assets/80201abd-a81f-4422-9c8a-fbc2b050e81e" width="150px" height="150px" style="object-fit: cover;">
     </td>
     <td style="text-align: center;">
         <img src="https://github.com/user-attachments/assets/80201abd-a81f-4422-9c8a-fbc2b050e81e" width="150px" height="150px" style="object-fit: cover;">
     </td>
     <td style="text-align: center;">
-        <img src="https://ssafy.b-cdn.net/image/64bc64b5-8b79-4bc9-aa44-fc07d85e59691723790117080.jpeg" width="150px" height="150px" style="object-fit: cover;">
+        <img src="https://github.com/user-attachments/assets/80201abd-a81f-4422-9c8a-fbc2b050e81e" width="150px" height="150px" style="object-fit: cover;">
     </td>
   </tr>
   <tr>
